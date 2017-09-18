@@ -5,9 +5,18 @@
         "noImplicitAny": true,
         "module": "commonjs",
         "target": "es5",
-        "jsx": "react"
-    },
-    "include": [
-        "./src/**/*"
-    ]
+        "jsx": "react",
+        "allowJs": true, 
+        "strict": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "experimentalDecorators": true,
+        "types": [
+            "webpack-env",
+            "node"
+        ]
+    }
 }
