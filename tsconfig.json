@@ -4,7 +4,7 @@
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "commonjs",
-        "target": "es5",
+        "target": "es6",
         "jsx": "react",
         "allowJs": true, 
         "strict": true,
@@ -16,7 +16,8 @@
         "experimentalDecorators": true,
         "types": [
             "webpack-env",
-            "node"
+            "node",
+            "material-ui"
         ]
     }
 }

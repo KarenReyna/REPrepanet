@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { AppContainer } from "react-hot-loader";
 import { Provider } from 'react-redux';
 import Main from './containers/main';
+import { MuiThemeProvider } from "material-ui/styles";
 import registerServiceWorker from './scripts/registerServiceWorker';
 import configureStore from './store'
 
@@ -12,7 +13,9 @@ const rootEl = document.getElementById("root");
 ReactDOM.render(
   <AppContainer>
     <Provider store={store}>
-      <Main />
+      <MuiThemeProvider>
+        <Main />
+      </MuiThemeProvider>
     </Provider>
   </AppContainer>,
   rootEl
@@ -24,7 +27,7 @@ registerServiceWorker();
 if (module.hot) {
   module.hot.accept();
   
-  const NextApp = require<{default: typeof Main}>("./containers/Main").default;
+  const NextApp = require<{default: typeof Main}>("./containers/main").default;
 
   module.hot.dispose(() => {
     ReactDOM.render(

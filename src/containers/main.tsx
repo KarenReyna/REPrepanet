@@ -1,12 +1,19 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import App from '../components/app';
-import { example_action } from '../actions'
+import { Home } from '../components/home';
+import { Login } from '../components/login';
+import { openLogin, closeLogin } from '../actions';
 
 class Main extends React.Component<any, any> {
+  constructor() {
+    super();
+  }
   render() {
     return (
-      <App />
+      <div>
+        <Home loginClicked = {this.props.openLogin}/>
+        <Login open = {this.props.loginIsOpen} loginClose = {this.props.closeLogin} />
+      </div>
     );
   }
 }
@@ -14,14 +21,15 @@ class Main extends React.Component<any, any> {
 function mapStateToProps(state: any) {
     return {
         //TODO: Edit state to props
-        example: state.example,
+        loginIsOpen: state.login.open,
     }
 }
 
 function mapDispatchToProps(dispatch: any) {
     return {
         //TODO: Edit dispatch to props
-        example_dispatch: dispatch(example_action()),
+        openLogin: () => dispatch(openLogin()),
+        closeLogin: () => dispatch(closeLogin())
     }
 }
   

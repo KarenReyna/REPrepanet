@@ -1,16 +1,23 @@
 export enum ActionType {
-    EXAMPLE = 'EXAMPLE',
-    EXAMPLE_1 = 'EXAMPLE_1',
+    OPEN_LOGIN = 'OPEN_LOGIN',
+    CLOSE_LOGIN = 'CLOSE_LOGIN',
+    LOGIN_SUBMIT = 'LOGIN_SUBMIT'
 };
 
 export type Action = {
-    type: ActionType.EXAMPLE,
+    type: ActionType.OPEN_LOGIN,
 } | {
-    type: ActionType.EXAMPLE_1,
+    type: ActionType.CLOSE_LOGIN,
 }
 
-export function example_action(): Action {
+export function openLogin(): Action {
     return {
-        type: ActionType.EXAMPLE,
+        type: ActionType.OPEN_LOGIN,
+    }
+}
+
+export function closeLogin(): Action {
+    return {
+        type: ActionType.CLOSE_LOGIN,
     }
 }
