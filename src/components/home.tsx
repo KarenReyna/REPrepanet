@@ -2,6 +2,7 @@ import * as React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {GridList, GridTile} from 'material-ui/GridList';
+import IconButton from 'material-ui/IconButton';
 import style from '../style/home';
 
 const collectionsData = [
@@ -43,8 +44,7 @@ export class Home extends React.Component<any, any> {
       <div>
         <RaisedButton label = "Login" style={{textAlign: 'right', float: 'right'}} onClick={this.props.loginClicked}/>
         <Card>
-          <CardHeader
-          />
+          <CardHeader/>
           <CardMedia
             overlay={<CardTitle title="Recursos Educativos Prepanet" subtitle="Explora diversos materiales educativos y mejora tu forma de aprender." />}
           >
@@ -54,7 +54,8 @@ export class Home extends React.Component<any, any> {
           <div style={style.root}>
             <GridList cellHeight={180} style={style.gridList}>
               {collectionsData.map((collection) => (
-                <GridTile key={collection.img} title={collection.title}>
+                <GridTile key={collection.img} title={collection.title} 
+                actionIcon={<IconButton onClick={this.props.loginClicked}><img src="/src/assets/pageview.svg"/></IconButton>}>
                   <img src={collection.img} />
                 </GridTile>
               ))}
