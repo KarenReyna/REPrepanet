@@ -18,6 +18,11 @@ const styles = {
     height: 200,
     overflowY: 'auto',
   },
+  gridListResources: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    overflowX: 'auto',
+  },
 };
 const collectionsData = [
   {
@@ -31,12 +36,12 @@ const collectionsData = [
 ]
 const favoriteResourcesData = [
   {
-    img: '/src/assets/quimica.jpg',
+    img: '/src/assets/quimica1.jpg',
     title: 'Divertiester',
     subtitle: 'Química - Juego Web'
   },
   {
-    img: '/src/assets/fisica.png',
+    img: '/src/assets/aminas.png',
     title: 'Aminas',
     subtitle: 'Química - Juego iOS'
   },
@@ -46,9 +51,9 @@ const favoriteResourcesData = [
     subtitle: 'Química - Juego Web'
   },
   {
-    img: '/src/assets/fisica.png',
-    title: 'Aldehidos',
-    subtitle: 'Química - Juego Web'
+    img: '/src/assets/kimitrivia.jpg',
+    title: 'KimiTrivia',
+    subtitle: 'Química - Juego iOS'
   }
 ]
 
@@ -78,7 +83,7 @@ export class Home extends React.Component<any, any> {
 
           <CardTitle title="Recursos Populares" subtitle="Recursos preferidos." />
           <div style={styles.root}>
-            <GridList cellHeight={180} style={styles.gridList}>
+            <GridList style={styles.gridListResources} cols={2.2}>
               {favoriteResourcesData.map((resource) => (
                 <GridTile key={resource.img} title={resource.title}subtitle={resource.subtitle}
                 >
