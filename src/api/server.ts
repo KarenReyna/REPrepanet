@@ -2,16 +2,17 @@ import * as express from 'express'
 import { Router } from 'express';
 import * as bodyParser from 'body-parser';
 import { connect, connection } from "mongoose";
+import * as session from 'express-session';
+import * as mongoConnect from 'connect-mongo';
 
 import { usersRoutes } from './routes/users';
 
 import serverConfig from '../../src/config';
 
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+var MongoStore = mongoConnect(session);
 
 // MongoDB Connection
-connect(serverConfig.mongoURL, (error: any) => {
+connect(serverConfig.mongoURL, { useMongoClient: true }, (error: any) => {
   if (error) {
     console.error('Please make sure Mongodb is installed and running!');
     throw error;
@@ -19,8 +20,8 @@ connect(serverConfig.mongoURL, (error: any) => {
 });
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //use sessions for tracking logins
 app.use(session({

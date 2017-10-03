@@ -4,5 +4,8 @@ import { UserController } from '../controllers/users';
 export function usersRoutes(router: Router) {
     var e = new UserController();
     router
-        .get('/users', e.getUser);
+        .get('/profile', e.getUser)
+        .post('/register', e.createUser)
+        .post('/login', e.loginUser)
+		.get('/logout', e.logoutUser);
 }

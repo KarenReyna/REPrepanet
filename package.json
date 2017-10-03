@@ -13,6 +13,7 @@
     "clean": "node_modules/.bin/rimraf dist"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.1",
     "express": "^4.15.4",
     "material-ui": "^0.19.2",
