@@ -1,23 +1,34 @@
-export enum ActionType {
-    OPEN_LOGIN = 'OPEN_LOGIN',
-    CLOSE_LOGIN = 'CLOSE_LOGIN',
-    LOGIN_SUBMIT = 'LOGIN_SUBMIT'
-};
+import * as Types from '../constants';
 
-export type Action = {
-    type: ActionType.OPEN_LOGIN,
-} | {
-    type: ActionType.CLOSE_LOGIN,
-}
-
-export function openLogin(): Action {
+export function loginOpen(): Types.Action {
     return {
-        type: ActionType.OPEN_LOGIN,
+        type: Types.ActionType.OPEN_LOGIN,
     }
 }
 
-export function closeLogin(): Action {
+export function loginClose(): Types.Action {
     return {
-        type: ActionType.CLOSE_LOGIN,
+        type: Types.ActionType.CLOSE_LOGIN,
     }
+}
+
+export function loginFailed(failed: boolean) {
+    return {
+        type: Types.ActionType.LOGIN_FAILED,
+        failed: failed
+    };
+}
+
+export function loginLoading(isLoading: boolean) {
+    return {
+        type: Types.ActionType.LOGIN_LOADING,
+        loading: isLoading
+    };
+}
+
+export function loginSuccess(user: Types.User) {
+    return {
+        type: Types.ActionType.LOGIN_SUCCESS,
+        user: user
+    };
 }
