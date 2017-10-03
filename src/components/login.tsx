@@ -22,7 +22,7 @@ export class Login extends React.Component<any, any> {
 
   public render() {
     const actions = [
-      <FlatButton label = "Cancel" onClick = {this.props.loginClose}/>,
+      <FlatButton label = "Cancelar" onClick = {this.props.loginClose}/>,
       <FlatButton label = "Login" onClick = {() => this.props.loginSubmit(this.state.email, this.state.password)}/>
     ];
     return (
@@ -38,13 +38,13 @@ export class Login extends React.Component<any, any> {
             onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
           /><br />
           <TextField
-            hintText="Password"
+            hintText="Contraseña"
             data-type="password"
-            floatingLabelText="Password"
+            floatingLabelText="Contraseña"
             type="password"
             onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
           /><br />
-
+          {this.props.loginFailed && <p>El usuario y/o contraseña están incorrectos</p>}
           {this.props.loading && <LinearProgress mode="indeterminate" />}
       </Dialog>)
   }
