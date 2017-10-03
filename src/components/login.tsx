@@ -1,35 +1,27 @@
 import * as React from 'react';
 import Dialog from 'material-ui/Dialog';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+
+const modalStyle = {
+  textAlign: 'center', 
+  maxWidth: 'none',
+};
+
+const buttonStyle = { 
+  marginLeft: '10px',
+};
 
 export class Login extends React.Component<any, any> {
   public render() {
-    const modalStyle = {
-      textAlign: 'center', 
-      width: '35%',
-      maxWidth: 'none',
-    };
+    const actions = [
+      <RaisedButton label="Cancelar" onClick={this.props.loginClose} style={buttonStyle}/>,
+      <RaisedButton label="Entrar" onClick={this.props.loginSubmit} primary={true} style={buttonStyle}/>
+    ];
 
-    return (
-      <Dialog open={this.props.open} modal={true} contentStyle={modalStyle}>
-        <div className="uk-modal-body">
-          <h2 className="uk-modal-title">REPrepanet</h2>
-          <br/>
-          <form>
-            <div className="uk-margin">
-              <input className="uk-input" type="text" placeholder="correo electronico"></input>
-            </div>
-            <div className="uk-margin">
-              <input className="uk-input" type="password" placeholder="contraseña"></input>
-            </div>
-          </form>
-          <p className="uk-text-right"><a href="#">Olvide mi contraseña</a></p>
-          <p uk-margin>
-            <button className="uk-button uk-button-default" onClick={this.props.loginClose}>Cancelar</button>
-            &nbsp;
-            <button className="uk-button uk-button-primary" onClick={this.props.loginSubmit}>Entrar</button>
-          </p>
-        </div>
-      </Dialog>
-    );
+    return <Dialog title="REPrepanet" open={this.props.open} actions={actions} modal={true} contentStyle={modalStyle}>
+            <TextField hintText="Correo electrónico"/><br />
+            <TextField hintText="Contraseña"/><br />
+           </Dialog>
   }
 }
