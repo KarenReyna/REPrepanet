@@ -7,7 +7,7 @@ export function loginFetch(loginAttempt: Types.LoginAttempt) {
 
         fetch('http://localhost:8000/api/login/', {
             mode: 'no-cors',
-            method: 'GET',
+            method: 'POST',
             body: JSON.stringify({
                 email: loginAttempt.email,
                 password: loginAttempt.password,

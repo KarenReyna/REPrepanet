@@ -25,7 +25,6 @@ export class UserController {
     }
 
     public createUser(req: any, res: any) {
-        console.log('new user');
         if (req.body.password !== req.body.passwordConf) {
             res.statusCode = 400;
             res.setHeader("Content-Type", "application/json");

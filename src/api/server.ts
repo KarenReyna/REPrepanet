@@ -20,7 +20,6 @@ connect(serverConfig.mongoURL, { useMongoClient: true }, (error: any) => {
 });
 
 const app = express();
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -35,7 +34,7 @@ app.use(session({
 }));
 
 var router: Router = Router();
-app.use('/api', router);
+app.use('/api', require);
 
 // Add all custom routes
 usersRoutes(router);
