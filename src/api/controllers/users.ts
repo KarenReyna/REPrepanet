@@ -25,6 +25,7 @@ export class UserController {
     }
 
     public createUser(req: any, res: any) {
+        console.log("Creating user...")
         if (req.body.password !== req.body.passwordConf) {
             res.statusCode = 400;
             res.setHeader("Content-Type", "application/json");
@@ -32,7 +33,7 @@ export class UserController {
             res.end();
             return;
         }
-
+        console.log(req.body);
         if (req.body.email &&
             req.body.username &&
             req.body.password &&
@@ -48,29 +49,34 @@ export class UserController {
                 privileges: priv.split(",")
             }
 
+            console.log(userData);
             User.create(userData, function (err, user) {
+                console.log("user : " , user);
+                console.log("err : " , err);
                 if (err) {
+                    console.log("error");
                     res.statusCode = 500;
                     res.setHeader("Content-Type", "application/json");
-                    res.write(JSON.stringify({ error: err.message}));
-                    res.end();
-                    return;
+                    res.send({ error: err.message});
+                    //res.end();
+                    //return;
                 } else {
+                    console.log("user");
                     req.session.userId = user._id;                    
                     res.statusCode = 200;
                     res.setHeader("Content-Type", "application/json");
-                    res.write(JSON.stringify(user));
-                    res.end();
-                    return;
+                    res.send(user);
+                    //res.end();
+                    //return;
                 }
             });
 
         } else {
             res.statusCode = 400;
             res.setHeader("Content-Type", "application/json");
-            res.write(JSON.stringify({ error: 'All fields required.'}));
-            res.end();
-            return;
+            res.send({ error: 'All fields required.'});
+            //res.end();
+            //return;
         }
     }
 
