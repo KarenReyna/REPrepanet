@@ -1,27 +1,51 @@
 import * as React from 'react';
 import Dialog from 'material-ui/Dialog';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-
-const modalStyle = {
-  textAlign: 'center', 
-  maxWidth: 'none',
-};
-
-const buttonStyle = { 
-  marginLeft: '10px',
-};
+import LinearProgress from 'material-ui/LinearProgress';
 
 export class Login extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      email: "",
+      password: ""
+    }
+  }
+
+  handleChange(type: string | undefined, newValue: string) {
+    let newState = type && type == "email" ? 
+      { email: newValue } : type == "password" ? 
+      { password: newValue } : {};
+    this.setState(newState);
+  }
+
   public render() {
     const actions = [
-      <RaisedButton label="Cancelar" onClick={this.props.loginClose} style={buttonStyle}/>,
-      <RaisedButton label="Entrar" onClick={this.props.loginSubmit} primary={true} style={buttonStyle}/>
+      <FlatButton label = "Cancelar" onClick = {this.props.loginClose}/>,
+      <FlatButton label = "Login" onClick = {() => this.props.loginSubmit(this.state.email, this.state.password)}/>
     ];
-
-    return <Dialog title="REPrepanet" open={this.props.open} actions={actions} modal={true} contentStyle={modalStyle}>
-            <TextField hintText="Correo electrónico"/><br />
-            <TextField hintText="Contraseña"/><br />
-           </Dialog>
+    return (
+      <Dialog 
+        open = {this.props.open} 
+        actions = {actions} 
+        modal = {false}
+        onRequestClose={this.props.loginClose}>
+          <TextField
+            hintText="Email"
+            data-type="email"
+            floatingLabelText="Email"
+            onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
+          /><br />
+          <TextField
+            hintText="Contraseña"
+            data-type="password"
+            floatingLabelText="Contraseña"
+            type="password"
+            onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
+          /><br />
+          {this.props.loginFailed && <p>El usuario y/o contraseña están incorrectos</p>}
+          {this.props.loading && <LinearProgress mode="indeterminate" />}
+      </Dialog>)
   }
 }

@@ -25,7 +25,7 @@ const config: webpack.Configuration = {
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
-            title: 'REPrepanet',
+            title: 'Melon',
             chunksSortMode: 'dependency',
             template: path.resolve(__dirname, './src/index.ejs')
         }),
