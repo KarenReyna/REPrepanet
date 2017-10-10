@@ -1,0 +1,21 @@
+.root {
+    display: 'flex';
+    flex-wrap: 'wrap';
+    justify-content: 'space-around'
+  }
+
+.homeImage {
+    height: 400
+  }
+
+.gridList {
+    width: 500;
+    height: 200;
+    overflow-y: 'auto';
+  }
+
+.gridListResources {
+    display: 'flex';
+    flex-wrap: 'nowrap';
+    overflow-x: 'auto';
+  }
