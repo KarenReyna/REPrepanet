@@ -12,6 +12,9 @@ export enum ActionType {
     REGISTER_FAILED = 'REGISTER_FAILED',
     REGISTER_SUCCESS = 'REGISTER_SUCCESS',
     REGISTER_LOADING = 'REGISTER_LOADING',
+    ADMINISTRACION_OPEN = 'ADMINISTRACION_OPEN',
+    COLECCIONES_OPEN = 'COLECCIONES_OPEN',
+    RECURSOS_OPEN = 'RECURSOS_OPEN',
 };
 
 export type Action = {
@@ -46,7 +49,13 @@ export type Action = {
 } | {
     type: ActionType.REGISTER_LOADING,
     loading: boolean
-}
+} | {
+    type: ActionType.ADMINISTRACION_OPEN,
+} | {
+    type: ActionType.COLECCIONES_OPEN,
+} | {
+    type: ActionType.RECURSOS_OPEN,
+} 
 
 export type User = {
     idCustomized: string,

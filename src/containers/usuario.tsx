@@ -1,13 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
-import { Usuario } from '../components/usuario';
-import { Register } from '../components/register';
-
-import { registerOpen, registerClose} from '../actions';
-
-import { registerFetch } from '../actions/thunks';
-import * as Types from '../constants';
+import {Usuario} from '../components/usuario';
+import { administracionOpen, coleccionesOpen, recursosOpen} from '../actions';
 
 class UsuarioContainer extends React.Component<any, any> {
   constructor() {
@@ -17,14 +11,11 @@ class UsuarioContainer extends React.Component<any, any> {
     return (
       <div>
         <Usuario 
-          registerClicked = {this.props.registerOpen}
+          administracionClicked = {this.props.administracionOpen}
+          coleccionesClicked = {this.props.coleccionesOpen}
+          recursosClicked = {this.props.recursosOpen}
+          content = {this.props.muestraContenido}
         />
-        <Register 
-          open = {this.props.registerIsOpen}
-          registerClose = {this.props.registerClose}
-          registerSubmit = {this.props.registerSubmit}
-          loading = {this.props.registerLoading}
-          registerFailed = {this.props.registerFailed}/>
       </div>
     );
   }
@@ -32,19 +23,16 @@ class UsuarioContainer extends React.Component<any, any> {
 
 function mapStateToProps(state: any) {
   return {
-      //register
-      registerIsOpen: state.register.open,
-      registerLoading: state.register.loading,
-      registerFailed: state.register.failed,
+      //contenido
+      muestraContenido: state.contenido.cont,
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
   return {
-      //register
-      registerOpen: () => dispatch(registerOpen()),
-      registerClose: () => dispatch(registerClose()),
-      registerSubmit: (registerAttempt: Types.User) => dispatch(registerFetch(registerAttempt)),
+      administracionOpen: () => dispatch(administracionOpen()),
+      coleccionesOpen: () => dispatch(coleccionesOpen()),
+      recursosOpen: () => dispatch(recursosOpen()),
   }
 }
 

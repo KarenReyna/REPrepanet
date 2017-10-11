@@ -85,3 +85,21 @@ export function registerSuccess(user: Types.User) {
         user: user
     };
 }
+
+export function administracionOpen(): Types.Action {
+    return {
+        type: Types.ActionType.ADMINISTRACION_OPEN,
+    }
+}
+
+export function coleccionesOpen(): Types.Action {
+    return {
+        type: Types.ActionType.COLECCIONES_OPEN,
+    }
+}
+
+export function recursosOpen(): Types.Action {
+    return {
+        type: Types.ActionType.RECURSOS_OPEN,
+    }
+}
