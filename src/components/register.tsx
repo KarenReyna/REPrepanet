@@ -40,7 +40,7 @@ export class Register extends React.Component<any, any> {
         open = {this.props.open} 
         actions = {actions} 
         modal = {false}
-        onRequestClose={this.props.loginClose}>
+        onRequestClose={this.props.registerClose}>
           <TextField
               hintText="Nombre"
               data-type="name"

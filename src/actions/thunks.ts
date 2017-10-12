@@ -62,7 +62,7 @@ export function registerFetch(registerAttempt:Types.User) {
             method: 'POST',
             headers:headers,
             body: JSON.stringify({
-                username: registerAttempt.name,
+                name: registerAttempt.name,
                 email: registerAttempt.email,
                 password: registerAttempt.password,
                 passwordConf: registerAttempt.passwordConf,
@@ -82,5 +82,28 @@ export function registerFetch(registerAttempt:Types.User) {
             .then((response) => response.json())
             .then((user) => dispatch(Action.registerSuccess(user as Types.User)))
             .catch(() => dispatch(Action.registerFailed(true)));
+    };
+}
+
+export function usersFetch() {
+    return (dispatch:any) => {
+        //dispatch(Action.loginLoading(true));
+
+        fetch('http://localhost:8000/api/users/', {
+            mode: 'cors',
+            method: 'GET',
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+
+            //dispatch(Action.loginLoading(false));
+
+            return response;
+        })
+        .then((response) => response.json())
+        .then((users) => dispatch(Action.loadUsersSuccess(users as Types.User[])))
+        .catch(() => console.log("ERROR"));
     };
 }

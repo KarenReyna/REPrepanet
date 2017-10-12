@@ -85,3 +85,10 @@ export function registerSuccess(user: Types.User) {
         user: user
     };
 }
+
+export function loadUsersSuccess(users: Types.User[]) {
+    return {
+        type: Types.ActionType.LOAD_USERS_SUCCESS,
+        users: users
+    };
+}
