@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Home } from '../components/home';
 import { Login } from '../components/login';
 import { Register } from '../components/register';
-import { loginOpen, loginClose, registerOpen, registerClose } from '../actions';
+import { Create } from '../components/create';
+import { loginOpen, loginClose, registerOpen, registerClose, openCreate, closeCreate } from '../actions';
 import { loginFetch, registerFetch } from '../actions/thunks';
 import * as Types from '../constants';
 
@@ -16,7 +17,8 @@ class Main extends React.Component<any, any> {
       <div>
         <Home 
           loginClicked = {this.props.loginOpen}
-          registerClicked = {this.props.registerOpen}/>
+          registerClicked = {this.props.registerOpen}
+          createClicked = {this.props.openCreate}/>
         <Login
           open = {this.props.loginIsOpen}
           loginClose = {this.props.loginClose}
@@ -29,6 +31,9 @@ class Main extends React.Component<any, any> {
           registerSubmit = {this.props.registerSubmit}
           loading = {this.props.registerLoading}
           registerFailed = {this.props.registerFailed}/>
+        <Create 
+          open = {this.props.createIsOpen} 
+          closeCreate = {this.props.closeCreate} />
       </div>
     );
   }
@@ -44,7 +49,10 @@ function mapStateToProps(state: any) {
         //register
         registerIsOpen: state.register.open,
         registerLoading: state.register.loading,
-        registerFailed: state.register.failed
+        registerFailed: state.register.failed,
+
+        // create item
+        createIsOpen: state.create.open,
     }
 }
 
@@ -58,7 +66,11 @@ function mapDispatchToProps(dispatch: any) {
         //register
         registerOpen: () => dispatch(registerOpen()),
         registerClose: () => dispatch(registerClose()),
-        registerSubmit: (registerAttempt: Types.User) => dispatch(registerFetch(registerAttempt))
+        registerSubmit: (registerAttempt: Types.User) => dispatch(registerFetch(registerAttempt)),
+
+        // create item
+        openCreate: () => dispatch(openCreate()),
+        closeCreate: () => dispatch(closeCreate()),
     }
 }
   

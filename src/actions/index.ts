@@ -85,3 +85,16 @@ export function registerSuccess(user: Types.User) {
         user: user
     };
 }
+
+// Create New Item Actions
+export function openCreate(): Types.Action {
+    return {
+        type: Types.ActionType.OPEN_CREATE
+    };
+}
+
+export function closeCreate(): Types.Action {
+    return {
+        type: Types.ActionType.CLOSE_CREATE
+    };
+}

@@ -12,6 +12,8 @@ export enum ActionType {
     REGISTER_FAILED = 'REGISTER_FAILED',
     REGISTER_SUCCESS = 'REGISTER_SUCCESS',
     REGISTER_LOADING = 'REGISTER_LOADING',
+    OPEN_CREATE = 'OPEN_CREATE',
+    CLOSE_CREATE = 'CLOSE_CREATE',
 };
 
 export type Action = {
@@ -46,6 +48,10 @@ export type Action = {
 } | {
     type: ActionType.REGISTER_LOADING,
     loading: boolean
+} | {
+    type: ActionType.OPEN_CREATE,
+} | {
+    type: ActionType.CLOSE_CREATE,
 }
 
 export type User = {
