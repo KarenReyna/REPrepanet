@@ -15,6 +15,7 @@ export enum ActionType {
     ADMINISTRACION_OPEN = 'ADMINISTRACION_OPEN',
     COLECCIONES_OPEN = 'COLECCIONES_OPEN',
     RECURSOS_OPEN = 'RECURSOS_OPEN',
+    LOAD_USERS_SUCCESS = 'LOAD_USERS_SUCCESS'
 };
 
 export type Action = {
@@ -55,7 +56,10 @@ export type Action = {
     type: ActionType.COLECCIONES_OPEN,
 } | {
     type: ActionType.RECURSOS_OPEN,
-} 
+} | {
+    type: ActionType.LOAD_USERS_SUCCESS,
+    users: User[]
+}
 
 export type User = {
     idCustomized: string,

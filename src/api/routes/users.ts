@@ -9,6 +9,7 @@ router
     .get('/profile', e.getUser)
     .post('/register', e.createUser)
     .post('/login', e.loginUser)
-    .get('/logout', e.logoutUser);
+    .get('/logout', e.logoutUser)
+    .get('/users', e.getUsers);
 
 module.exports = router;

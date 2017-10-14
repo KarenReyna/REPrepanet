@@ -101,5 +101,11 @@ export function coleccionesOpen(): Types.Action {
 export function recursosOpen(): Types.Action {
     return {
         type: Types.ActionType.RECURSOS_OPEN,
-    }
+}
+
+export function loadUsersSuccess(users: Types.User[]) {
+    return {
+        type: Types.ActionType.LOAD_USERS_SUCCESS,
+        users: users
+    };
 }

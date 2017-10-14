@@ -24,6 +24,30 @@ export class UserController {
             });
     }
 
+     public getUsers(req: any, res: any) {
+        User.find()
+            .exec(function (error, users) {
+                if (error) {
+                    res.status(500).send(error);
+                    console.log(req);
+                } else {
+                    if (users === null) {
+                        res.statusCode = 401;
+                        res.setHeader("Content-Type", "application/json");
+                        res.write("");
+                        res.end();
+                        return;
+                    } else {
+                        res.statusCode = 200;
+                        res.setHeader("Content-Type", "application/json");
+                        res.write(JSON.stringify(users));
+                        res.end();
+                        return;
+                    }
+                }
+            });
+    }
+
     public createUser(req: any, res: any) {
         console.log("Creating user...")
         if (req.body.password !== req.body.passwordConf) {
@@ -35,15 +59,15 @@ export class UserController {
         }
         console.log(req.body);
         if (req.body.email &&
-            req.body.username &&
+            req.body.name &&
             req.body.password &&
             req.body.passwordConf) {
 
             let priv = req.body.privileges || "";
-
+            
             var userData = {
+                name: req.body.name,
                 email: req.body.email,
-                username: req.body.username,
                 password: req.body.password,
                 passwordConf: req.body.passwordConf,
                 privileges: priv.split(",")
