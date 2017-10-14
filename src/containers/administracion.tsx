@@ -7,12 +7,26 @@ import { Register } from '../components/register';
 
 import { registerOpen, registerClose} from '../actions';
 
-import { registerFetch } from '../actions/thunks';
+import { registerFetch, usersFetch } from '../actions/thunks';
 import * as Types from '../constants';
 
 class AdministracionContainer extends React.Component<any, any> {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true
+    };
+  }
+
+  componentDidMount() {
+    this.props.loadUsers();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if(nextProps.users && nextProps.users[0])
+      this.setState({loading: false});
+    console.log(this.props.users[0].email);
   }
   render() {
     return (
@@ -37,6 +51,9 @@ function mapStateToProps(state: any) {
       registerIsOpen: state.register.open,
       registerLoading: state.register.loading,
       registerFailed: state.register.failed,
+
+      // users
+      users: state.users
   }
 }
 
@@ -46,6 +63,9 @@ function mapDispatchToProps(dispatch: any) {
       registerOpen: () => dispatch(registerOpen()),
       registerClose: () => dispatch(registerClose()),
       registerSubmit: (registerAttempt: Types.User) => dispatch(registerFetch(registerAttempt)),
+
+      // get users
+      loadUsers: () => dispatch(usersFetch())
   }
 }
 

@@ -34,17 +34,20 @@ const usuarios = [
 
 export default class Administracion extends React.Component<any, any> {
   public render() {
-      return(<RightContent>
-        <h2>Administración</h2>
-        <Button label="Registrar usuario" onClick={this.props.registerClicked} />
-        <br />
-        <Lista>
-            {usuarios.map((usuario) => (
-                <li key={usuario.key}>
-                <p>{usuario.title}</p>
-            </li>
-            ))}
-        </Lista>
-    </RightContent>);
+      return(
+        <RightContent>
+          <h2>Administración</h2>
+          <Button label="Registrar usuario" onClick={this.props.registerClicked} />
+          <br />
+          <Lista>
+              {usuarios.map((usuario) => (
+                  <li key={usuario.key}>
+                  <p>{usuario.title}</p>
+              </li>
+              ))}
+          </Lista>
+        </RightContent>
+        
+      );
   }
 }

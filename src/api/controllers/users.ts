@@ -1,4 +1,4 @@
-import { User } from '../models/User';
+import { User } from '../models/user';
 
 export class UserController {
     public getUser(req: any, res: any) {
