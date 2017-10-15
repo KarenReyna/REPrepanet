@@ -19,7 +19,7 @@ export default class Collections extends React.Component<any, any> {
       return(
         <Content style="rigthContent">
           <br />
-          <Button label="Añadir colección" />
+          <Button label="Añadir colección" onClick={this.props.addCollectionClicked}/>
           <br />
           <List>
             {collectionsList.map((collection) => (

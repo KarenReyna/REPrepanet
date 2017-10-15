@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Register } from '../components/register';
-import { registerOpen, registerClose} from '../actions';
-import { registerFetch } from '../actions/thunks';
-import * as Types from '../constants';
+import { AddCollection } from '../components/addCollection';
+import { addCollectionOpen, addCollectionClose} from '../actions';
+import { addCollectionFetch } from '../actions/thunks';
 import Collections from '../components/collections';
+import * as Types from '../constants';
 
 class CollectionsContainer extends React.Component<any, any> {
   constructor() {
@@ -14,14 +14,13 @@ class CollectionsContainer extends React.Component<any, any> {
     return (
       <div>
         <Collections
-          registerClicked = {this.props.registerOpen}
+          addCollectionClicked = {this.props.addCollectionOpen}
         />
-        <Register 
-          open = {this.props.registerIsOpen}
-          registerClose = {this.props.registerClose}
-          registerSubmit = {this.props.registerSubmit}
-          loading = {this.props.registerLoading}
-          registerFailed = {this.props.registerFailed}/>
+        <AddCollection
+          open = {this.props.addCollectionIsOpen}
+          addCollectionClose = {this.props.addCollectionClose}
+          addCollectionSubmit = {this.props.addCollectionSubmit}
+        />
       </div>
     );
   }
@@ -29,19 +28,16 @@ class CollectionsContainer extends React.Component<any, any> {
 
 function mapStateToProps(state: any) {
   return {
-      //register
-      registerIsOpen: state.register.open,
-      registerLoading: state.register.loading,
-      registerFailed: state.register.failed,
+      addCollectionIsOpen: state.addCollection.open,
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
   return {
       //register
-      registerOpen: () => dispatch(registerOpen()),
-      registerClose: () => dispatch(registerClose()),
-      registerSubmit: (registerAttempt: Types.User) => dispatch(registerFetch(registerAttempt)),
+      addCollectionOpen: () => dispatch(addCollectionOpen()),
+      addCollectionClose: () => dispatch(addCollectionClose()),
+      addCollectionSubmit: (addCollectionAttempt: Types.Collection) => dispatch(addCollectionFetch(addCollectionAttempt)),
   }
 }
 

@@ -16,6 +16,10 @@ export enum ActionType {
     COLLECTIONS_OPEN = 'COLLECTIONS_OPEN',
     RESOURCES_OPEN = 'RESOURCES_OPEN',
     LOAD_USERS_SUCCESS = 'LOAD_USERS_SUCCESS',
+    ADDCOLLECTION_OPEN = 'ADDCOLLECTION_OPEN',
+    ADDCOLLECTION_CLOSE = 'ADDCOLLECTION_CLOSE',
+    ADDCOLLECTION_LOADING = 'ADDCOLLECTION_LOADING',
+    ADDCOLLECTION_SUCCESS = 'ADDCOLLECTION_SUCCESS',
 };
 
 export type Action = {
@@ -58,6 +62,12 @@ export type Action = {
     type: ActionType.RESOURCES_OPEN,
 } | {
     type: ActionType.LOAD_USERS_SUCCESS,
+} | {
+    type: ActionType.ADDCOLLECTION_OPEN,
+} | {
+    type: ActionType.ADDCOLLECTION_CLOSE,
+} | {
+    type: ActionType.ADDCOLLECTION_LOADING,
 } 
 
 export type User = {
@@ -72,4 +82,9 @@ export type User = {
 export type LoginAttempt = {
   email: string,
   password: string
+}
+
+export type Collection = {
+    name: string, 
+    description: string, 
 }

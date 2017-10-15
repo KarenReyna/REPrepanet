@@ -105,6 +105,34 @@ export function resourcesOpen(): Types.Action {
     }
 }
 
+// Add Collection
+
+export function addCollectionOpen(): Types.Action {
+    return {
+        type: Types.ActionType.ADDCOLLECTION_OPEN
+    }
+}
+
+export function addCollectionClose(): Types.Action {
+    return {
+        type: Types.ActionType.ADDCOLLECTION_CLOSE
+    }
+}
+
+export function addCollectionLoading(isLoading: boolean) {
+    return {
+        type: Types.ActionType.REGISTER_LOADING,
+        loading: isLoading
+    };
+}
+
+export function addCollectionSuccess(collection: Types.Collection) {
+    return {
+        type: Types.ActionType.ADDCOLLECTION_SUCCESS,
+        colection: collection
+    };
+}
+
 export function loadUsersSuccess(users: Types.User[]) {
     return {
         type: Types.ActionType.LOAD_USERS_SUCCESS,

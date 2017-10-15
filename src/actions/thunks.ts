@@ -107,3 +107,38 @@ export function usersFetch() {
         .catch(() => console.log("ERROR"));
     };
 }
+
+export function addCollectionFetch(addCollectionAttempt: Types.Collection) {
+    return (dispatch:any) => {
+        dispatch(Action.addCollectionLoading(true));
+        console.log(addCollectionAttempt.name),
+        console.log(addCollectionAttempt.description);
+
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        });
+
+        fetch('http://localhost:5100/api/addCollection/', {
+            mode: 'cors',
+            method: 'POST',
+            headers:headers,
+            body: JSON.stringify({
+                name: addCollectionAttempt.name,
+                description: addCollectionAttempt.description,
+            })
+        })
+        .then((response) => {
+            console.log(response);
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            dispatch(Action.registerLoading(false));
+            return response;
+        })
+        .then((response) => response.json())
+        .then((collection) => dispatch(Action.addCollectionSuccess(collection as Types.Collection)))
+        .catch(() => dispatch(Action.registerFailed(true)));
+    };
+
+}
