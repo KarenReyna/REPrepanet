@@ -86,21 +86,22 @@ export function registerSuccess(user: Types.User) {
     };
 }
 
-export function administracionOpen(): Types.Action {
+// User
+export function administrationOpen(): Types.Action {
     return {
-        type: Types.ActionType.ADMINISTRACION_OPEN,
+        type: Types.ActionType.ADMINISTRATION_OPEN,
     }
 }
 
-export function coleccionesOpen(): Types.Action {
+export function collectionsOpen(): Types.Action {
     return {
-        type: Types.ActionType.COLECCIONES_OPEN,
+        type: Types.ActionType.COLLECTIONS_OPEN,
     }
 }
 
-export function recursosOpen(): Types.Action {
+export function resourcesOpen(): Types.Action {
     return {
-        type: Types.ActionType.RECURSOS_OPEN,
+        type: Types.ActionType.RESOURCES_OPEN,
     }
 }
 
@@ -108,5 +109,5 @@ export function loadUsersSuccess(users: Types.User[]) {
     return {
         type: Types.ActionType.LOAD_USERS_SUCCESS,
         users: users
-    };
+    }
 }

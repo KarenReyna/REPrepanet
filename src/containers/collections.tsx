@@ -1,23 +1,19 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
-import Recursos from '../components/recursos';
 import { Register } from '../components/register';
-
-
 import { registerOpen, registerClose} from '../actions';
-
 import { registerFetch } from '../actions/thunks';
 import * as Types from '../constants';
+import Collections from '../components/collections';
 
-class RecursosContainer extends React.Component<any, any> {
+class CollectionsContainer extends React.Component<any, any> {
   constructor() {
     super();
   }
   render() {
     return (
       <div>
-        <Recursos
+        <Collections
           registerClicked = {this.props.registerOpen}
         />
         <Register 
@@ -49,4 +45,4 @@ function mapDispatchToProps(dispatch: any) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (RecursosContainer)
+export default connect(mapStateToProps, mapDispatchToProps) (CollectionsContainer)

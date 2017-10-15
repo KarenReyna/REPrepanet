@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from "react-hot-loader";
 import { Provider } from 'react-redux';
-import UsuarioContainer from './containers/usuario';
+import UsuarioContainer from './containers/user';
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // import {cyan500} from 'material-ui/styles/colors';
@@ -41,7 +41,7 @@ registerServiceWorker();
 if (module.hot) {
   module.hot.accept();
   
-  const NextApp = require<{default: typeof UsuarioContainer}>("./containers/usuario").default;
+  const NextApp = require<{default: typeof UsuarioContainer}>("./containers/user").default;
 
   module.hot.dispose(() => {
     ReactDOM.render(

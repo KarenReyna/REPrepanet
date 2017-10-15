@@ -1,19 +1,19 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
+import * as React from 'react';
+import Styles from '../style/elementStyles';
 
-var ResourceCard = createReactClass({
-    propTypes: {
+export default class ResourceCard extends React.Component<any, any> {
+    static propTypes = {
         title: React.PropTypes.string.isRequired,
         subtitle: React.PropTypes.string.isRequired,
-    },
-    render() {
-        return <div className="uk-card uk-card-primary uk-width-1-4@m uk-inline" style={{marginRight: '25px'}}>
-                <div className="uk-card-body">
-                    <a href="#" className="uk-button uk-button-text">{this.props.title}</a>
-                    <p>{this.props.subtitle}</p>
-                </div>
-               </div>
     }
-});
-
-export default ResourceCard;
+    public render() {
+      return(
+        <div className={Styles.resourceCardHead.class} style={Styles.resourceCardHead.style}>
+            <div className={Styles.resourceCardBody.class}>
+                <a className={Styles.resourceCardText.class}>{this.props.title}</a>
+                <p>{this.props.subtitle}</p>
+            </div>
+        </div>
+      );
+  }
+}

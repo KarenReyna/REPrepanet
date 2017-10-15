@@ -1,15 +1,15 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
+import * as React from 'react';
+import Styles from '../style/elementStyles';
 
-var Button = createReactClass({
-    propTypes: {
+export default class Button extends React.Component<any, any> {
+    static propTypes = {
         label: React.PropTypes.string.isRequired,
-    },
-    render() {
-        return <p>
-                <button className="uk-button uk-button-primary" onClick={this.props.onClick}>{this.props.label}</button>
-               </p>
     }
-});
-
-export default Button;
+    public render() {
+      return(
+        <p>
+            <button className={Styles.button.class} style={this.props.style} onClick={this.props.onClick}>{this.props.label}</button>
+        </p>
+      );
+  }
+}
