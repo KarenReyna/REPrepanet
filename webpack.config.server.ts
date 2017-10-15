@@ -2,7 +2,7 @@ import * as webpack from "webpack";
 import * as path from "path";
 
 const config: webpack.Configuration = {
-    entry: path.resolve(__dirname, 'src/api/server.ts'),
+    entry: path.resolve(__dirname, 'src/frontend/api/server.ts'),
     output: {
         path: path.join(__dirname, 'dist'),
         filename: "server.bundle.js",

@@ -1,9 +1,11 @@
 import * as Types from '../constants';
-import * as Action from './';
+import * as LoginAction from './login';
+import * as RegisterAction from './register';
+import * as UserAction from './user';
 
 export function loginFetch(loginAttempt:Types.LoginAttempt) {
     return (dispatch:any) => {
-        dispatch(Action.loginLoading(true));
+        dispatch(LoginAction.loginWaitingOnServer(true));
 
         fetch('http://localhost:8000/api/login/', {
             mode: 'cors',
@@ -18,19 +20,20 @@ export function loginFetch(loginAttempt:Types.LoginAttempt) {
                     throw Error(response.statusText);
                 }
 
-                dispatch(Action.loginLoading(false));
+                dispatch(LoginAction.loginWaitingOnServer(false));
 
                 return response;
             })
             .then((response) => response.json())
-            .then((user) => dispatch(Action.loginSuccess(user as Types.User)))
-            .catch(() => dispatch(Action.loginFailed(true)));
+            .then((user) => dispatch(LoginAction.loginSuccessful(user as Types.User)))
+            .catch(() => dispatch(LoginAction.loginFailed()));
     };
 }
 
+// TODO this looks weird combining login/logout
 export function logoutFetch() {
     return (dispatch:any) => {
-        dispatch(Action.loginLoading(true));
+        dispatch(LoginAction.loginWaitingOnServer(true));
 
         fetch('http://localhost:8000/api/register/')
             .then((response) => {
@@ -38,19 +41,19 @@ export function logoutFetch() {
                     throw Error(response.statusText);
                 }
 
-                dispatch(Action.logoutLoading(false));
+                dispatch(UserAction.logoutWaitingOnServer());
 
                 return response;
             })
             .then((response) => response.json())
-            .then(() => dispatch(Action.logoutSuccess()))
-            .catch(() => dispatch(Action.logoutFailed(true)));
+            .then(() => dispatch(UserAction.logoutSuccessful()))
+            .catch(() => dispatch(UserAction.logoutFailed(true)));
     };
 }
 
 export function registerFetch(registerAttempt:Types.User) {
     return (dispatch:any) => {
-        dispatch(Action.registerLoading(true));
+        dispatch(RegisterAction.registerWaitingOnServer(true));
 
         const headers = new Headers({
             'Content-Type': 'application/json',
@@ -75,12 +78,12 @@ export function registerFetch(registerAttempt:Types.User) {
                     throw Error(response.statusText);
                 }
 
-                dispatch(Action.registerLoading(false));
+                dispatch(RegisterAction.registerWaitingOnServer(false));
 
                 return response;
             })
             .then((response) => response.json())
-            .then((user) => dispatch(Action.registerSuccess(user as Types.User)))
-            .catch(() => dispatch(Action.registerFailed(true)));
+            .then((user) => dispatch(RegisterAction.registerSuccessful(user as Types.User)))
+            .catch(() => dispatch(RegisterAction.registerFailed()));
     };
 }
