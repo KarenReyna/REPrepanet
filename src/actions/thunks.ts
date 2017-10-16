@@ -127,7 +127,6 @@ export function addCollectionFetch(addCollectionAttempt: Types.Collection) {
             })
         })
         .then((response) => {
-            console.log(response);
             if (!response.ok) {
                 throw Error(response.statusText);
             }

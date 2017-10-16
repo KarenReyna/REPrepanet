@@ -6,13 +6,13 @@ import List from '../elements/List';
 export default class Collections extends React.Component<any, any> {
   public render() {
       var data = this.props.dataArray;
-      const newCollection = this.props.newCollection;
+      /*const newCollection = this.props.newCollection;*/
       if(data == null) {
         data = [{_id: 0, name: '', description: '',},];
       }
-      if(newCollection != null) {
+      /*if(newCollection != null) {
         data.push(newCollection);
-      }
+      }*/
       return(
         <Content style="rigthContent">
           <br />
