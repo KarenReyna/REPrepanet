@@ -36,4 +36,30 @@ export class CollectionController {
             res.send({ error: 'All fields required.'});
         }
     }
+
+    public getCollections(req: any, res: any) {
+        console.log("Entro a getCollections Server");
+
+        Collection.find().exec(function (error, collections) {
+            if (error) {
+                res.status(500).send(error);
+                console.log(req);
+            } else {
+                console.log(collections);
+                if (collections == null) {
+                    res.statusCode = 401;
+                    res.setHeader("Content-Type", "application/json");
+                    res.write("");
+                    res.end();
+                    return;
+                } else {
+                    res.statusCode = 200;
+                    res.setHeader("Content-Type", "application/json");
+                    res.write(JSON.stringify(collections));
+                    res.end();
+                    return;
+                }
+            }
+        });
+    }
 }

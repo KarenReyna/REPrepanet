@@ -13,6 +13,7 @@ router
     .post('/login', e.loginUser)
     .get('/logout', e.logoutUser)
     .get('/users', e.getUsers)
-    .post('/addCollection', c.createCollection);
+    .post('/addCollection', c.createCollection)
+    .get('/getCollections', c.getCollections);
 
 module.exports = router;

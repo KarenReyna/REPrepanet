@@ -3,12 +3,12 @@ import Administration from '../containers/administration';
 import Collections from '../containers/collections';
 import Resources from '../containers/resources';
 
-export function contentUser(state = {content: Administration}, action: Types.Action) {
+export function contentUser(state = {content: Administration, data: null}, action: Types.Action) {
   switch (action.type) {
     case Types.ActionType.COLLECTIONS_OPEN:
       return {
         ...state,
-        content: Collections
+        content: Collections,
       }
       case Types.ActionType.RESOURCES_OPEN:
       return {
@@ -19,6 +19,11 @@ export function contentUser(state = {content: Administration}, action: Types.Act
       return {
         ...state,
         content: Administration
+      }
+      case Types.ActionType.LOADCOLLECTION_SUCCESS:
+      return {
+        ...state,
+        data: action.collection,
       }
     default:
       return state

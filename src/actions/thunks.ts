@@ -111,8 +111,6 @@ export function usersFetch() {
 export function addCollectionFetch(addCollectionAttempt: Types.Collection) {
     return (dispatch:any) => {
         dispatch(Action.addCollectionLoading(true));
-        console.log(addCollectionAttempt.name),
-        console.log(addCollectionAttempt.description);
 
         const headers = new Headers({
             'Content-Type': 'application/json',
@@ -141,4 +139,22 @@ export function addCollectionFetch(addCollectionAttempt: Types.Collection) {
         .catch(() => dispatch(Action.registerFailed(true)));
     };
 
+}
+
+export function getCollections() {
+    return (dispatch:any) => {
+        fetch('http://localhost:5100/api/getCollections/', {
+            mode: 'cors',
+            method: 'GET',
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((collections) => dispatch(Action.loadCollectionsSuccess(collections as Types.Collection[])))
+        .catch(() => console.log("ERROR"));
+    };
 }

@@ -129,7 +129,14 @@ export function addCollectionLoading(isLoading: boolean) {
 export function addCollectionSuccess(collection: Types.Collection) {
     return {
         type: Types.ActionType.ADDCOLLECTION_SUCCESS,
-        colection: collection
+        collection: collection,
+    };
+}
+
+export function loadCollectionsSuccess(collection: Types.Collection[]) {
+    return {
+        type: Types.ActionType.LOADCOLLECTION_SUCCESS,
+        collection: collection, 
     };
 }
 

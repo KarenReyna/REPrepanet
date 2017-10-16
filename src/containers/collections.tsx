@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { AddCollection } from '../components/addCollection';
 import { addCollectionOpen, addCollectionClose} from '../actions';
-import { addCollectionFetch } from '../actions/thunks';
+import { addCollectionFetch, getCollections} from '../actions/thunks';
 import Collections from '../components/collections';
 import * as Types from '../constants';
 
@@ -15,6 +15,8 @@ class CollectionsContainer extends React.Component<any, any> {
       <div>
         <Collections
           addCollectionClicked = {this.props.addCollectionOpen}
+          getData = {this.props.getCollections}
+          dataArray = {this.props.dataLoaded}
         />
         <AddCollection
           open = {this.props.addCollectionIsOpen}
@@ -29,15 +31,16 @@ class CollectionsContainer extends React.Component<any, any> {
 function mapStateToProps(state: any) {
   return {
       addCollectionIsOpen: state.addCollection.open,
+      dataLoaded: state.contentUser.data,
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
   return {
-      //register
       addCollectionOpen: () => dispatch(addCollectionOpen()),
       addCollectionClose: () => dispatch(addCollectionClose()),
       addCollectionSubmit: (addCollectionAttempt: Types.Collection) => dispatch(addCollectionFetch(addCollectionAttempt)),
+      getCollections: dispatch(getCollections()),
   }
 }
 

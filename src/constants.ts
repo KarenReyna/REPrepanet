@@ -20,6 +20,7 @@ export enum ActionType {
     ADDCOLLECTION_CLOSE = 'ADDCOLLECTION_CLOSE',
     ADDCOLLECTION_LOADING = 'ADDCOLLECTION_LOADING',
     ADDCOLLECTION_SUCCESS = 'ADDCOLLECTION_SUCCESS',
+    LOADCOLLECTION_SUCCESS = 'LOADCOLLECTION_SUCCESS',
 };
 
 export type Action = {
@@ -68,7 +69,10 @@ export type Action = {
     type: ActionType.ADDCOLLECTION_CLOSE,
 } | {
     type: ActionType.ADDCOLLECTION_LOADING,
-} 
+} | {
+    type: ActionType.LOADCOLLECTION_SUCCESS,
+    collection: Collection
+}
 
 export type User = {
     idCustomized: string,
