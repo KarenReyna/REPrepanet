@@ -54,3 +54,10 @@ export type LoginAttempt = {
     email: string,
     password: string
 }
+
+export var fetchHeader = {
+    'Accept' : 'application/json',
+    'Content-Type' : 'application/json'
+}
+
+export var serverUrl = "http://localhost:8000/"

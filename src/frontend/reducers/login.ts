@@ -22,6 +22,12 @@ export function login(state = {visible: false, waiting: false, failed: false}, a
         waiting: false,
         failed: true
       }
+    case Types.ActionType.LOGIN_SUCCESSFUL:
+      return {
+        ...state,
+        waiting: false,
+        visible: false
+      } 
     default:
       return state
   }

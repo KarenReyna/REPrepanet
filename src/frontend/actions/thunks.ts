@@ -3,18 +3,22 @@ import * as LoginAction from './login';
 import * as RegisterAction from './register';
 import * as UserAction from './user';
 
+function request(object: any, route: string) {
+    return fetch(Types.serverUrl + route, {
+        mode: 'cors',
+        method: 'POST',
+        headers: Types.fetchHeader,
+        body: JSON.stringify({
+            ...object
+        })
+    })
+}
+
 export function loginFetch(loginAttempt:Types.LoginAttempt) {
     return (dispatch:any) => {
         dispatch(LoginAction.loginWaitingOnServer(true));
 
-        fetch('http://localhost:8000/api/login/', {
-            mode: 'cors',
-            method: 'POST',
-            body: JSON.stringify({
-                email: loginAttempt.email,
-                password: loginAttempt.password,
-            })
-        })
+        request(loginAttempt, 'api/login')
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -35,7 +39,7 @@ export function logoutFetch() {
     return (dispatch:any) => {
         dispatch(LoginAction.loginWaitingOnServer(true));
 
-        fetch('http://localhost:8000/api/register/')
+        fetch(Types.serverUrl + 'api/register/')
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -55,23 +59,7 @@ export function registerFetch(registerAttempt:Types.User) {
     return (dispatch:any) => {
         dispatch(RegisterAction.registerWaitingOnServer(true));
 
-        const headers = new Headers({
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        });
-
-        fetch('http://localhost:5100/api/register/', {
-            mode: 'cors',
-            method: 'POST',
-            headers:headers,
-            body: JSON.stringify({
-                username: registerAttempt.name,
-                email: registerAttempt.email,
-                password: registerAttempt.password,
-                passwordConf: registerAttempt.passwordConf,
-                privileges: registerAttempt.privileges,
-            })
-        })
+        request(registerAttempt, 'api/register')
             .then((response) => {
                 console.log(response);
                 if (!response.ok) {

@@ -23,7 +23,7 @@ export class Login extends React.Component<any, any> {
   public render() {
     const actions = [
       <FlatButton label = "Cancelar" onClick = {this.props.loginHide}/>,
-      <FlatButton label = "Login" onClick = {() => this.props.loginSubmit(this.state.email, this.state.password)}/>
+      <FlatButton label = "Login" onClick = {() => this.props.loginSubmit({email: this.state.email, password: this.state.password})}/>
     ];
     return (
       <Dialog 
