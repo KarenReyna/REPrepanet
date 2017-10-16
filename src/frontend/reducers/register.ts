@@ -1,26 +1,26 @@
 import * as Types from '../constants';
-export function register(state = {open: false, loading: false, failed: false}, action: Types.Action) {
+export function register(state = {visible: false, waiting: false, failed: false}, action: Types.Action) {
   switch (action.type) {
-    case Types.ActionType.OPEN_REGISTER:
+    case Types.ActionType.REGISTER_SHOW:
       return {
         ...state,
-        open: true
+        visible: true
       }
-    case Types.ActionType.CLOSE_REGISTER:
+    case Types.ActionType.REGISTER_HIDE:
       return {
         ...state,
-        open: false
+        visible: false
       }
-    case Types.ActionType.REGISTER_LOADING:
+    case Types.ActionType.REGISTER_WAITING_ON_SERVER:
       return {
         ...state,
-        loading: action.loading
+        waiting: true
       }
     case Types.ActionType.REGISTER_FAILED:
       return {
         ...state,
         loading: false,
-        failed: action.failed
+        failed: true
       }
     default:
       return state
