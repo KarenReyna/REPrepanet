@@ -57,7 +57,7 @@ export function registerFetch(registerAttempt:Types.User) {
             'Accept': 'application/json'
         });
 
-        fetch('http://localhost:5100/api/register/', {
+        fetch('http://localhost:8000/api/register/', {
             mode: 'cors',
             method: 'POST',
             headers:headers,
