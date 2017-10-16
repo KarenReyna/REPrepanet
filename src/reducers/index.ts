@@ -4,6 +4,7 @@ import { register } from './register';
 import { user } from './user';
 import { contentUser } from './contentUser';
 import { addCollection } from './addCollection';
+import { users } from './users';
 
 // TODO: Add reducers
 
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
     //TODO: Add reducers
     login,
     register,
-    user, 
+    user,
+    users, 
     contentUser,
     addCollection, 
 });

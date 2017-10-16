@@ -10,22 +10,18 @@ export default class Administration extends React.Component<any, any> {
       data = [{_id: 0, name: '', email: '',},];
     }
       return(
-        <Content>
-          <h2>Administración</h2>
-          
+        <Content style="rigthContent">
+          <br />
           <Button label="Registrar usuario" onClick={this.props.registerClicked} />
           <br />
           <List>
             {data.map((user) => (
-              <li key={user._id}>
+              <li key={user.name}>
                 <a href='#'>{user.name}</a>
                 <p>{user.privileges}</p>
               </li>
             ))}
           </List>
-          
-        </Content>
-        
-      );
+      </Content>);
   }
 }

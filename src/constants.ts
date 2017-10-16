@@ -63,6 +63,7 @@ export type Action = {
     type: ActionType.RESOURCES_OPEN,
 } | {
     type: ActionType.LOAD_USERS_SUCCESS,
+    users: User[]
 } | {
     type: ActionType.ADDCOLLECTION_OPEN,
 } | {
