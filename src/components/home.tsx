@@ -1,80 +1,71 @@
 import * as React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-import {Card, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
-import {GridList, GridTile} from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
+import Navbar from '../elements/Navbar';
+import Button from '../elements/Button';
+import NavButton from '../elements/NavButton';
+import Container from '../elements/Container';
+import CollectionCard from '../elements/CollectionCard';
+import ResourceCard from '../elements/ResourceCard';
+import Styles from '../style/elementStyles';
 
-const collectionsData = [
+const collectionsList = [
   {
-    img: '/src/assets/quimica.jpg',
-    title: 'Química'
+    key: 1,
+    title: 'Química',
   },
   {
-    img: '/src/assets/fisica.png',
-    title: 'Física'
+    key: 2, 
+    title: 'Física',
   },
-]
-const favoriteResourcesData = [
+];
+
+const resourcesList = [
   {
-    img: '/src/assets/quimica1.jpg',
+    key: 1, 
     title: 'Divertiester',
     subtitle: 'Química - Juego Web'
   },
   {
-    img: '/src/assets/aminas.png',
+    key: 2, 
     title: 'Aminas',
     subtitle: 'Química - Juego iOS'
   },
   {
-    img: '/src/assets/fisica.png',
+    key: 3, 
     title: 'Aldehidos',
     subtitle: 'Química - Juego Web'
   },
-  {
-    img: '/src/assets/kimitrivia.jpg',
-    title: 'KimiTrivia',
-    subtitle: 'Química - Juego iOS'
-  }
-]
+];
 
+// Falta agregar boton entrar
 export class Home extends React.Component<any, any> {
   public render() {
     return (
       <div>
-        <RaisedButton label = "Login" style={{textAlign: 'right', float: 'right'}} onClick={this.props.loginClicked}/>
-        <RaisedButton label = "Registro" style={{textAlign: 'right', float: 'right'}} onClick={this.props.registerClicked}/>
-        <Card>
-          <CardHeader/>
-          <CardMedia
-            overlay={<CardTitle title="Recursos Educativos Prepanet" subtitle="Explora diversos materiales educativos y mejora tu forma de aprender." />}
-          >
-            <img src="/src/assets/home.png" 
-              className="root"/>
-          </CardMedia>
-          <CardTitle title="Colecciones" subtitle="Escoge sobre qué materia quieres consultar." />
-          <div className="root">
-            <GridList cellHeight={180}>
-              {collectionsData.map((collection) => (
-                <GridTile key={collection.img} title={collection.title} 
-                actionIcon={<IconButton onClick={this.props.loginClicked}><img src="/src/assets/pageview.svg"/></IconButton>}>
-                  <img src={collection.img} />
-                </GridTile>
-              ))}
-            </GridList>
-          </div>
+        <Navbar title="REPrepanet">
+          <NavButton label="Entrar" onClick={this.props.loginClicked}/>
+        </Navbar>
 
-          <CardTitle title="Recursos Populares" subtitle="Recursos preferidos." />
-          <div className="root">
-            <GridList cols={2.2}>
-              {favoriteResourcesData.map((resource) => (
-                <GridTile key={resource.img} title={resource.title}subtitle={resource.subtitle}
-                >
-                  <img src={resource.img} />
-                </GridTile>
-              ))}
-            </GridList>
-          </div>
-        </Card>
+        <Container bgColor={Styles.colors.green}>
+          <br />
+          <h2 style={{color: Styles.colors.white}}>Recursos Educativos Prepanet</h2>
+          <p style={{color: Styles.colors.white}}>Explora diversos materiales educativos y mejora tu forma de aprender.</p>
+          <Button label="Explorar" onClick={this.props.administracionClicked}/>
+          <br />
+        </Container>
+
+        <Container>
+          <h3>Colecciones</h3>
+          {collectionsList.map((collection) => (
+            <CollectionCard key={collection.key} title={collection.title} />
+          ))}
+        </Container>
+
+        <Container>
+          <h3>Recursos populares</h3>
+          {resourcesList.map((resource) => (
+            <ResourceCard key={resource.key} title={resource.title} subtitle={resource.subtitle}/>
+          ))}
+        </Container>
       </div>
     );
   }
