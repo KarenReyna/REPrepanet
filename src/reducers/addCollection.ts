@@ -1,5 +1,5 @@
 import * as Types from '../constants';
-export function addCollection(state = {open: false}, action: Types.Action) {
+export function addCollection(state = {open: false, newCollection: null}, action: Types.Action) {
   switch (action.type) {
     case Types.ActionType.ADDCOLLECTION_OPEN:
       return {
@@ -10,6 +10,12 @@ export function addCollection(state = {open: false}, action: Types.Action) {
       return {
         ...state,
         open: false
+      }
+    case Types.ActionType.ADDCOLLECTION_SUCCESS:
+      return {
+        ...state,
+        open: false,
+        newCollection: action.collection
       }
     default:
       return state

@@ -17,6 +17,7 @@ class CollectionsContainer extends React.Component<any, any> {
           addCollectionClicked = {this.props.addCollectionOpen}
           getData = {this.props.getCollections}
           dataArray = {this.props.dataLoaded}
+          newCollection = {this.props.newCollection}
         />
         <AddCollection
           open = {this.props.addCollectionIsOpen}
@@ -32,6 +33,7 @@ function mapStateToProps(state: any) {
   return {
       addCollectionIsOpen: state.addCollection.open,
       dataLoaded: state.contentUser.data,
+      newCollection: state.addCollection.newCollection, 
   }
 }
 

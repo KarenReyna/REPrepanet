@@ -70,6 +70,9 @@ export type Action = {
 } | {
     type: ActionType.ADDCOLLECTION_LOADING,
 } | {
+    type: ActionType.ADDCOLLECTION_SUCCESS,
+    collection: Collection
+} | {
     type: ActionType.LOADCOLLECTION_SUCCESS,
     collection: Collection
 }

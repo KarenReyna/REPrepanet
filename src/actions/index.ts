@@ -105,8 +105,7 @@ export function resourcesOpen(): Types.Action {
     }
 }
 
-// Add Collection
-
+// Collections
 export function addCollectionOpen(): Types.Action {
     return {
         type: Types.ActionType.ADDCOLLECTION_OPEN
