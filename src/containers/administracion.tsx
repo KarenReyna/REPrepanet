@@ -26,13 +26,15 @@ class AdministracionContainer extends React.Component<any, any> {
     console.log(nextProps);
     if(nextProps.users && nextProps.users[0])
       this.setState({loading: false});
-    console.log(this.props.users[0].email);
+    //console.log(this.props.users[0].email);
   }
   render() {
     return (
       <div>
         <Administracion
           registerClicked = {this.props.registerOpen}
+          getData = {this.props.loadUsers}
+          dataArray = {this.props.users}
         />
         <Register 
           open = {this.props.registerIsOpen}
