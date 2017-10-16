@@ -1,41 +1,15 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
+import * as React from 'react';
+import Styles from '../style/elementStyles';
 
-const navbarStyle = {
-    className: "uk-container",
-    position: {
-        height: '50px',
-        marginTop: '10px',
-    }
+export default class Navbar extends React.Component<any, any> {
+    public render() {
+      return(
+          <div style={Styles.navbar.container.style}>
+            <div className={Styles.navbar.navbar.class} style={Styles.navbar.navbar.style}>
+                <a className={Styles.navbar.logo.class} style={Styles.navbar.logo.style}>{this.props.title}</a>
+                {this.props.children}
+            </div>
+          </div>
+      );
+  }
 }
-
-const sitenameStyle = {
-    className: "uk-logo uk-inline",
-    position: {
-        marginLeft: '0px',
-    }
-}
-
-const div = {
-    style: {
-        borderBottomStyle: 'solid',
-        borderBottomWidth: '5px',
-        borderBottomColor: '#63BB67', 
-    }
-}
-
-var Navbar = createReactClass({
-    propTypes: {
-        title: React.PropTypes.string.isRequired,
-    },
-    render() {
-        return <div style={div.style}>
-                <div className={navbarStyle.className} style={navbarStyle.position}>
-                    <a className={sitenameStyle.className} href="#" style={sitenameStyle.position}>{this.props.title}</a>
-                    {this.props.children}
-                </div>
-               </div>
-    }
-});
-
-export default Navbar;

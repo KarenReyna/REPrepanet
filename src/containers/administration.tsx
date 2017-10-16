@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
-import Administracion from '../components/administracion';
 import { Register } from '../components/register';
-
-
 import { registerOpen, registerClose} from '../actions';
-
 import { registerFetch, usersFetch } from '../actions/thunks';
 import * as Types from '../constants';
+import Administration from '../components/administration';
 
 class AdministracionContainer extends React.Component<any, any> {
   constructor(props) {
@@ -31,7 +27,7 @@ class AdministracionContainer extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <Administracion
+        <Administration
           registerClicked = {this.props.registerOpen}
           getData = {this.props.loadUsers}
           dataArray = {this.props.users}

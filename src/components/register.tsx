@@ -41,6 +41,8 @@ export class Register extends React.Component<any, any> {
         actions = {actions} 
         modal = {false}
 
+        onRequestClose={this.props.loginClose}>
+
         onRequestClose={this.props.registerClose}>
 
           <TextField

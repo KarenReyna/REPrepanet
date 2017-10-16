@@ -12,10 +12,15 @@ export enum ActionType {
     REGISTER_FAILED = 'REGISTER_FAILED',
     REGISTER_SUCCESS = 'REGISTER_SUCCESS',
     REGISTER_LOADING = 'REGISTER_LOADING',
-    ADMINISTRACION_OPEN = 'ADMINISTRACION_OPEN',
-    COLECCIONES_OPEN = 'COLECCIONES_OPEN',
-    RECURSOS_OPEN = 'RECURSOS_OPEN',
-    LOAD_USERS_SUCCESS = 'LOAD_USERS_SUCCESS'
+    ADMINISTRATION_OPEN = 'ADMINISTRATION_OPEN',
+    COLLECTIONS_OPEN = 'COLLECTIONS_OPEN',
+    RESOURCES_OPEN = 'RESOURCES_OPEN',
+    LOAD_USERS_SUCCESS = 'LOAD_USERS_SUCCESS',
+    ADDCOLLECTION_OPEN = 'ADDCOLLECTION_OPEN',
+    ADDCOLLECTION_CLOSE = 'ADDCOLLECTION_CLOSE',
+    ADDCOLLECTION_LOADING = 'ADDCOLLECTION_LOADING',
+    ADDCOLLECTION_SUCCESS = 'ADDCOLLECTION_SUCCESS',
+    LOADCOLLECTION_SUCCESS = 'LOADCOLLECTION_SUCCESS',
 };
 
 export type Action = {
@@ -51,14 +56,25 @@ export type Action = {
     type: ActionType.REGISTER_LOADING,
     loading: boolean
 } | {
-    type: ActionType.ADMINISTRACION_OPEN,
+    type: ActionType.ADMINISTRATION_OPEN,
 } | {
-    type: ActionType.COLECCIONES_OPEN,
+    type: ActionType.COLLECTIONS_OPEN,
 } | {
-    type: ActionType.RECURSOS_OPEN,
+    type: ActionType.RESOURCES_OPEN,
 } | {
     type: ActionType.LOAD_USERS_SUCCESS,
-    users: User[]
+} | {
+    type: ActionType.ADDCOLLECTION_OPEN,
+} | {
+    type: ActionType.ADDCOLLECTION_CLOSE,
+} | {
+    type: ActionType.ADDCOLLECTION_LOADING,
+} | {
+    type: ActionType.ADDCOLLECTION_SUCCESS,
+    collection: Collection
+} | {
+    type: ActionType.LOADCOLLECTION_SUCCESS,
+    collection: Collection
 }
 
 export type User = {
@@ -73,4 +89,9 @@ export type User = {
 export type LoginAttempt = {
   email: string,
   password: string
+}
+
+export type Collection = {
+    name: string, 
+    description: string, 
 }

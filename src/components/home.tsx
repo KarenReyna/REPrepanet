@@ -1,18 +1,13 @@
 import * as React from 'react';
-
 import Navbar from '../elements/Navbar';
-import NavbarButton from '../elements/NavbarButton';
-import Container from '../elements/Container';
 import Button from '../elements/Button';
+import NavButton from '../elements/NavButton';
+import Container from '../elements/Container';
 import CollectionCard from '../elements/CollectionCard';
 import ResourceCard from '../elements/ResourceCard';
+import Styles from '../style/elementStyles';
 
-const colors = {
-  green: '#63BB67',
-  white: '#ffffff',
-};
-
-const collections = [
+const collectionsList = [
   {
     key: 1,
     title: 'Química',
@@ -23,7 +18,7 @@ const collections = [
   },
 ];
 
-const popularResources = [
+const resourcesList = [
   {
     key: 1, 
     title: 'Divertiester',
@@ -41,31 +36,33 @@ const popularResources = [
   },
 ];
 
-
+// Falta agregar boton entrar
 export class Home extends React.Component<any, any> {
   public render() {
     return (
       <div>
         <Navbar title="REPrepanet">
-          <NavbarButton label="Entrar" onClick={this.props.loginClicked}/>
+          <NavButton label="Entrar" onClick={this.props.loginClicked}/>
         </Navbar>
-        <Container bgColor={colors.green}>
-          <h2 style={{color: colors.white}}>Recursos Educativos Prepanet</h2>
-          <p style={{color: colors.white}}>Explora diversos materiales educativos y mejora tu forma de aprender.</p>
+
+        <Container bgColor={Styles.colors.green}>
+          <br />
+          <h2 style={{color: Styles.colors.white}}>Recursos Educativos Prepanet</h2>
+          <p style={{color: Styles.colors.white}}>Explora diversos materiales educativos y mejora tu forma de aprender.</p>
           <Button label="Explorar" onClick={this.props.administracionClicked}/>
           <br />
         </Container>
 
         <Container>
           <h3>Colecciones</h3>
-          {collections.map((collection) => (
+          {collectionsList.map((collection) => (
             <CollectionCard key={collection.key} title={collection.title} />
           ))}
         </Container>
 
         <Container>
           <h3>Recursos populares</h3>
-          {popularResources.map((resource) => (
+          {resourcesList.map((resource) => (
             <ResourceCard key={resource.key} title={resource.title} subtitle={resource.subtitle}/>
           ))}
         </Container>

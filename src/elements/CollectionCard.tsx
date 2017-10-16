@@ -1,17 +1,17 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
+import * as React from 'react';
+import Styles from '../style/elementStyles';
 
-var CollectionCard = createReactClass({
-    propTypes: {
+export default class CollectionCard extends React.Component<any, any> {
+    static propTypes = {
         title: React.PropTypes.string.isRequired,
-    },
-    render() {
-        return <div className="uk-card uk-card-primary uk-width-1-4@m uk-inline" style={{marginRight: '25px'}}>
-                <div className="uk-card-body">
-                    <a href="#" className="uk-button uk-button-text">{this.props.title}</a>
-                </div>
-               </div>
     }
-});
-
-export default CollectionCard;
+    public render() {
+      return(
+        <div className={Styles.collectionCardHead.class} style={Styles.collectionCardHead.style}>
+            <div className={Styles.collectionCardBody.class}>
+                <a className={Styles.collectionCardText.class}>{this.props.title}</a>
+            </div>
+       </div>
+      );
+  }
+}
