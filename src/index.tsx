@@ -40,7 +40,7 @@ registerServiceWorker();
 // Hot Module Replacement API
 if (module.hot) {
   module.hot.accept();
-  
+
   const NextApp = require<{default: typeof User}>("./frontend/containers/user").default;
 
   module.hot.dispose(() => {
