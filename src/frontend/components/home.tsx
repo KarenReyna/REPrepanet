@@ -43,6 +43,7 @@ export class Home extends React.Component<any, any> {
       <div>
         <RaisedButton label = "Login" style={{textAlign: 'right', float: 'right'}} onClick={this.props.loginShow}/>
         <RaisedButton label = "Registro" style={{textAlign: 'right', float: 'right'}} onClick={this.props.registerShow}/>
+        <RaisedButton label = "Nuevo Recurso" style={{textAlign: 'right', float: 'right'}} onClick={this.props.newResourceShow}/>
         <Card>
           <CardHeader/>
           <CardMedia

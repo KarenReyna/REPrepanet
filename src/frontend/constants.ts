@@ -12,6 +12,9 @@ export enum ActionType {
     REGISTER_FAILED = 'REGISTER_FAILED',
     REGISTER_SUCCESSFUL = 'REGISTER_SUCCESSFUL',
     REGISTER_WAITING_ON_SERVER = 'REGISTER_WAITING_ON_SERVER',
+
+    NEW_RESOURCE_SHOW = 'NEW_RESOURCE_SHOW',
+    NEW_RESOURCE_HIDE = 'NEW_RESOURCE_HIDE',
 };
 
 export type Action = {
@@ -39,6 +42,10 @@ export type Action = {
     type: ActionType.REGISTER_FAILED,
 } | {
     type: ActionType.REGISTER_WAITING_ON_SERVER,
+} | {
+    type: ActionType.NEW_RESOURCE_SHOW,
+} | {
+    type: ActionType.NEW_RESOURCE_HIDE,
 }
 
 export type User = {
