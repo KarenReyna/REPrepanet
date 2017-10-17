@@ -32,15 +32,15 @@ export class Register extends React.Component<any, any> {
 
   public render() {
     const actions = [
-      <FlatButton label = "Cancel" onClick = {this.props.registerClose}/>,
+      <FlatButton label = "Cancel" onClick = {this.props.registerHide}/>,
       <FlatButton label = "Register" onClick = {() => this.props.registerSubmit(this.state.user)}/>
     ];
     return (
       <Dialog 
-        open = {this.props.open} 
+        open = {this.props.visible} 
         actions = {actions} 
         modal = {false}
-        onRequestClose={this.props.registerClose}>
+        onRequestClose={this.props.registerHide}>
           <TextField
               hintText="Nombre"
               data-type="name"
@@ -74,7 +74,7 @@ export class Register extends React.Component<any, any> {
               onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
           /><br />
           {this.props.registerFailed && <p>El usuario ya existe</p>}
-          {this.props.loading && <LinearProgress mode="indeterminate" />}
+          {this.props.waiting && <LinearProgress mode="indeterminate" />}
       </Dialog>)
   }
 }

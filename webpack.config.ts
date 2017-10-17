@@ -7,7 +7,7 @@ var FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const config: webpack.Configuration = {
     entry: [
         "react-hot-loader/patch",
-        "./src/index.tsx",
+        "./src/frontend/index.tsx",
     ],
     output: {
         path: path.join(__dirname, 'dist'),
@@ -21,13 +21,13 @@ const config: webpack.Configuration = {
     },
 
     plugins: [
-        new FaviconsWebpackPlugin('./src/assets/melon.png'),
+        new FaviconsWebpackPlugin('./src/frontend/assets/melon.png'),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             title: 'Melon',
             chunksSortMode: 'dependency',
-            template: path.resolve(__dirname, './src/index.ejs')
+            template: path.resolve(__dirname, './src/frontend/index.ejs')
         }),
     ],
 
@@ -40,7 +40,7 @@ const config: webpack.Configuration = {
                     "awesome-typescript-loader"
                 ],
                 exclude: path.resolve(__dirname, 'node_modules'),
-                include: path.resolve(__dirname, "src"),
+                include: path.resolve(__dirname, "src/frontend"),
             },
             {
               test: /\.(jpg|png|svg)$/,

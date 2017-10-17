@@ -23,7 +23,7 @@ const config: webpack.Configuration = {
                     "awesome-typescript-loader"
                 ],
                 exclude: path.resolve(__dirname, 'node_modules'),
-                include: path.resolve(__dirname, "src"),
+                include: path.resolve(__dirname, "src/backend"),
             },
             {
                 enforce: "pre",

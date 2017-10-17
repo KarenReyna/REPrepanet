@@ -1,5 +1,5 @@
-import {Router} from 'express';
-import {UserController} from '../controllers/users';
+import { Router } from 'express';
+import { UserController } from '../controllers/users';
 
 var router:Router = Router();
 
@@ -9,7 +9,6 @@ router
     .get('/profile', e.getUser)
     .post('/register', e.createUser)
     .post('/login', e.loginUser)
-    .get('/logout', e.logoutUser)
-    .get('/users', e.getUsers);
+    .get('/logout', e.logoutUser);
 
 module.exports = router;
