@@ -21,7 +21,7 @@ const config: webpack.Configuration = {
     },
 
     plugins: [
-        new FaviconsWebpackPlugin('./src/assets/melon.png'),
+        new FaviconsWebpackPlugin('./src/frontend/assets/melon.png'),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({

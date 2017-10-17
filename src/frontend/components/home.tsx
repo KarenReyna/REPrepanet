@@ -36,20 +36,19 @@ const resourcesList = [
   },
 ];
 
-// Falta agregar boton entrar
 export class Home extends React.Component<any, any> {
   public render() {
     return (
       <div>
         <Navbar title="REPrepanet">
-          <NavButton label="Entrar" onClick={this.props.loginClicked}/>
+          <NavButton label="Entrar" onClick={this.props.loginShow}/>
         </Navbar>
 
         <Container bgColor={Styles.colors.green}>
           <br />
           <h2 style={{color: Styles.colors.white}}>Recursos Educativos Prepanet</h2>
           <p style={{color: Styles.colors.white}}>Explora diversos materiales educativos y mejora tu forma de aprender.</p>
-          <Button label="Explorar" onClick={this.props.administracionClicked}/>
+          <Button label="Explorar"/>
           <br />
         </Container>
 

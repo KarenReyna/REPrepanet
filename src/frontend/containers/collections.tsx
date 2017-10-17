@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { AddCollection } from '../components/addCollection';
-import { addCollectionOpen, addCollectionClose} from '../actions';
+import { addCollectionShow, addCollectionHide} from '../actions/collections';
 import { addCollectionFetch, getCollections} from '../actions/thunks';
 import Collections from '../components/collections';
 import * as Types from '../constants';
@@ -39,8 +39,8 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch: any) {
   return {
-      addCollectionOpen: () => dispatch(addCollectionOpen()),
-      addCollectionClose: () => dispatch(addCollectionClose()),
+      addCollectionOpen: () => dispatch(addCollectionShow()),
+      addCollectionClose: () => dispatch(addCollectionHide()),
       addCollectionSubmit: (addCollectionAttempt: Types.Collection) => dispatch(addCollectionFetch(addCollectionAttempt)),
       getCollections: dispatch(getCollections()),
   }

@@ -5,25 +5,25 @@ import Resources from '../containers/resources';
 
 export function contentUser(state = {content: Administration, data: null}, action: Types.Action) {
   switch (action.type) {
-    case Types.ActionType.COLLECTIONS_OPEN:
+    case Types.ActionType.COLLECTIONS_SHOW:
       return {
         ...state,
         content: Collections,
       }
-      case Types.ActionType.RESOURCES_OPEN:
+      case Types.ActionType.RESOURCES_SHOW:
       return {
         ...state,
         content: Resources
       }
-      case Types.ActionType.ADMINISTRATION_OPEN:
+      case Types.ActionType.ADMINISTRATION_SHOW:
       return {
         ...state,
         content: Administration
       }
-      case Types.ActionType.LOADCOLLECTION_SUCCESS:
+      case Types.ActionType.LOAD_COLLECTIONS_SUCCESSFUL:
       return {
         ...state,
-        data: action.collection,
+        data: action.collections,
       }
     default:
       return state

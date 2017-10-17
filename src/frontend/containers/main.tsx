@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Home } from '../components/home';
 import { Login } from '../components/login';
-import { loginOpen, loginClose} from '../actions';
+import { loginShow, loginHide } from '../actions/login';
 import { loginFetch} from '../actions/thunks';
 import * as Types from '../constants';
 
@@ -14,14 +14,12 @@ class Main extends React.Component<any, any> {
     return (
       <div>
         <Home 
-          loginClicked = {this.props.loginOpen}
-          registerClicked = {this.props.registerOpen}
-          administracionClicked = {this.props.administracionOpen}/> 
+          loginShow = {this.props.loginShow}/>
         <Login
-          open = {this.props.loginIsOpen}
-          loginClose = {this.props.loginClose}
+          visible = {this.props.loginIsVisible}
+          loginHide = {this.props.loginHide}
           loginSubmit = {this.props.loginSubmit}
-          loading = {this.props.loginLoading}
+          waiting = {this.props.loginIsWaiting}
           loginFailed = {this.props.loginFailed}/>
       </div>
     );
@@ -31,8 +29,8 @@ class Main extends React.Component<any, any> {
 function mapStateToProps(state: any) {
     return {
         //login
-        loginIsOpen: state.login.open,
-        loginLoading: state.login.loading,
+        loginIsVisible: state.login.visible,
+        loginIsWaiting: state.login.waiting,
         loginFailed: state.login.failed,
     }
 }
@@ -40,8 +38,8 @@ function mapStateToProps(state: any) {
 function mapDispatchToProps(dispatch: any) {
     return {
         //login
-        loginOpen: () => dispatch(loginOpen()),
-        loginClose: () => dispatch(loginClose()),
+        loginShow: () => dispatch(loginShow()),
+        loginHide: () => dispatch(loginHide()),
         loginSubmit: (loginAttempt: Types.User) => dispatch(loginFetch(loginAttempt)),
     }
 }
