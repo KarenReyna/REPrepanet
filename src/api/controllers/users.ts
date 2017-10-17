@@ -23,6 +23,30 @@ export class UserController {
                 }
             });
     }
+    
+    public getUsers(req: any, res: any) {
+        User.find()
+            .exec(function (error, users) {
+                if (error) {
+                    res.status(500).send(error);
+                    console.log(req);
+                } else {
+                    if (users === null) {
+                        res.statusCode = 401;
+                        res.setHeader("Content-Type", "application/json");
+                        res.write("");
+                        res.end();
+                        return;
+                    } else {
+                        res.statusCode = 200;
+                        res.setHeader("Content-Type", "application/json");
+                        res.write(JSON.stringify(users));
+                        res.end();
+                        return;
+                    }
+                }
+            });
+    }
 
     public createUser(req: any, res: any) {
         console.log("Creating user...")
