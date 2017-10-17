@@ -1,5 +1,5 @@
 import * as Types from '../constants';
-// TODO LOGOUT
+
 export function logoutWaitingOnServer() {
     return {
         type: Types.ActionType.LOGOUT,

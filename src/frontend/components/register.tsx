@@ -32,8 +32,8 @@ export class Register extends React.Component<any, any> {
 
   public render() {
     const actions = [
-      <FlatButton label = "Cancel" onClick = {this.props.registerHide}/>,
-      <FlatButton label = "Register" onClick = {() => this.props.registerSubmit(this.state.user)}/>
+      <FlatButton label = "Cancelar" onClick = {this.props.registerHide}/>,
+      <FlatButton label = "Registrar" onClick = {() => this.props.registerSubmit(this.state.user)}/>
     ];
     return (
       <Dialog 
