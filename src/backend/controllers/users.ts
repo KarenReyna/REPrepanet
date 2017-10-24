@@ -1,4 +1,4 @@
-import { User } from '../models/User';
+import { User } from '../models/user';
 import * as response from '../helpers/response';
 
 export class UserController {
