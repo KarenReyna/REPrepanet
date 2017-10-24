@@ -59,7 +59,8 @@ const config: webpack.Configuration = {
 
     devServer: {
         hot: true,
-        inline: true
+        inline: true,
+        historyApiFallback: true
     }
 
 };
