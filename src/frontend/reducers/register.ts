@@ -22,6 +22,11 @@ export function register(state = {visible: false, waiting: false, failed: false}
         loading: false,
         failed: true
       }
+    case Types.ActionType.REGISTER_SUCCESSFUL:
+      return {
+        ...state,
+        visible: false
+      }
     default:
       return state
   }

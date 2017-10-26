@@ -1,13 +1,10 @@
 import * as express from 'express'
-// import { Router } from 'express';
 import * as bodyParser from 'body-parser';
 import { connect, connection } from "mongoose";
 import * as session from 'express-session';
 import * as mongoConnect from 'connect-mongo';
 
-// import { usersRoutes } from './routes/users';
-
-import serverConfig from '../../src/config';
+import serverConfig from './config';
 
 var MongoStore = mongoConnect(session);
 
@@ -51,11 +48,6 @@ app.use(session({
     mongooseConnection: connection
   })
 }));
-
-
-
-// Add all custom routes
-// usersRoutes(router);
 
 var router = require('./routes/users');
 app.use('/api', router);

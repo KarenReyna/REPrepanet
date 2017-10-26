@@ -23,7 +23,7 @@ export class Login extends React.Component<any, any> {
   public render() {
     const actions = [
       <FlatButton label = "Cancelar" onClick = {this.props.loginHide}/>,
-      <FlatButton label = "Login" onClick = {() => this.props.loginSubmit({email: this.state.email, password: this.state.password})}/>
+      <FlatButton label = "Entrar" onClick = {() => this.props.loginSubmit({email: this.state.email, password: this.state.password})}/>
     ];
     return (
       <Dialog 
@@ -32,9 +32,9 @@ export class Login extends React.Component<any, any> {
         modal = {false}
         onRequestClose={this.props.loginClose}>
           <TextField
-            hintText="Email"
+            hintText="Correo electrónico"
             data-type="email"
-            floatingLabelText="Email"
+            floatingLabelText="Correo electrónico"
             onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
           /><br />
           <TextField
