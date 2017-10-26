@@ -5,7 +5,7 @@ import Container from '../elements/Container';
 import Content from '../elements/Content';
 import Menu from '../elements/Menu';
 
-export class User extends React.Component<any, any> {
+export default class User extends React.Component<any, any> {
   public render() {
     const RightContent = this.props.content;
     return (

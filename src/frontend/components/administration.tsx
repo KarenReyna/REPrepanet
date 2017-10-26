@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Button from '../elements/Button';
-import Content from '../elements/Content'
+import Content from '../elements/Content';
 import List from '../elements/List';
 
 export default class Administration extends React.Component<any, any> {

@@ -3,6 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+//import ChipInput from 'material-ui-chip-input'
 
 export class NewResource extends React.Component<any, any> {
   constructor(props: any) {

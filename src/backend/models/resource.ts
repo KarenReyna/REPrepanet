@@ -6,6 +6,7 @@ interface IResourceDocument extends Document {
     url: string,
     image: string, // CHECK
     tags: string[],
+    category: { type: Schema.Types.ObjectId, ref: 'Category' }
 }
 
 interface IResource extends IResourceDocument {}
@@ -16,9 +17,10 @@ var ResourceSchema = new Schema({
     description: String,
     url: String,
     image: String,
-    tags: Array<String>()
+    tags: Array<String>(),
+    category: { type: Schema.Types.ObjectId, ref: 'Category' }
 });
 
-var Resource: IResourceModel = model<IResource, IResourceModel>('User', ResourceSchema);
+var Resource: IResourceModel = model<IResource, IResourceModel>('Resource', ResourceSchema);
 
 export { Resource, IResource, IResourceModel, IResourceDocument };

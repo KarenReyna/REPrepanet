@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Register } from '../components/register';
+import Register from '../components/register';
 import { registerShow, registerHide} from '../actions/register';
 import { registerFetch, getUsersFetch } from '../actions/thunks';
 import * as Types from '../constants';

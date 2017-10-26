@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import LinearProgress from 'material-ui/LinearProgress';
 import * as Types from '../constants';
 
-export class Register extends React.Component<any, any> {
+export default class Register extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
