@@ -14,7 +14,7 @@ export default class Collections extends React.Component<any, any> {
         data.push(newCollection);
       }*/
       return(
-        <Content style="rigthContent">
+        <Content style="rightContent">
           <br />
           <Button label="Añadir colección" onClick={this.props.addCollectionClicked}/>
           <br />

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Register from '../components/register';
+import { NewResource } from '../components/newresource';
 import { registerShow, registerHide} from '../actions/register';
+import { newResourceHide, newResourceShow} from '../actions/resources';
 import { registerFetch, getUsersFetch } from '../actions/thunks';
 import * as Types from '../constants';
 import Administration from '../components/administration';
@@ -28,6 +30,7 @@ class AdministrationContainer extends React.Component<any, any> {
       <div>
         <Administration
           registerClicked = {this.props.registerOpen}
+          newResourceShow = {this.props.newResourceShow}
           getData = {this.props.loadUsers}
           dataArray = {this.props.users}
         />
@@ -37,6 +40,9 @@ class AdministrationContainer extends React.Component<any, any> {
           registerSubmit = {this.props.registerSubmit}
           waiting = {this.props.registerLoading}
           registerFailed = {this.props.registerFailed}/>
+        <NewResource
+          visible = {this.props.newResourceIsVisible}
+          newResourceHide = {this.props.newResourceHide}/>
       </div>
     );
   }
@@ -50,7 +56,10 @@ function mapStateToProps(state: any) {
       registerFailed: state.register.failed,
 
       // users
-      users: state.users
+      users: state.users,
+
+      // new resource
+      newResourceIsVisible: state.newResource.visible,
   }
 }
 
@@ -63,6 +72,10 @@ function mapDispatchToProps(dispatch: any) {
 
       // get users
       loadUsers: () => dispatch(getUsersFetch()),
+
+      // new resouce
+      newResourceShow: () => dispatch(newResourceShow()),
+      newResourceHide: () => dispatch(newResourceHide()),
   }
 }
 

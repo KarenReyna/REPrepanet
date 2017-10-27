@@ -4,7 +4,6 @@ import { history } from './store';
 
 import Main from './containers/main';
 import User from './containers/user';
-import Admin from './containers/administration';
 
 import { ConnectedRouter } from 'react-router-redux'
 
@@ -15,7 +14,6 @@ export class Routes extends React.Component<any, any> {
         <div>
           <Route exact path="/" component={Main}/>
           <Route path="/usuario" component={User}/>
-          <Route path="/admin" component={Admin}/>
         </div>
       </ConnectedRouter>
     );

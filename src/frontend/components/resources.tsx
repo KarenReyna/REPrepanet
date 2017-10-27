@@ -29,7 +29,7 @@ const resourcesList = [
 export default class Resources extends React.Component<any, any> {
   public render() {
       return(
-        <Content style="rigthContent">
+        <Content style="rightContent">
           <br />
           <Button label="Añadir recurso"/>
           <br />

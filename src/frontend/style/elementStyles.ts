@@ -35,7 +35,7 @@ const Styles = {
             }
         }
     },
-    rigthContent: {
+    rightContent: {
         style: {
             width: '80%',
             float: 'right',   

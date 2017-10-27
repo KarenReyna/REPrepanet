@@ -13,6 +13,7 @@ export default class Administration extends React.Component<any, any> {
         <Content style="rightContent">
           <br />
           <Button label="Registrar usuario" onClick={this.props.registerClicked} />
+          <Button label="Añadir Recurso" onClick={this.props.newResourceShow} />
           <br />
           <List>
             {data.map((user) => (
