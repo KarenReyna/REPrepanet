@@ -1,4 +1,4 @@
-import { Collection } from '../models/collection';
+import { Category } from '../models/category';
 
 export class CollectionController {
     public createCollection(req: any, res: any) {
@@ -14,7 +14,7 @@ export class CollectionController {
             }
 
             console.log(collectionData);
-            Collection.create(collectionData, function (err, collection ) {
+            Category.create(collectionData, function (err, collection ) {
                 console.log("collection : " , collection);
                 console.log("err : " , err);
                 if (err) {
@@ -40,7 +40,7 @@ export class CollectionController {
     public getCollections(req: any, res: any) {
         console.log("Entro a getCollections Server");
 
-        Collection.find().exec(function (error, collections) {
+        Category.find().exec(function (error, collections) {
             if (error) {
                 res.status(500).send(error);
                 console.log(req);

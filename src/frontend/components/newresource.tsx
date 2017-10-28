@@ -3,11 +3,30 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-//import ChipInput from 'material-ui-chip-input'
+import ChipInput from 'material-ui-chip-input';
 
 export class NewResource extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      chips: []
+    }
+  }
+
+  onBeforeRequestAdd(chip) {
+    return chip.length >= 3;
+  }
+
+  handleRequestAdd(chip) {
+    this.setState({
+      chips: [...this.state.chips, chip]
+    })
+  }
+
+  handleRequestDelete (deletedChip) {
+    this.setState({
+      chips: this.state.chips.filter((c) => c !== deletedChip)
+    })
   }
 
   public render() {
@@ -40,6 +59,14 @@ export class NewResource extends React.Component<any, any> {
           label='Imagen'>
           <input type="file" />
         </RaisedButton>
+        <br />
+        <ChipInput
+          value={this.state.chips}
+          onBeforeRequestAdd={(chip) => this.onBeforeRequestAdd(chip)}
+          onRequestAdd={(chip) => this.handleRequestAdd(chip)}
+          onRequestDelete={(deletedChip) => this.handleRequestDelete(deletedChip)}
+          floatingLabelText='Etiquetas del recurso'
+        />
       </Dialog>)
   }
 }
