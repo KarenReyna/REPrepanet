@@ -6,7 +6,7 @@ import { NewCategory } from '../components/newcategory';
 import { registerShow, registerHide} from '../actions/register';
 import { newResourceHide, newResourceShow} from '../actions/resources';
 import { newCategoryShow, newCategoryHide} from '../actions/categories';
-import { registerFetch, getUsersFetch, addNewResource, addNewCategory } from '../actions/thunks';
+import { registerFetch, getUsersFetch, addNewResource, addNewCategory, getCategories } from '../actions/thunks';
 import * as Types from '../constants';
 import Administration from '../components/administration';
 
@@ -20,6 +20,7 @@ class AdministrationContainer extends React.Component<any, any> {
 
   componentDidMount() {
     this.props.loadUsers();
+    this.props.getCategories();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,7 +51,9 @@ class AdministrationContainer extends React.Component<any, any> {
           submit = {this.props.addNewCategory}/>
         <NewResource
           visible = {this.props.newResourceIsVisible}
-          newResourceHide = {this.props.newResourceHide}/>
+          newResourceHide = {this.props.newResourceHide}
+          categories = {this.props.categories}
+          submit = {this.props.addNewResource}/>
       </div>
     );
   }
@@ -72,6 +75,8 @@ function mapStateToProps(state: any) {
       // new category
       newCategoryIsVisible: state.newCategory.visible,
       newCategoryFailed: state.newCategory.failed,
+
+      categories: state.categories,
   }
 }
 
@@ -94,6 +99,8 @@ function mapDispatchToProps(dispatch: any) {
       newCategoryShow: () => dispatch(newCategoryShow()),
       newCategoryHide: () => dispatch(newCategoryHide()),
       addNewCategory: (categoryAttempt: Types.Category) => dispatch(addNewCategory(categoryAttempt)),
+
+      getCategories: () => dispatch(getCategories()), 
   }
 }
 

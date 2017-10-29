@@ -11,3 +11,16 @@ export function newResourceHide(): Types.Action {
       type: Types.ActionType.NEW_RESOURCE_HIDE,
   }
 }
+
+export function newResourceSuccessful(resource: Types.Resource) {
+  return {
+      type: Types.ActionType.NEW_RESOURCE_SUCCESSFUL,
+      resource: resource,
+  };
+}
+
+export function newResourceFailed(): Types.Action {
+  return {
+      type: Types.ActionType.NEW_RESOURCE_FAILED
+  };
+}

@@ -112,6 +112,7 @@ export type Resource = {
     description: string,
     url: string,
     imageurl: string,
+    category: string,
     tags: string[]
 }
 

@@ -4,6 +4,7 @@ import * as RegisterAction from './register';
 import * as UserAction from './user';
 import * as UsersAction from './users';
 import * as CategoryAction from './categories';
+import * as ResourceAction from './resources';
 
 function request(object: any, route: string) {
     return fetch(
@@ -110,8 +111,8 @@ export function addNewResource(resourceAttempt:Types.Resource) {
                 return response;
             })
             .then((response) => response.json())
-            .then((user) => dispatch(LoginAction.loginSuccessful(user as Types.User)))
-            .catch(() => dispatch(LoginAction.loginFailed()));
+            .then((resource) => dispatch(ResourceAction.newResourceSuccessful(resource as Types.Resource)))
+            .catch(() => dispatch(ResourceAction.newResourceFailed()));
     };
 }
 

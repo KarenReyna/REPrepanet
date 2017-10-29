@@ -16,8 +16,8 @@ export class CategoryController {
           }
 
           console.log(categoryData);
-          Category.create(categoryData, function (err, collection ) {
-              console.log("collection : " , collection);
+          Category.create(categoryData, function (err, category ) {
+              console.log("category : " , category);
               console.log("err : " , err);
               if (err) {
                   console.log("error");
@@ -26,10 +26,10 @@ export class CategoryController {
                   res.send({ error: err.message});
               } else {
                   console.log("user");
-                  req.session.collectionId = collection._id;                    
+                  req.session.categoryId = category._id;                    
                   res.statusCode = 200;
                   res.setHeader("Content-Type", "application/json");
-                  res.send(collection);
+                  res.send(category);
               }
           });
       } else {
@@ -41,7 +41,6 @@ export class CategoryController {
 
   public getCategories(req: any, res: any) {
     console.log("Entro a categories Server");
-
     Category.find().exec(function (error, categories) {
         if (error) {
             res.status(500).send(error);

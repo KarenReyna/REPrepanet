@@ -15,14 +15,15 @@ export class ResourceController {
         ) {
 
         let imageurl = req.body.imageurl || "";
-        let tags = req.body.tags || "";
-
+        let tags = req.body.tags || [];
+        var mongoose = require('mongoose');
         var resourceData = {
             name: req.body.name,
             description: req.body.description,
             url: req.body.url,
             imageurl: imageurl,
-            tags: tags.split(",")
+            tags: tags,
+            category: new mongoose.Types.ObjectId(req.body.category)
         }
 
         Resource.create(resourceData, function (err, resource) {
