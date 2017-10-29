@@ -17,7 +17,7 @@ export default class User extends React.Component<any, any> {
           <Content style="leftContent">
             <Menu>
               <li><a href="#" onClick={this.props.administrationClicked}>Administración</a></li>
-              <li><a href="#" onClick={this.props.collectionsClicked}>Colecciones</a></li>
+              <li><a href="#" onClick={this.props.categoriesClicked}>Categorías</a></li>
               <li><a href="#" onClick={this.props.resourcesClicked}>Recursos</a></li>
             </Menu>
           </Content>

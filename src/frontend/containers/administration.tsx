@@ -2,9 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import Register from '../components/register';
 import { NewResource } from '../components/newresource';
+import { NewCategory } from '../components/newcategory';
 import { registerShow, registerHide} from '../actions/register';
 import { newResourceHide, newResourceShow} from '../actions/resources';
-import { registerFetch, getUsersFetch } from '../actions/thunks';
+import { newCategoryShow, newCategoryHide} from '../actions/categories';
+import { registerFetch, getUsersFetch, addNewResource, addNewCategory } from '../actions/thunks';
 import * as Types from '../constants';
 import Administration from '../components/administration';
 
@@ -31,6 +33,7 @@ class AdministrationContainer extends React.Component<any, any> {
         <Administration
           registerClicked = {this.props.registerOpen}
           newResourceShow = {this.props.newResourceShow}
+          newCategoryShow = {this.props.newCategoryShow}
           getData = {this.props.loadUsers}
           dataArray = {this.props.users}
         />
@@ -40,6 +43,11 @@ class AdministrationContainer extends React.Component<any, any> {
           registerSubmit = {this.props.registerSubmit}
           waiting = {this.props.registerLoading}
           registerFailed = {this.props.registerFailed}/>
+        <NewCategory
+          visible = {this.props.newCategoryIsVisible}
+          newCategoryHide = {this.props.newCategoryHide}
+          failed = {this.props.newCategoryFailed}
+          submit = {this.props.addNewCategory}/>
         <NewResource
           visible = {this.props.newResourceIsVisible}
           newResourceHide = {this.props.newResourceHide}/>
@@ -60,6 +68,10 @@ function mapStateToProps(state: any) {
 
       // new resource
       newResourceIsVisible: state.newResource.visible,
+
+      // new category
+      newCategoryIsVisible: state.newCategory.visible,
+      newCategoryFailed: state.newCategory.failed,
   }
 }
 
@@ -76,6 +88,12 @@ function mapDispatchToProps(dispatch: any) {
       // new resouce
       newResourceShow: () => dispatch(newResourceShow()),
       newResourceHide: () => dispatch(newResourceHide()),
+      addNewResource: (resourceAttempt: Types.Resource) => dispatch(addNewResource(resourceAttempt)),
+
+      // new category
+      newCategoryShow: () => dispatch(newCategoryShow()),
+      newCategoryHide: () => dispatch(newCategoryHide()),
+      addNewCategory: (categoryAttempt: Types.Category) => dispatch(addNewCategory(categoryAttempt)),
   }
 }
 

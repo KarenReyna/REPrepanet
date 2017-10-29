@@ -13,6 +13,9 @@ export default class Administration extends React.Component<any, any> {
         <Content style="rightContent">
           <br />
           <Button label="Registrar usuario" onClick={this.props.registerClicked} />
+          <br />
+          <Button label="Añadir Categoría" onClick={this.props.newCategoryShow} />
+          <br />
           <Button label="Añadir Recurso" onClick={this.props.newResourceShow} />
           <br />
           <List>

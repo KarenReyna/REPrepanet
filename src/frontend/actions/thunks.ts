@@ -2,11 +2,12 @@ import * as Types from '../constants';
 import * as LoginAction from './login';
 import * as RegisterAction from './register';
 import * as UserAction from './user';
-import * as CollectionsAction from './collections';
 import * as UsersAction from './users';
+import * as CategoryAction from './categories';
 
 function request(object: any, route: string) {
-    return fetch(Types.serverUrl + route, {
+    return fetch(
+        Types.serverUrl + route, {
         mode: 'cors',
         method: 'POST',
         headers: Types.fetchHeader,
@@ -77,52 +78,6 @@ export function registerFetch(registerAttempt:Types.User) {
     };
 }
 
-// Collections
-
-export function addCollectionFetch(addCollectionAttempt: Types.Collection) {
-    return (dispatch:any) => {
-        dispatch(CollectionsAction.addCollectionWaitingOnServer(true));
-
-        const object = {
-            name: addCollectionAttempt.name,
-            description: addCollectionAttempt.description,
-        };
-
-        request(object, 'api/addCollection/')
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-
-            dispatch(CollectionsAction.addCollectionWaitingOnServer(false));
-
-            return response;
-        })
-        .then((response) => response.json())
-        .then((collection) => dispatch(CollectionsAction.addCollectionSuccessful(collection as Types.Collection)))
-        .catch(() => console.log("ERROR"));
-    };
-
-}
-
-export function getCollections() {
-    return (dispatch:any) => {
-        fetch(Types.serverUrl + 'api/getCollections/', {
-                mode: 'cors',
-                method: 'GET',
-            })
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response;
-        })
-        .then((response) => response.json())
-        .then((collections) => dispatch(CollectionsAction.loadCollectionsSuccessful(collections as Types.Collection[])))
-        .catch(() => console.log("ERROR"));
-    };
-}
-
 // Users
 
 export function getUsersFetch() {
@@ -139,6 +94,64 @@ export function getUsersFetch() {
         })
         .then((response) => response.json())
         .then((users) => dispatch(UsersAction.loadUsersSuccessful(users as Types.User[])))
+        .catch(() => console.log("ERROR"));
+    };
+}
+
+// Add new resource
+export function addNewResource(resourceAttempt:Types.Resource) {
+    return (dispatch:any) => {
+        request(resourceAttempt, 'api/addResource')
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+
+                return response;
+            })
+            .then((response) => response.json())
+            .then((user) => dispatch(LoginAction.loginSuccessful(user as Types.User)))
+            .catch(() => dispatch(LoginAction.loginFailed()));
+    };
+}
+
+// Categories
+
+export function addNewCategory(categoryAttempt: Types.Category) {
+    return (dispatch: any) => {
+        console.log(JSON.stringify({
+            ...categoryAttempt}));
+        
+        request(categoryAttempt, 'api/addCategory')
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+    
+                return response;
+            })
+            .then((response) => response.json())
+            .then((category) => dispatch(CategoryAction.newCategorySuccessful(category as Types.Category)))
+            .catch(() => dispatch(CategoryAction.newCategoryFailed()));
+    };
+}
+
+export function getCategories() {
+    console.log("thunk called")
+    return (dispatch:any) => {
+        console.log(Types.serverUrl + 'api/categories');
+        fetch(Types.serverUrl + 'api/categories', {
+                mode: 'cors',
+                method: 'GET',
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((categories) => dispatch(CategoryAction.loadCategoriesSuccessful(categories as Types.Category[])))
         .catch(() => console.log("ERROR"));
     };
 }

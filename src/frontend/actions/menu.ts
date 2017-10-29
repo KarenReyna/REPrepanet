@@ -6,9 +6,9 @@ export function administrationShow(): Types.Action {
     }
 }
 
-export function collectionsShow(): Types.Action {
+export function categoriesShow(): Types.Action {
     return {
-        type: Types.ActionType.COLLECTIONS_SHOW,
+        type: Types.ActionType.CATEGORIES_SHOW,
     }
 }
 

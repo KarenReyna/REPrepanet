@@ -3,9 +3,9 @@ import { login } from './login';
 import { register } from './register';
 import { user } from './user';
 import { newResource } from './resources';
+import { newCategory } from './categories';
 import { users } from './users';
 import { contentUser } from './contentUser';
-import { addCollection } from './addCollection';
 import { routerReducer } from 'react-router-redux';
 
 // TODO: Add reducers
@@ -16,9 +16,9 @@ const rootReducer = combineReducers({
     register,
     user,
     newResource,
+    newCategory,
     users,  
     contentUser,
-    addCollection, 
     router: routerReducer
 });
   

@@ -9,7 +9,8 @@ export class NewResource extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      chips: []
+      chips: [],
+      datasource: ["web",  "videojuego",  "app"]
     }
   }
 
@@ -66,6 +67,7 @@ export class NewResource extends React.Component<any, any> {
           onRequestAdd={(chip) => this.handleRequestAdd(chip)}
           onRequestDelete={(deletedChip) => this.handleRequestDelete(deletedChip)}
           floatingLabelText='Etiquetas del recurso'
+          dataSource={this.state.datasource}
         />
       </Dialog>)
   }

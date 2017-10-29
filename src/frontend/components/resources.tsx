@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Content from '../elements/Content'
-import Button from '../elements/Button';
 import List from '../elements/List';
 
 const resourcesList = [
@@ -30,8 +29,6 @@ export default class Resources extends React.Component<any, any> {
   public render() {
       return(
         <Content style="rightContent">
-          <br />
-          <Button label="Añadir recurso"/>
           <br />
           <div>
             <input className="uk-input" type="text" placeholder="Buscar"></input>

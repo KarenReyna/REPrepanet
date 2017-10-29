@@ -15,15 +15,18 @@ export enum ActionType {
 
     NEW_RESOURCE_SHOW = 'NEW_RESOURCE_SHOW',
     NEW_RESOURCE_HIDE = 'NEW_RESOURCE_HIDE',
-    ADMINISTRATION_SHOW = 'ADMINSITRATION_SHOW',
-    COLLECTIONS_SHOW = 'COLLECTIONS_SHOW',
-    RESOURCES_SHOW = 'RESOURCES_SHOW',
+    NEW_RESOURCE_FAILED = 'NEW_RESOURCE_FAILED',
+    NEW_RESOURCE_SUCCESSFUL = 'NEW_RESOURCE_SUCCESSFUL',
 
-    ADD_COLLECTION_SHOW = 'ADD_COLLECTION_SHOW',
-    ADD_COLLECTION_HIDE = 'ADD_COLLECTION_HIDE',
-    ADD_COLLECTION_WAITING_ON_SERVER = 'ADD_COLLECTION_WAITING_ON_SERVER',
-    ADD_COLLECTION_SUCCESSFUL = 'ADD_COLLECTION_SUCCESSFUL',
-    LOAD_COLLECTIONS_SUCCESSFUL = 'LOAD_COLLECTION_SUCCESSFUL',
+    NEW_CATEGORY_SHOW = 'NEW_CATEGORY_SHOW',
+    NEW_CATEGORY_HIDE = 'NEW_CATEGORY_HIDE',
+    NEW_CATEGORY_FAILED = 'NEW_CATEGORY_FAILED',
+    NEW_CATEGORY_SUCCESSFUL = 'NEW_CATEGORY_SUCCESSFUL',
+    LOAD_CATEGORIES_SUCCESSFUL = 'LOAD_CATEGORIES_SUCCESSFUL',
+
+    ADMINISTRATION_SHOW = 'ADMINSITRATION_SHOW',
+    CATEGORIES_SHOW = 'CATEGORIES_SHOW',
+    RESOURCES_SHOW = 'RESOURCES_SHOW',
 
     LOAD_USERS_SUCCESSFUL = 'LOAD_USERS_SUCCESSFUL',
 };
@@ -58,23 +61,28 @@ export type Action = {
 } | {
     type: ActionType.NEW_RESOURCE_HIDE,
 } | {
+    type: ActionType.NEW_RESOURCE_FAILED,
+} | {
+    type: ActionType.NEW_RESOURCE_SUCCESSFUL,
+    resource: Resource,
+} | {
+    type:ActionType.NEW_CATEGORY_SHOW,
+} | {
+    type: ActionType.NEW_CATEGORY_HIDE,
+} | {
+    type: ActionType.NEW_CATEGORY_FAILED, 
+} | {
+    type: ActionType.NEW_CATEGORY_SUCCESSFUL,
+    category: Category,
+} | {
+    type: ActionType.LOAD_CATEGORIES_SUCCESSFUL,
+    categories: Category,
+} | {
     type: ActionType.ADMINISTRATION_SHOW,
 } | {
-    type: ActionType.COLLECTIONS_SHOW,
+    type: ActionType.CATEGORIES_SHOW,
 } | {
     type: ActionType.RESOURCES_SHOW,
-} | {
-    type: ActionType.ADD_COLLECTION_SHOW,
-} | {
-    type: ActionType.ADD_COLLECTION_HIDE,
-} | {
-    type: ActionType.ADD_COLLECTION_WAITING_ON_SERVER,
-} | {
-    type: ActionType.ADD_COLLECTION_SUCCESSFUL,
-    collection: Collection
-} | {
-    type: ActionType.LOAD_COLLECTIONS_SUCCESSFUL,
-    collections: Collection
 } | {
     type: ActionType.LOAD_USERS_SUCCESSFUL,
     users: User
@@ -94,9 +102,17 @@ export type LoginAttempt = {
     password: string
 }
 
-export type Collection = {
-    name: string, 
-    description: string, 
+export type Category = {
+    name: string,
+    description: string,
+}
+
+export type Resource = {
+    name: string,
+    description: string,
+    url: string,
+    imageurl: string,
+    tags: string[]
 }
 
 export var fetchHeader = {

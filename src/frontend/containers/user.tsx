@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import User from '../components/user';
-import { administrationShow, collectionsShow, resourcesShow} from '../actions/menu';
+import { administrationShow, categoriesShow, resourcesShow} from '../actions/menu';
 
 class UsersContainer extends React.Component<any, any> {
   constructor() {
@@ -12,7 +12,7 @@ class UsersContainer extends React.Component<any, any> {
       <div>
         <User 
           administrationClicked = {this.props.administrationOpen}
-          collectionsClicked = {this.props.collectionsOpen}
+          categoriesClicked = {this.props.categoriesShow}
           resourcesClicked = {this.props.resourcesOpen}
           content = {this.props.showContent}
         />
@@ -30,7 +30,7 @@ function mapStateToProps(state: any) {
 function mapDispatchToProps(dispatch: any) {
   return {
       administrationOpen: () => dispatch(administrationShow()),
-      collectionsOpen: () => dispatch(collectionsShow()),
+      categoriesShow: () => dispatch(categoriesShow()),
       resourcesOpen: () => dispatch(resourcesShow()),
   }
 }
