@@ -36,5 +36,29 @@ export class ResourceController {
     } else {
         response.customError(res, 400, 'All fields required.');
     }
-}
+  }
+
+  public getResources(req: any, res: any) {
+    Resource.find().populate('category').exec(function (error, resources) {
+      if (error) {
+          res.status(500).send(error);
+          console.log(req);
+      } else {
+          console.log(resources);
+          if (resources == null) {
+              res.statusCode = 401;
+              res.setHeader("Content-Type", "application/json");
+              res.write("");
+              res.end();
+              return;
+          } else {
+              res.statusCode = 200;
+              res.setHeader("Content-Type", "application/json");
+              res.write(JSON.stringify(resources));
+              res.end();
+              return;
+          }
+      }
+  });
+  }
 }

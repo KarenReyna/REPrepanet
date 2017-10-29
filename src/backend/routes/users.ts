@@ -18,5 +18,6 @@ router
     .post('/addCategory', cat.createCategory)
     .get('/categories', cat.getCategories)
     .post('/addResource', r.createResource)
+    .get('/resources', r.getResources)
 
 module.exports = router;
