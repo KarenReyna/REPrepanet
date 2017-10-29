@@ -116,6 +116,26 @@ export function addNewResource(resourceAttempt:Types.Resource) {
     };
 }
 
+export function getResources() {
+    console.log("thunk called")
+    return (dispatch:any) => {
+        console.log(Types.serverUrl + 'api/resources');
+        fetch(Types.serverUrl + 'api/resources', {
+                mode: 'cors',
+                method: 'GET',
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+            return response;
+        })
+        .then((response) => response.json())
+        .then((resources) => dispatch(ResourceAction.loadResourcesSuccessful(resources as Types.Resource[])))
+        .catch(() => console.log("ERROR"));
+    };
+}
+
 // Categories
 
 export function addNewCategory(categoryAttempt: Types.Category) {

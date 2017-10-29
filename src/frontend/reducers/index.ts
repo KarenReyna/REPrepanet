@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { login } from './login';
 import { register } from './register';
 import { user } from './user';
-import { newResource } from './resources';
+import { newResource, resources } from './resources';
 import { newCategory, categories } from './categories';
 import { users } from './users';
 import { contentUser } from './contentUser';
@@ -16,6 +16,7 @@ const rootReducer = combineReducers({
     register,
     user,
     newResource,
+    resources,
     newCategory,
     categories,
     users,  

@@ -24,3 +24,10 @@ export function newResourceFailed(): Types.Action {
       type: Types.ActionType.NEW_RESOURCE_FAILED
   };
 }
+
+export function loadResourcesSuccessful(resources: Types.Resource[]) {
+  return {
+    type: Types.ActionType.LOAD_RESOURCES_SUCCESSFUL,
+    resources: resources
+  };
+}

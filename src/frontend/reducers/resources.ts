@@ -27,3 +27,12 @@ export function newResource(state = { visible: false, failed: false, resource: n
       return state
   }
 }
+
+export function resources(state = [] as Types.Resource[], action: Types.Action) {
+  switch (action.type) {
+    case Types.ActionType.LOAD_RESOURCES_SUCCESSFUL:
+      return action.resources
+    default:
+      return state
+  }
+}

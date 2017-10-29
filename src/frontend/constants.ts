@@ -17,6 +17,7 @@ export enum ActionType {
     NEW_RESOURCE_HIDE = 'NEW_RESOURCE_HIDE',
     NEW_RESOURCE_FAILED = 'NEW_RESOURCE_FAILED',
     NEW_RESOURCE_SUCCESSFUL = 'NEW_RESOURCE_SUCCESSFUL',
+    LOAD_RESOURCES_SUCCESSFUL = 'LOAD_RESOURCES_SUCCESSFUL',
 
     NEW_CATEGORY_SHOW = 'NEW_CATEGORY_SHOW',
     NEW_CATEGORY_HIDE = 'NEW_CATEGORY_HIDE',
@@ -65,6 +66,9 @@ export type Action = {
 } | {
     type: ActionType.NEW_RESOURCE_SUCCESSFUL,
     resource: Resource,
+} | {
+    type: ActionType.LOAD_RESOURCES_SUCCESSFUL,
+    resources: Resource,
 } | {
     type:ActionType.NEW_CATEGORY_SHOW,
 } | {

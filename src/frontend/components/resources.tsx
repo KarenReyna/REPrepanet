@@ -1,46 +1,59 @@
 import * as React from 'react';
 import Content from '../elements/Content'
 import List from '../elements/List';
-
-const resourcesList = [
-  {
-    key: 1,
-    title: 'Recurso 1',
-  },
-  {
-    key: 2, 
-    title: 'Recurso 2',
-  },
-  {
-    key: 3, 
-    title: 'Recurso 3',
-  },
-  {
-    key: 4, 
-    title: 'Recurso 4',
-  },
-  {
-    key: 5, 
-    title: 'Recurso 5',
-  },
-];
+import { Tabs, Tab } from 'material-ui/Tabs';
+import * as Types from '../constants';
 
 export default class Resources extends React.Component<any, any> {
-  public render() {
-      return(
-        <Content style="rightContent">
-          <br />
-          <div>
-            <input className="uk-input" type="text" placeholder="Buscar"></input>
-          </div>
-          <br />
-          <List>
-            {resourcesList.map((resource) => (
-              <li key={resource.key}>
-                <a>{resource.title}</a>
+  constructor(props) {
+    super(props);
+    this.state = {
+      tab: '',
+    };
+  }
+
+  handleChange = (value) => {
+    this.setState({
+      value: value,
+    });
+  };
+
+  tabs(categories) {
+    var resources = this.props.resources as Types.Resource[]
+    return categories.map((category) => (
+      <Tab
+        label={category.name}
+        value={category._id}>
+        <List>
+            {resources.map((resource) => (
+              <li key={resource.name}>
+                <a>{resource.name}</a>
               </li>
             ))}
           </List>
-        </Content>);
+      </Tab>
+    ))
+  }
+
+  public render() {
+    var categories = this.props.categories as Types.Category[];
+    if (categories == null) {
+      return(
+        <Content style="rightContent">
+          <br/>
+          No categories exist
+        </Content>
+      );
+    }
+
+    return(
+      <Content style="rightContent">
+        <Tabs
+        value={this.state.tab}
+        onChange={this.handleChange}>
+          {this.tabs(this.props.categories)}
+        </Tabs>
+      </Content>
+    );
   }
 }
