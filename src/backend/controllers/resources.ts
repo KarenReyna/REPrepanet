@@ -34,6 +34,7 @@ export class ResourceController {
           }
         });
     } else {
+        console.log(req)
         response.customError(res, 400, 'All fields required.');
     }
   }
@@ -59,6 +60,39 @@ export class ResourceController {
               return;
           }
       }
-  });
+    });
+  }
+
+  public deleteResource(req: any, res: any) {
+      Resource.findOneAndRemove(req.body.name, function(err, resource){
+          if (err) {
+              res.status(500).send(err);
+              console.log(req);
+              return;
+          }
+          else {
+              console.log(resource);
+              res.statusCode = 200;
+              res.write(JSON.stringify(resource));
+              res.end();
+              return;
+          }
+      });
+  }
+
+  public editResource(req: any, res: any) {
+      var original = req.body.original;
+      Resource.findOneAndUpdate(original, {$set: req.body}, function(err, resource){
+        if (err) {
+            res.status(500).send(err);
+            console.log(req);
+            return;
+        }
+        else {
+            res.statusCode = 200;
+            res.send(resource);
+            return;
+        }
+      });
   }
 }
