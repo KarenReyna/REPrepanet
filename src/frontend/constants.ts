@@ -109,6 +109,7 @@ export type LoginAttempt = {
 export type Category = {
     name: string,
     description: string,
+    _id: string
 }
 
 export type Resource = {
@@ -116,7 +117,7 @@ export type Resource = {
     description: string,
     url: string,
     imageurl: string,
-    category: string,
+    category: Category,
     tags: string[]
 }
 
