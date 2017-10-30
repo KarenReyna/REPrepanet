@@ -6,7 +6,7 @@ import { NewCategory } from '../components/newcategory';
 import { registerShow, registerHide} from '../actions/register';
 import { newResourceHide, newResourceShow} from '../actions/resources';
 import { newCategoryShow, newCategoryHide} from '../actions/categories';
-import { registerFetch, getUsersFetch, addNewResource, addNewCategory, getCategories } from '../actions/thunks';
+import { registerFetch, getUsersFetch, addNewResource, addNewCategory, getCategories, getResources } from '../actions/thunks';
 import * as Types from '../constants';
 import Administration from '../components/administration';
 
@@ -21,6 +21,7 @@ class AdministrationContainer extends React.Component<any, any> {
   componentDidMount() {
     this.props.loadUsers();
     this.props.getCategories();
+    this.props.getResources();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -35,8 +36,8 @@ class AdministrationContainer extends React.Component<any, any> {
           registerClicked = {this.props.registerOpen}
           newResourceShow = {this.props.newResourceShow}
           newCategoryShow = {this.props.newCategoryShow}
-          getData = {this.props.loadUsers}
-          dataArray = {this.props.users}
+          getUsers = {this.props.loadUsers}
+          userArray = {this.props.users}
         />
         <Register 
           visible = {this.props.registerIsOpen}
@@ -53,7 +54,8 @@ class AdministrationContainer extends React.Component<any, any> {
           visible = {this.props.newResourceIsVisible}
           newResourceHide = {this.props.newResourceHide}
           categories = {this.props.categories}
-          submit = {this.props.addNewResource}/>
+          submit = {this.props.addNewResource}
+          tags = {this.props.tags}/>
       </div>
     );
   }
@@ -77,6 +79,9 @@ function mapStateToProps(state: any) {
       newCategoryFailed: state.newCategory.failed,
 
       categories: state.categories,
+
+      // tags
+      tags: state.tags
   }
 }
 
@@ -101,6 +106,7 @@ function mapDispatchToProps(dispatch: any) {
       addNewCategory: (categoryAttempt: Types.Category) => dispatch(addNewCategory(categoryAttempt)),
 
       getCategories: () => dispatch(getCategories()), 
+      getResources: () => dispatch(getResources()),
   }
 }
 

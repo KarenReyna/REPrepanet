@@ -5,9 +5,9 @@ import List from '../elements/List';
 
 export default class Administration extends React.Component<any, any> {
   public render() {
-      var data = this.props.dataArray;
-      if(data == null) {
-        data = [];
+      var users = this.props.userArray;
+      if(users == null) {
+        users = [];
       }
       return(
         <Content style="rightContent">
@@ -19,8 +19,8 @@ export default class Administration extends React.Component<any, any> {
           <Button label="Añadir Recurso" onClick={this.props.newResourceShow} />
           <br />
           <List>
-            {data.map((user) => (
-              <li key={user.key}>
+            {users.map((user) => (
+              <li key={user._id}>
                 <a href='#'>{user.name}</a>
                 <p>{user.privileges}</p>
               </li>
