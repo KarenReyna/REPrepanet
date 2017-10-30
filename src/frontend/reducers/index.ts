@@ -6,6 +6,7 @@ import { newResource, resources } from './resources';
 import { newCategory, categories } from './categories';
 import { users } from './users';
 import { contentUser } from './contentUser';
+import { tags } from './tags';
 import { routerReducer } from 'react-router-redux';
 
 // TODO: Add reducers
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     categories,
     users,  
     contentUser,
+    tags,
     router: routerReducer
 });
   

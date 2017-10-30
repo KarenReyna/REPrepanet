@@ -13,7 +13,6 @@ export class NewResource extends React.Component<any, any> {
     super(props);
     this.state = {
       chips: [],
-      datasource: ["web",  "videojuego",  "app"],
       selectFieldValue: null,
       resource: {} as Types.Resource,
     }
@@ -76,10 +75,16 @@ export class NewResource extends React.Component<any, any> {
       />
     ));
   }
-
+  private close() {
+    this.setState({
+      chips: [],
+      selectFieldValue: null
+    });
+    this.props.newResourceHide();
+  }
   public render() {
     const actions = [
-      <FlatButton label = "Cancelar" onClick = {this.props.newResourceHide}/>,
+      <FlatButton label = "Cancelar" onClick = {this.close.bind(this)}/>,
       <FlatButton label = "Añadir" onClick = {() => this.props.submit(this.state.resource)}/>
     ];
     return (
@@ -87,7 +92,7 @@ export class NewResource extends React.Component<any, any> {
         open = {this.props.visible} 
         actions = {actions} 
         modal = {false}
-        onRequestClose={this.props.newResourceHide}>
+        onRequestClose={this.close.bind(this)}>
         <TextField
           hintText = "Nombre"
           data-type="name"
@@ -128,7 +133,7 @@ export class NewResource extends React.Component<any, any> {
           onRequestAdd={(chip) => this.handleRequestAdd(chip)}
           onRequestDelete={(deletedChip) => this.handleRequestDelete(deletedChip)}
           floatingLabelText='Etiquetas del recurso'
-          dataSource={this.state.datasource}
+          dataSource={this.props.tags}
         />
       </Dialog>)
   }

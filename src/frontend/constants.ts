@@ -68,7 +68,7 @@ export type Action = {
     resource: Resource,
 } | {
     type: ActionType.LOAD_RESOURCES_SUCCESSFUL,
-    resources: Resource,
+    resources: Resource[],
 } | {
     type:ActionType.NEW_CATEGORY_SHOW,
 } | {
@@ -99,6 +99,7 @@ export type User = {
     password: string,
     passwordConf: string,
     privileges: string[],
+    _id: string
 }
 
 export type LoginAttempt = {
