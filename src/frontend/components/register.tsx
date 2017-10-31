@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog, { DialogActions } from 'material-ui/Dialog';
+import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
-import LinearProgress from 'material-ui/LinearProgress';
+import { LinearProgress } from 'material-ui/Progress';
 import * as Types from '../constants';
 
 export default class Register extends React.Component<any, any> {
@@ -15,7 +15,7 @@ export default class Register extends React.Component<any, any> {
     }
   }
 
-  handleChange(type: string | undefined, newValue: string) {
+  handleChange(type: string | undefined, newValue: string | undefined) {
     let newState = type && 
       type == "name" ? 
         { user: {...this.state.user, name: newValue}} : 
@@ -32,49 +32,52 @@ export default class Register extends React.Component<any, any> {
 
   public render() {
     const actions = [
-      <FlatButton label = "Cancelar" onClick = {this.props.registerHide}/>,
-      <FlatButton label = "Registrar" onClick = {() => this.props.registerSubmit(this.state.user)}/>
+      <Button key={1} onClick = {this.props.registerHide}>
+        Cancelar
+      </Button>,
+      <Button key={2} onClick = {() => this.props.registerSubmit(this.state.user)}>
+          Registrar
+      </Button>
     ];
     return (
       <Dialog 
-        open = {this.props.visible} 
-        actions = {actions} 
-        modal = {false}
+        open = {this.props.visible}
         onRequestClose={this.props.registerHide}>
           <TextField
-              hintText="Nombre"
+              label="Nombre"
               data-type="name"
-              floatingLabelText="Nombre"
-              onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
+              onChange={(e) => 
+                this.handleChange((e.target as HTMLElement).dataset.type, 
+                (e.target as HTMLElement).dataset.txt)}
           /><br />
           <TextField
-            hintText="Email"
+            label="Email"
             data-type="email"
-            floatingLabelText="Email"
-            onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
+            onChange={(e) => 
+              this.handleChange((e.target as HTMLElement).dataset.type, 
+              (e.target as HTMLElement).dataset.txt)}
           /><br />
           <TextField
-            hintText="Contraseña"
+            label="Contraseña"
             data-type="password"
-            floatingLabelText="Contraseña"
             type="password"
-            onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
+            onChange={(e) => 
+              this.handleChange((e.target as HTMLElement).dataset.type, 
+              (e.target as HTMLElement).dataset.txt)}
           /><br />
           <TextField
-            hintText="Confirmación de contraseña"
+            label="Confirmación de contraseña"
             data-type="passwordConf"
-            floatingLabelText="Confirmación de contraseña"
             type="password"
-            onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
-          /><br />
-          <TextField
-              hintText="Privilegios"
-              data-type="privileges"
-              floatingLabelText="Privilegios"
-              onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
+            onChange={(e) => 
+              this.handleChange((e.target as HTMLElement).dataset.type, 
+              (e.target as HTMLElement).dataset.txt)}
           /><br />
           {this.props.registerFailed && <p>El usuario ya existe</p>}
           {this.props.waiting && <LinearProgress mode="indeterminate" />}
+        <DialogActions>
+          {actions} 
+        </DialogActions>
       </Dialog>)
   }
 }

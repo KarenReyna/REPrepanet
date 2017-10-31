@@ -13,10 +13,14 @@ export enum ActionType {
     REGISTER_SUCCESSFUL = 'REGISTER_SUCCESSFUL',
     REGISTER_WAITING_ON_SERVER = 'REGISTER_WAITING_ON_SERVER',
 
-    NEW_RESOURCE_SHOW = 'NEW_RESOURCE_SHOW',
-    NEW_RESOURCE_HIDE = 'NEW_RESOURCE_HIDE',
+    RESOURCE_DIALOG_SHOW = 'RESOURCE_DIALOG_SHOW',
+    RESOURCE_DIALOG_HIDE = 'RESOURCE_DIALOG_HIDE',
     NEW_RESOURCE_FAILED = 'NEW_RESOURCE_FAILED',
     NEW_RESOURCE_SUCCESSFUL = 'NEW_RESOURCE_SUCCESSFUL',
+    EDIT_RESOURCE_SUCCESSFUL = 'NEW_RESOURCE_SUCCESSFUL',
+    EDIT_RESOURCE_FAILED = 'EDIT_RESOURCE_FAILED',
+    DELETE_RESOURCE_SUCCESSFUL = 'DELETE_RESOURCE_SUCCESSFUL',
+    DELETE_RESOURCE_FAILED = 'DELETE_RESOURCE_FAILED',
     LOAD_RESOURCES_SUCCESSFUL = 'LOAD_RESOURCES_SUCCESSFUL',
 
     NEW_CATEGORY_SHOW = 'NEW_CATEGORY_SHOW',
@@ -58,9 +62,10 @@ export type Action = {
 } | {
     type: ActionType.REGISTER_WAITING_ON_SERVER,
 } | {
-    type: ActionType.NEW_RESOURCE_SHOW,
+    type: ActionType.RESOURCE_DIALOG_SHOW,
+    resource: Resource
 } | {
-    type: ActionType.NEW_RESOURCE_HIDE,
+    type: ActionType.RESOURCE_DIALOG_HIDE,
 } | {
     type: ActionType.NEW_RESOURCE_FAILED,
 } | {
@@ -90,6 +95,16 @@ export type Action = {
 } | {
     type: ActionType.LOAD_USERS_SUCCESSFUL,
     users: User
+} | {
+    type: ActionType.EDIT_RESOURCE_SUCCESSFUL,
+    resource: Resource
+} | {
+    type: ActionType.EDIT_RESOURCE_FAILED
+} | {
+    type: ActionType.DELETE_RESOURCE_SUCCESSFUL,
+    id: string
+} | {
+    type: ActionType.DELETE_RESOURCE_FAILED
 }
 
 export type User = {
@@ -108,17 +123,19 @@ export type LoginAttempt = {
 }
 
 export type Category = {
+    _id: string,
     name: string,
     description: string,
 }
 
 export type Resource = {
-    name: string,
-    description: string,
-    url: string,
-    imageurl: string,
-    category: string,
-    tags: string[]
+    _id?: string | '',
+    name?: string,
+    description?: string,
+    url?: string,
+    imageurl?: string,
+    category?: string,
+    tags?: string[]
 }
 
 export var fetchHeader = {

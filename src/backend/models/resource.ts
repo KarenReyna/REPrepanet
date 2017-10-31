@@ -1,6 +1,7 @@
 import { Schema, model, Document, Model } from 'mongoose';
 
 interface IResourceDocument extends Document {
+    _id: string,
     name: string,
     description: string,
     url: string,
@@ -13,6 +14,7 @@ interface IResource extends IResourceDocument {}
 interface IResourceModel extends Model<IResource> {}
 
 var ResourceSchema = new Schema({
+    _id: String,
     name: String,
     description: String,
     url: String,

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog, { DialogActions } from 'material-ui/Dialog';
+import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
-import LinearProgress from 'material-ui/LinearProgress';
+import { LinearProgress } from 'material-ui/Progress';
 
 export class Login extends React.Component<any, any> {
   constructor(props: any) {
@@ -13,7 +13,7 @@ export class Login extends React.Component<any, any> {
     }
   }
 
-  handleChange(type: string | undefined, newValue: string) {
+  handleChange(type: string | undefined, newValue: string | undefined) {
     let newState = type && type == "email" ? 
       { email: newValue } : type == "password" ? 
       { password: newValue } : {};
@@ -22,30 +22,33 @@ export class Login extends React.Component<any, any> {
 
   public render() {
     const actions = [
-      <FlatButton label = "Cancelar" onClick = {this.props.loginHide}/>,
-      <FlatButton label = "Entrar" onClick = {() => this.props.loginSubmit({email: this.state.email, password: this.state.password})}/>
+      <Button onClick = {this.props.loginHide}>Cancelar</Button>,
+      <Button 
+        onClick = {() => this.props.loginSubmit({email: this.state.email, 
+          password: this.state.password})}>
+        Entrar
+      </Button>
     ];
     return (
       <Dialog 
-        open = {this.props.visible} 
-        actions = {actions} 
-        modal = {false}
+        open = {this.props.visible}
         onRequestClose={this.props.loginClose}>
           <TextField
-            hintText="Correo electrónico"
+            label="Correo electrónico"
             data-type="email"
-            floatingLabelText="Correo electrónico"
-            onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
+            onChange={(e) => this.handleChange((e.target as HTMLElement).dataset.type, (e.target as HTMLElement).dataset.txt)}
           /><br />
           <TextField
-            hintText="Contraseña"
+            label="Contraseña"
             data-type="password"
-            floatingLabelText="Contraseña"
             type="password"
-            onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}
+            onChange={(e) => this.handleChange((e.target as HTMLElement).dataset.type, (e.target as HTMLElement).dataset.txt)}
           /><br />
           {this.props.loginFailed && <p>El usuario y/o contraseña están incorrectos</p>}
           {this.props.waiting && <LinearProgress mode="indeterminate" />}
+        <DialogActions>
+          {actions}
+        </DialogActions>
       </Dialog>)
   }
 }

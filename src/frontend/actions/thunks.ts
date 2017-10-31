@@ -99,6 +99,38 @@ export function getUsersFetch() {
     };
 }
 
+export function editResource(resource: Types.Resource) {
+    return (dispatch:any) => {
+        request(resource, 'api/editResource')
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then((response) => response.json())
+            .then((resource) => dispatch(ResourceAction.
+                editResourceSuccessful(resource as Types.Resource)))
+            .catch(() => dispatch(ResourceAction.editResourceFailed()));
+    };
+}
+
+export function deleteResource(id: string) {
+    return (dispatch:any) => {
+        request(id, 'api/deleteResource')
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then((response) => response.json())
+            .then(() => dispatch(ResourceAction.
+                deleteResourceSuccessful(id)))
+            .catch(() => dispatch(ResourceAction.deleteResourceFailed()));
+    };
+}
+
 // Add new resource
 export function addNewResource(resourceAttempt:Types.Resource) {
     return (dispatch:any) => {

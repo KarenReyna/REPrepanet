@@ -1,20 +1,23 @@
 import * as React from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
+import Dialog, {DialogActions} from 'material-ui/Dialog';
+import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
-import ChipInput from 'material-ui-chip-input';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+// import ChipInput from 'material-ui-chip-input';
+import Select from 'material-ui/Select';
+import { MenuItem } from 'material-ui/Menu';
+import Input, { InputLabel } from 'material-ui/Input';
 import * as Types from '../constants';
 
-export class NewResource extends React.Component<any, any> {
+export class ResourceDialog extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
       chips: [],
-      selectFieldValue: null,
+      selectFieldValue: '',
       resource: {} as Types.Resource,
+    }
+    if(this.props.resource && this.props.resource._id != '') {
+      this.state.resource = this.props.resource
     }
   }
   
@@ -42,7 +45,7 @@ export class NewResource extends React.Component<any, any> {
     })
   }
 
-  handleChange(type: string | undefined, newValue: string) {
+  handleChange(type: string | undefined, newValue: string | undefined) {
     let newState = type && 
       type == "name" ? 
         { resource: {...this.state.resource, name: newValue}} : 
@@ -53,14 +56,12 @@ export class NewResource extends React.Component<any, any> {
     this.setState(newState);
   }
 
-  handleSelectFieldChange(event, key, value) {
-    console.log(event)
-    console.log(key)
+  handleSelectFieldChange(event) {
     this.setState({
-      selectFieldValue: value,
+      selectFieldValue: event.target.value,
       resource: {
         ...this.state.resource,
-        category: value
+        category: event.target.value
       }
     });
   }
@@ -69,72 +70,73 @@ export class NewResource extends React.Component<any, any> {
     return categories.map((category) => (
       <MenuItem
         key={category._id}
-        insetChildren={true}
-        value={category._id}
-        primaryText={category.name}
-      />
+        value={category._id}>
+        {category.name}
+      </MenuItem>
     ));
   }
   private close() {
     this.setState({
       chips: [],
-      selectFieldValue: null
+      selectFieldValue: ''
     });
-    this.props.newResourceHide();
+    this.props.hide();
   }
   public render() {
     const actions = [
-      <FlatButton label = "Cancelar" onClick = {this.close.bind(this)}/>,
-      <FlatButton label = "Añadir" onClick = {() => this.props.submit(this.state.resource)}/>
+      <Button key={1} onClick = {this.close.bind(this)}>Cancelar</Button>,
+      <Button key={2} onClick = {() => this.props.submit(this.state.resource)}>Añadir</Button>
     ];
     return (
       <Dialog 
-        open = {this.props.visible} 
-        actions = {actions} 
-        modal = {false}
+        open = {this.props.visible}
         onRequestClose={this.close.bind(this)}>
         <TextField
-          hintText = "Nombre"
+          label = "Nombre"
           data-type="name"
-          floatingLabelText = "Nombre"
-          onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}/>
+          onChange={(e) => this.handleChange((e.target as HTMLElement).dataset.type, 
+            (e.target as HTMLElement).dataset.txt)}/>
         <br />
         <TextField
-          hintText = "Descripción"
+          label = "Descripción"
           data-type="description"
-          floatingLabelText = "Descripción"
-          multiLine = {true}
+          multiline= {true}
           rows = {2}
-          onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}/>
+          onChange={(e) => this.handleChange((e.target as HTMLElement).dataset.type, 
+            (e.target as HTMLElement).dataset.txt)}/>
         <br />
-        <SelectField
-          floatingLabelText="Categoría"
+        <InputLabel htmlFor="category-helper">Categoría</InputLabel>
+        <Select
+          input={<Input id="category" />}
           value={this.state.selectFieldValue}
-          onChange={(e, key, value) => this.handleSelectFieldChange(e, key, value)}
+          onChange={(e) => this.handleSelectFieldChange(e)}
         >
           {this.menuItems(this.props.categories)}
-        </SelectField>
+        </Select>
         <br />
         <TextField
-          hintText = "URL"
           data-type="url"
-          floatingLabelText = "URL"
-          onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}/>
+          label = "URL"
+          onChange={(e) => this.handleChange((e.target as HTMLElement).dataset.type, 
+            (e.target as HTMLElement).dataset.txt)}/>
         <br />
-        <RaisedButton
-          containerElement='label'
-          label='Imagen'>
+        <Button
+          raised>
+          Imagen
           <input type="file" />
-        </RaisedButton>
+        </Button>
         <br />
-        <ChipInput
+        {/* <ChipInput
           value={this.state.chips}
           onBeforeRequestAdd={(chip) => this.onBeforeRequestAdd(chip)}
           onRequestAdd={(chip) => this.handleRequestAdd(chip)}
           onRequestDelete={(deletedChip) => this.handleRequestDelete(deletedChip)}
           floatingLabelText='Etiquetas del recurso'
           dataSource={this.props.tags}
-        />
+        /> */}
+        <DialogActions>
+          {actions}
+        </DialogActions>
       </Dialog>)
   }
 }

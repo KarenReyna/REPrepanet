@@ -2,12 +2,13 @@ import { Schema, model, Document, Model } from 'mongoose';
 import * as bcrypt from 'bcrypt-nodejs';
 
 interface IUserDocument extends Document {
+    _id: string,
     idCustomized: string,
     name: string,
     email: string,
     password: string,
     passwordConf: string,
-    privileges: string[],
+    isAdmin: boolean,
 }
 
 interface IUser extends IUserDocument {
@@ -19,11 +20,12 @@ interface IUserModel extends Model<IUser> {
 }
 
 var UserSchema = new Schema({
+    _id: String,
     idCustomized: String,
     name: String,
     email: String,
     password: String,
-    privileges: Array<String>()
+    privileges: Boolean
 });
 
 //authenticate input against database

@@ -19,7 +19,7 @@ router
     .get('/categories', cat.getCategories)
     .post('/addResource', r.createResource)
     .get('/resources', r.getResources)
-    .post('/delResource', r.deleteResource)
+    .post('/deleteResource', r.deleteResource)
     .post('/editResource', r.editResource)
 
 module.exports = router;

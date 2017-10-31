@@ -63,26 +63,9 @@ export class ResourceController {
     });
   }
 
-  public deleteResource(req: any, res: any) {
-      Resource.findOneAndRemove(req.body.name, function(err, resource){
-          if (err) {
-              res.status(500).send(err);
-              console.log(req);
-              return;
-          }
-          else {
-              console.log(resource);
-              res.statusCode = 200;
-              res.write(JSON.stringify(resource));
-              res.end();
-              return;
-          }
-      });
-  }
-
   public editResource(req: any, res: any) {
-      var original = req.body.original;
-      Resource.findOneAndUpdate(original, {$set: req.body}, function(err, resource){
+      Resource.findByIdAndUpdate(req.body.resource, 
+        req.body.resource, function(err, resource){
         if (err) {
             res.status(500).send(err);
             console.log(req);
@@ -95,4 +78,20 @@ export class ResourceController {
         }
       });
   }
+
+  public deleteResource(req: any, res: any) {
+    Resource.findByIdAndRemove(req.body.resource, 
+      req.body.resource, function(err, resource){
+      if (err) {
+          res.status(500).send(err);
+          console.log(req);
+          return;
+      }
+      else {
+          res.statusCode = 200;
+          res.send(resource);
+          return;
+      }
+    });
+}
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog, { DialogActions } from 'material-ui/Dialog';
+import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import * as Types from '../constants';
 
@@ -12,7 +12,7 @@ export class NewCategory extends React.Component<any, any> {
     }
   }
 
-  handleChange(type: string | undefined, newValue: string) {
+  handleChange(type: string | undefined, newValue: string | undefined) {
     let newState = type && 
       type == "name" ? 
         { category: {...this.state.category, name: newValue}} : 
@@ -23,29 +23,35 @@ export class NewCategory extends React.Component<any, any> {
 
   public render() {
     const actions = [
-      <FlatButton label = "Cancelar" onClick = {this.props.newCategoryHide}/>,
-      <FlatButton label = "Añadir" onClick = {() => this.props.submit(this.state.category)}/>
+      <Button key={1} onClick = {this.props.newCategoryHide}>
+          Cancelar
+      </Button>,
+      <Button key={2} onClick = {() => this.props.submit(this.state.category)}>
+          Añadir
+      </Button>
     ];
     return (
       <Dialog 
-        open = {this.props.visible} 
-        actions = {actions} 
-        modal = {false}
+        open = {this.props.visible}
         onRequestClose={this.props.newCategoryHide}>
         <TextField
-          hintText = "Nombre"
-          floatingLabelText = "Nombre"
+          label = "Nombre"
           data-type = "name"
-          onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}/>
+          onChange={(e) => 
+            this.handleChange((e.target as HTMLElement).dataset.type, 
+            (e.target as HTMLElement).dataset.txt)}/>
         <br />
         <TextField
-          hintText = "Descripción"
-          floatingLabelText = "Descripción"
+          label = "Descripción"
           data-type = "description"
-          multiLine = {true}
           rows = {2}
-          onChange={(e, newValue) => this.handleChange((e.target as HTMLElement).dataset.type, newValue)}/>
+          onChange={(e) => 
+            this.handleChange((e.target as HTMLElement).dataset.type,
+            (e.target as HTMLElement).dataset.txt)}/>
         <br />
+        <DialogActions>
+          {actions}
+        </DialogActions>
       </Dialog>)
   }
 }

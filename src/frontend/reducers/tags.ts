@@ -5,7 +5,7 @@ export function tags(state = [] as string[], action: Types.Action) {
     case Types.ActionType.LOAD_RESOURCES_SUCCESSFUL:
       var tagList: string[] = [];
       action.resources.map((resource) => {
-        tagList = tagList.concat(resource.tags);
+        tagList = resource.tags? tagList.concat(resource.tags) : tagList;
       });
       console.log(tagList)
       return tagList.filter(function(elem, index) {
@@ -14,7 +14,8 @@ export function tags(state = [] as string[], action: Types.Action) {
 
     case Types.ActionType.NEW_RESOURCE_SUCCESSFUL:
       var tagList = state;
-      tagList.concat(action.resource.tags);
+      tagList = action.resource.tags? 
+        tagList.concat(action.resource.tags) : tagList;
       return tagList.filter(function(elem, index) {
         return tagList.indexOf(elem) === index; 
       });

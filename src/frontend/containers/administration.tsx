@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Register from '../components/register';
-import { NewResource } from '../components/newresource';
+import { ResourceDialog } from '../components/resourceDialog';
 import { NewCategory } from '../components/newcategory';
 import { registerShow, registerHide} from '../actions/register';
-import { newResourceHide, newResourceShow} from '../actions/resources';
+import { resourceDialogHide, resourceDialogShow} from '../actions/resources';
 import { newCategoryShow, newCategoryHide} from '../actions/categories';
 import { registerFetch, getUsersFetch, addNewResource, addNewCategory, getCategories, getResources } from '../actions/thunks';
 import * as Types from '../constants';
@@ -50,9 +50,9 @@ class AdministrationContainer extends React.Component<any, any> {
           newCategoryHide = {this.props.newCategoryHide}
           failed = {this.props.newCategoryFailed}
           submit = {this.props.addNewCategory}/>
-        <NewResource
+        <ResourceDialog
           visible = {this.props.newResourceIsVisible}
-          newResourceHide = {this.props.newResourceHide}
+          hide = {this.props.newResourceHide}
           categories = {this.props.categories}
           submit = {this.props.addNewResource}
           tags = {this.props.tags}/>
@@ -72,7 +72,7 @@ function mapStateToProps(state: any) {
       users: state.users,
 
       // new resource
-      newResourceIsVisible: state.newResource.visible,
+      newResourceIsVisible: state.resourceDialog.visible,
 
       // new category
       newCategoryIsVisible: state.newCategory.visible,
@@ -96,8 +96,8 @@ function mapDispatchToProps(dispatch: any) {
       loadUsers: () => dispatch(getUsersFetch()),
 
       // new resouce
-      newResourceShow: () => dispatch(newResourceShow()),
-      newResourceHide: () => dispatch(newResourceHide()),
+      newResourceShow: () => dispatch(resourceDialogShow()),
+      newResourceHide: () => dispatch(resourceDialogHide()),
       addNewResource: (resourceAttempt: Types.Resource) => dispatch(addNewResource(resourceAttempt)),
 
       // new category
