@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { User } from '../components/user';
+import { logoutFetch } from '../actions/thunks';
 import { administrationShow, collectionsShow, resourcesShow} from '../actions/menu';
 
 class UsersContainer extends React.Component<any, any> {
@@ -15,6 +16,7 @@ class UsersContainer extends React.Component<any, any> {
           collectionsClicked = {this.props.collectionsOpen}
           resourcesClicked = {this.props.resourcesOpen}
           content = {this.props.showContent}
+          logoutClicked = {this.props.logoutOpen}
         />
       </div>
     );
@@ -32,6 +34,7 @@ function mapDispatchToProps(dispatch: any) {
       administrationOpen: () => dispatch(administrationShow()),
       collectionsOpen: () => dispatch(collectionsShow()),
       resourcesOpen: () => dispatch(resourcesShow()),
+      logoutOpen: () => dispatch(logoutFetch()),
   }
 }
 

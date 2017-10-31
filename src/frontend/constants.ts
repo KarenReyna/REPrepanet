@@ -21,6 +21,10 @@ export enum ActionType {
     ADD_COLLECTION_HIDE = 'ADD_COLLECTION_HIDE',
     ADD_COLLECTION_WAITING_ON_SERVER = 'ADD_COLLECTION_WAITING_ON_SERVER',
     ADD_COLLECTION_SUCCESSFUL = 'ADD_COLLECTION_SUCCESSFUL',
+    EDIT_COLLECTION_SHOW = 'EDIT_COLLECTION_SHOW',
+    EDIT_COLLECTION_HIDE = 'EDIT_COLLECTION_HIDE',
+    EDIT_COLLECTION_SUCCESSFUL = 'EDIT_COLLECTION_SUCCESSFUL', 
+    DELETE_COLLECTION_SUCCESSFUL = 'EDIT_COLLECTION_SUCCESSFUL',   
     LOAD_COLLECTIONS_SUCCESSFUL = 'LOAD_COLLECTION_SUCCESSFUL',
 
     LOAD_USERS_SUCCESSFUL = 'LOAD_USERS_SUCCESSFUL',
@@ -67,6 +71,15 @@ export type Action = {
     type: ActionType.ADD_COLLECTION_SUCCESSFUL,
     collection: Collection
 } | {
+    type: ActionType.EDIT_COLLECTION_SHOW,
+    collection: CollectionFull,
+} | {
+    type: ActionType.EDIT_COLLECTION_HIDE,
+} | {
+    type: ActionType.EDIT_COLLECTION_SUCCESSFUL,
+} | {
+    type: ActionType.DELETE_COLLECTION_SUCCESSFUL,
+} | {
     type: ActionType.LOAD_COLLECTIONS_SUCCESSFUL,
     collections: Collection
 } | {
@@ -89,6 +102,12 @@ export type LoginAttempt = {
 }
 
 export type Collection = {
+    name: string, 
+    description: string, 
+}
+
+export type CollectionFull = {
+    idCollection: any, 
     name: string, 
     description: string, 
 }

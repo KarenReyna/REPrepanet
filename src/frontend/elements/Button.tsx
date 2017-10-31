@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Styles from '../style/elementStyles';
+// import PropTypes from 'prop-types';
 
 export default class Button extends React.Component<any, any> {
-    static propTypes = {
-        label: React.PropTypes.string.isRequired,
-    }
+    // static propTypes = {
+    //     label: PropTypes.string.isRequired,
+    // }
     public render() {
       return(
         <p>

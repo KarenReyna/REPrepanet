@@ -4,6 +4,7 @@ import * as RegisterAction from './register';
 import * as UserAction from './user';
 import * as CollectionsAction from './collections';
 import * as UsersAction from './users';
+import { history } from '../store';
 
 function request(object: any, route: string) {
     return fetch(Types.serverUrl + route, {
@@ -31,7 +32,10 @@ export function loginFetch(loginAttempt:Types.LoginAttempt) {
                 return response;
             })
             .then((response) => response.json())
-            .then((user) => dispatch(LoginAction.loginSuccessful(user as Types.User)))
+            .then((user) => {
+                dispatch(LoginAction.loginSuccessful(user as Types.User));
+                history.push('/usuario');
+            })
             .catch(() => dispatch(LoginAction.loginFailed()));
     };
 }
@@ -40,8 +44,12 @@ export function loginFetch(loginAttempt:Types.LoginAttempt) {
 export function logoutFetch() {
     return (dispatch:any) => {
         dispatch(LoginAction.loginWaitingOnServer(true));
+        console.log("Entro a logoutFetch");
+        
+        // Esto es provisional, porque no esta funcionando el backend
+        history.push('/');
 
-        fetch(Types.serverUrl + 'api/register/')
+        fetch(Types.serverUrl + 'api/logout/')
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -78,7 +86,6 @@ export function registerFetch(registerAttempt:Types.User) {
 }
 
 // Collections
-
 export function addCollectionFetch(addCollectionAttempt: Types.Collection) {
     return (dispatch:any) => {
         dispatch(CollectionsAction.addCollectionWaitingOnServer(true));
@@ -99,7 +106,9 @@ export function addCollectionFetch(addCollectionAttempt: Types.Collection) {
             return response;
         })
         .then((response) => response.json())
-        .then((collection) => dispatch(CollectionsAction.addCollectionSuccessful(collection as Types.Collection)))
+        .then((collection) => {
+            dispatch(CollectionsAction.addCollectionSuccessful(collection as Types.Collection))
+        })
         .catch(() => console.log("ERROR"));
     };
 
@@ -123,8 +132,43 @@ export function getCollections() {
     };
 }
 
-// Users
+export function modifyCollectionFetch(editedCollection: Types.CollectionFull) {
+    return (dispatch: any) => {
+        request(editedCollection, 'api/editCollection/')
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
 
+                return response;
+        })
+        .then((response) => response.json())
+        .then(
+            dispatch(CollectionsAction.editCollectionSuccessful())
+        )
+        .catch(() => console.log("ERROR"));
+    };
+}
+
+export function deleteCollectionFetch(editedCollection: Types.CollectionFull) {
+    return (dispatch: any) => {
+        request(editedCollection, 'api/deleteCollection/')
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+
+                return response;
+        })
+        .then((response) => response.json())
+        .then(
+            dispatch(CollectionsAction.deleteCollectionSuccessful())
+        )
+        .catch(() => console.log("ERROR"));
+    };
+}
+
+// Users
 export function getUsersFetch() {
     return (dispatch:any) => {
         fetch(Types.serverUrl + 'api/users/', {

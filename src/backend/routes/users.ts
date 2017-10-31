@@ -14,6 +14,8 @@ router
     .get('/logout', e.logoutUser)
     .get('/users', e.getUsers)
     .post('/addCollection', c.createCollection)
-    .get('/getCollections', c.getCollections):
+    .post('/editCollection', c.editCollection)
+    .post('/deleteCollection', c.deleteCollection)
+    .get('/getCollections', c.getCollections)
 
 module.exports = router;

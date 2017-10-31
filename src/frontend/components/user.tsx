@@ -11,7 +11,7 @@ export class User extends React.Component<any, any> {
     return (
       <div>
         <Navbar title="REPrepanet">
-          <NavButton label="Salir"/>
+          <NavButton label="Salir" onClick={this.props.logoutClicked}/>
         </Navbar>
         <Container>
           <Content style="leftContent">

@@ -32,3 +32,28 @@ export function loadCollectionsSuccessful(collections: Types.Collection[]) {
         collections: collections, 
     };
 }
+
+export function editCollectionShow(collectionSelected: Types.CollectionFull): Types.Action {
+    return {
+        type: Types.ActionType.EDIT_COLLECTION_SHOW,
+        collection: collectionSelected,
+    }
+}
+
+export function editCollectionHide(): Types.Action {
+    return {
+        type: Types.ActionType.EDIT_COLLECTION_HIDE,
+    }
+}
+
+export function editCollectionSuccessful() : Types.Action {
+    return {
+        type: Types.ActionType.EDIT_COLLECTION_SUCCESSFUL,
+    }
+}
+
+export function deleteCollectionSuccessful() : Types.Action {
+    return {
+        type: Types.ActionType.DELETE_COLLECTION_SUCCESSFUL,
+    }
+}
