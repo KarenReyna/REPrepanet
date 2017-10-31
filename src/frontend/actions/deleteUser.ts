@@ -1,8 +1,9 @@
 import * as Types from '../constants';
 
-export function deleteUserShow(): Types.Action {
+export function deleteUserShow(deleteUserData: Types.User): Types.Action {
   return {
       type: Types.ActionType.DELETE_USER_SHOW,
+      user: deleteUserData
   }
 }
 
@@ -26,9 +27,9 @@ export function deleteUserWaitingOnServer(waiting: boolean) {
   };
 }
 
-export function deleteUserSuccessful(user: Types.User) {
+export function deleteUserSuccessful(deleteUserData: Types.User) {
   return {
       type: Types.ActionType.DELETE_USER_SUCCESSFUL,
-      user: user
+      user: deleteUserData
   };
 }

@@ -34,7 +34,6 @@ class AdministrationContainer extends React.Component<any, any> {
           getData = {this.props.loadUsers}
           dataArray = {this.props.users}
           deleteUserClicked = {this.props.deleteUserOpen}
-          deleteUser = {this.props.deleteUser}
         />
         <Register 
           visible = {this.props.registerIsOpen}
@@ -48,7 +47,7 @@ class AdministrationContainer extends React.Component<any, any> {
           deleteUserSubmit = {this.props.deleteUserSubmit}
           waiting = {this.props.deleteUserLoading}
           deleteUserFailed = {this.props.deleteUserFailed}
-          deleteUser = {this.props.deleteUserClicked}/>
+          deleteUserData = {this.props.deleteUserData}/>
       </div>
     );
   }
@@ -68,6 +67,7 @@ function mapStateToProps(state: any) {
       deleteUserIsOpen: state.deleteUser.visible,
       deleteUserLoading: state.deleteUser.waiting,
       deleteUserFailed: state.deleteUser.failed,
+      deleteUserData: state.deleteUser.user,
   }
 }
 
@@ -82,7 +82,7 @@ function mapDispatchToProps(dispatch: any) {
       loadUsers: () => dispatch(getUsersFetch()),
 
       //delete user
-      deleteUserOpen: () => dispatch(deleteUserShow()),
+      deleteUserOpen: (deleteUserData: Types.User) => dispatch(deleteUserShow(deleteUserData)),
       deleteUserClose: () => dispatch(deleteUserHide()),
       deleteUserSubmit: (deleteUserAttempt: Types.User) => dispatch(deleteUserFetch(deleteUserAttempt)),
 

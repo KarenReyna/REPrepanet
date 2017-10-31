@@ -28,7 +28,7 @@ export default class Administration extends React.Component<any, any> {
                 <Button label="Borrar usuario" 
                 //onClick={this.props.deleteUserClicked} 
                   data={this.props.deleteUser} data-id={user.key} data-name={user.name}
-                  onClick={this.onItemClick.bind(this, user)}/>
+                  onClick={this.props.deleteUserClicked.bind(this, user)}/>
               </li>
             ))}
           </List>

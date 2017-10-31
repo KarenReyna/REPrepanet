@@ -7,18 +7,21 @@ export class DeleteUser extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     console.log(this.state);
-    /*this.state = {
-      user: {
-        idCustomized: '-1'
-      } as Types.User
-    }*/
+    this.state = {
+      delete: this.props.deleteUser
+    }
+    console.log(this.state);
   }
 
   public render() {
-    console.log("holaaa"+this.props.deleteUser);
+    var data= this.props.deleteUserData;
+    if(data != null){
+      console.log(data);
+    }
+    console.log("deleteUserData "+this.props.deleteUserData);
     const actions = [
       <FlatButton label = "Cancelar" onClick = {this.props.deleteUserHide}/>,
-      <FlatButton label = "Eliminar" onClick = {() => this.props.deleteUserSubmit(this.props.deleteUser)}/>
+      <FlatButton label = "Eliminar" onClick = {() => this.props.deleteUserSubmit(this.props.deleteUserData)}/>
     ];
     return (
       <Dialog 
