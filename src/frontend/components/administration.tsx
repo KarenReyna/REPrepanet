@@ -4,6 +4,12 @@ import Content from '../elements/Content'
 import List from '../elements/List';
 
 export default class Administration extends React.Component<any, any> {
+  onItemClick(item, e) {  
+    console.log(item);
+    console.log(e);
+    this.props.deleteUserClicked(item);
+  }
+
   public render() {
       var data = this.props.dataArray;
       if(data == null) {
@@ -19,8 +25,10 @@ export default class Administration extends React.Component<any, any> {
               <li key={user.key}>
                 <a href='#'>{user.name}</a>
                 <p>{user.privileges}</p>
-                <Button label="Borrar usuario" onClick={this.props.deleteUserClicked} 
-                  data={this.props.deleteUser} data-id={user.key} data-name={user.name}/>
+                <Button label="Borrar usuario" 
+                //onClick={this.props.deleteUserClicked} 
+                  data={this.props.deleteUser} data-id={user.key} data-name={user.name}
+                  onClick={this.onItemClick.bind(this, user)}/>
               </li>
             ))}
           </List>

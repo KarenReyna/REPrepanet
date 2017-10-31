@@ -47,7 +47,8 @@ class AdministrationContainer extends React.Component<any, any> {
           deleteUserHide = {this.props.deleteUserClose}
           deleteUserSubmit = {this.props.deleteUserSubmit}
           waiting = {this.props.deleteUserLoading}
-          deleteUserFailed = {this.props.deleteUserFailed}/>
+          deleteUserFailed = {this.props.deleteUserFailed}
+          deleteUser = {this.props.deleteUserClicked}/>
       </div>
     );
   }
