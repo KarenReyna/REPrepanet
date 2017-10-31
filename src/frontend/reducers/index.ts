@@ -6,6 +6,7 @@ import { users } from './users';
 import { contentUser } from './contentUser';
 import { addCollection } from './addCollection';
 import { routerReducer } from 'react-router-redux'
+import { deleteUser } from './deleteUser';
 
 // TODO: Add reducers
 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     users,  
     contentUser,
     addCollection, 
-    router: routerReducer
+    router: routerReducer,
+    deleteUser
 });
   
 export default rootReducer

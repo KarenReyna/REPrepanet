@@ -106,4 +106,22 @@ export class UserController {
             });
         }
     }
+
+    public deleteUser(req: any, res: any) {
+        console.log("Entro" + req.userId);
+        User.findByIdAndRemove(req.userId)
+        .exec(function (error, user) {
+            if (error) {
+                response.customError(res, 500, error);
+            } else {
+                if (user === null) {
+                    response.customError(res, 400, 'User empty');
+                    return;
+                } else {
+                    response.success(res, user);
+                    return;
+                }
+            }
+        });
+    }
 }

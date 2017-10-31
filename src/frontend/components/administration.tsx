@@ -19,6 +19,8 @@ export default class Administration extends React.Component<any, any> {
               <li key={user.key}>
                 <a href='#'>{user.name}</a>
                 <p>{user.privileges}</p>
+                <Button label="Borrar usuario" onClick={this.props.deleteUserClicked} 
+                  data={this.props.deleteUser} data-id={user.key} data-name={user.name}/>
               </li>
             ))}
           </List>

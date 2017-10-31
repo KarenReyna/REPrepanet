@@ -24,6 +24,12 @@ export enum ActionType {
     LOAD_COLLECTIONS_SUCCESSFUL = 'LOAD_COLLECTION_SUCCESSFUL',
 
     LOAD_USERS_SUCCESSFUL = 'LOAD_USERS_SUCCESSFUL',
+
+    DELETE_USER_SHOW = 'DELETE_USER_SHOW',
+    DELETE_USER_HIDE = 'DELETE_USER_HIDE',
+    DELETE_USER_SUCCESSFUL = 'DELETE_USER_SUCCESSFUL',
+    DELETE_USER_FAILED = 'DELETE_USER_FAILED',
+    DELETE_USER_WAITING_ON_SERVER = 'DELETE_USER_WAITING_ON_SERVER',
 };
 
 export type Action = {
@@ -72,7 +78,19 @@ export type Action = {
 } | {
     type: ActionType.LOAD_USERS_SUCCESSFUL,
     users: User
+} | {
+    type: ActionType.DELETE_USER_SHOW,
+} | {
+    type: ActionType.DELETE_USER_HIDE,
+} | {
+    type: ActionType.DELETE_USER_SUCCESSFUL,
+    user: User
+} | {
+    type: ActionType.DELETE_USER_FAILED,
+} | {
+    type: ActionType.DELETE_USER_WAITING_ON_SERVER,
 }
+
 
 export type User = {
     idCustomized: string,

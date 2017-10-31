@@ -4,6 +4,7 @@ import * as RegisterAction from './register';
 import * as UserAction from './user';
 import * as CollectionsAction from './collections';
 import * as UsersAction from './users';
+import * as DeleteUser from './deleteUser';
 
 function request(object: any, route: string) {
     return fetch(Types.serverUrl + route, {
@@ -140,5 +141,28 @@ export function getUsersFetch() {
         .then((response) => response.json())
         .then((users) => dispatch(UsersAction.loadUsersSuccessful(users as Types.User[])))
         .catch(() => console.log("ERROR"));
+    };
+}
+
+export function deleteUserFetch(deleteAttempt:Types.User) {
+    return (dispatch:any) => {
+        dispatch(DeleteUser.deleteUserWaitingOnServer(true));
+        console.log("Entro thunks 1");
+        request(deleteAttempt, 'api/deleteUser/')
+            .then((response) => {
+                console.log(deleteAttempt);
+                
+                console.log(response);
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+
+                dispatch(DeleteUser.deleteUserWaitingOnServer(false));
+
+                return response;
+            })
+            .then((response) => response.json())
+            .then((user) => dispatch(DeleteUser.deleteUserSuccessful(user as Types.User)))
+            .catch(() => dispatch(DeleteUser.deleteUserFailed()));
     };
 }
