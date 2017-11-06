@@ -1,5 +1,5 @@
 import { Schema, model, Document, Model } from 'mongoose';
-import { ICategory, Category } from './category';
+import { ICategory } from './category';
 import { ITag } from './tag';
 import { IUpdate } from '.'
 
@@ -28,7 +28,7 @@ var ResourceSchema = new Schema({
     url: { type: String, maxlength: 1000, required: true },
     description: { type: String, maxlength: 20000, required: true },
     tags: { type: Array<ITag>(), default: [] },
-    category: { type: Category, required: true },
+    category: { type: {}, required: true },
     updated_by: { type: Array<IUpdate>(), default: [] },
     type: { type: String, required: true, default: "web", maxlength: 50 }
 });

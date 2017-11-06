@@ -1,4 +1,4 @@
-import { User } from '../models/User';
+import { User } from '../models/user';
 import { Success, CustomError, ResponseObjectType } from '../helpers/response';
 
 // TODO: Figure out login and logout with client/server side
