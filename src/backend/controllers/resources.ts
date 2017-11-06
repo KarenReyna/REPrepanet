@@ -41,8 +41,8 @@ export class ResourceController {
 
     private createResponseObject(req: any): any {
         let imageurl = req.body.imageurl || "";
-        var category = Category.findById(req.body.category_id, 'name, description').exec();
-        var currentUser = User.findById(req.session.userId, 'name, email').exec();
+        var category = Category.findById(req.body.category_id, 'name description').exec();
+        var currentUser = User.findById(req.session.userId, 'name email').exec();
         let tags = [];
         if (req.body.tags) {
             tags = Tag.findOrCreateBatch(req.body.tags.split(','));

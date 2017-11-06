@@ -29,7 +29,7 @@ export class CategoryController {
     }
 
     private createResponseObject(req: any): any {
-        var currentUser = User.findById(req.session.userId, 'name, email').exec();        
+        var currentUser = User.findById(req.session.userId, 'name email').exec();        
         return {
             name: req.body.name,
             description: req.body.description,
