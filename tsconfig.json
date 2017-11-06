@@ -10,9 +10,16 @@
         "strict": true,
         "noImplicitThis": false,
         "noUnusedLocals": true,
-        "noUnusedParameters": true,
+        "noUnusedParameters": true, 
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
+        "baseUrl": ".",
+        "paths": {
+            "Config/*": ["src/frontend/config/*"],
+            "Containers/*": ["src/frontend/containers/*"],
+            "Logic/*": ["src/frontend/logic/*"],
+            "Presentational/*": ["src/frontend/presentational/*"]
+        },
         "experimentalDecorators": true,
         "types": [
             "webpack-env",

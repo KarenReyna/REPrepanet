@@ -32,7 +32,7 @@ const config: webpack.Configuration = {
             },
         ]
     },
-    devtool: 'source-map',    
+    devtool: 'source-map',
 };
 
 export default config;

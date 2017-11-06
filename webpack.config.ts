@@ -7,7 +7,7 @@ var FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const config: webpack.Configuration = {
     entry: [
         "react-hot-loader/patch",
-        "./src/frontend/index.tsx",
+        "./src/frontend/config/index.tsx",
     ],
     output: {
         path: path.join(__dirname, 'dist'),
@@ -17,17 +17,23 @@ const config: webpack.Configuration = {
     devtool: "source-map",
 
     resolve: {
-        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+        alias: {
+            Config: path.resolve(__dirname, 'src/frontend/config'),
+            Containers: path.resolve(__dirname, 'src/frontend/containers'),
+            Logic: path.resolve(__dirname, 'src/frontend/logic'),
+            Presentational: path.resolve(__dirname, 'src/frontend/presentational')
+        }
     },
 
     plugins: [
-        new FaviconsWebpackPlugin('./src/frontend/assets/melon.png'),
+        new FaviconsWebpackPlugin('./src/frontend/presentational/assets/melon.png'),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             title: 'Melon',
             chunksSortMode: 'dependency',
-            template: path.resolve(__dirname, './src/frontend/index.ejs')
+            template: path.resolve(__dirname, './src/frontend/config/index.ejs')
         }),
     ],
 

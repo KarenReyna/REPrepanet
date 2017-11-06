@@ -49,8 +49,16 @@ app.use(session({
   })
 }));
 
-var router = require('./routes/users');
-app.use('/api', router);
+// Router
+var usersRoutes = require('./routes/users');
+var categoriesRoutes = require('./routes/categories');
+var resourcesRoutes = require('./routes/resources');
+var sessionsRoutes = require('./routes/sessions');
+
+app.use('/api', sessionsRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/categories', categoriesRoutes);
+app.use('/api/resources', resourcesRoutes);
 
 // start app
 app.listen(serverConfig.port, (error: any) => {

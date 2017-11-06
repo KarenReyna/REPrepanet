@@ -1,40 +1,36 @@
 import { Tag } from '../models/Tag';
-import * as response from '../helpers/response';
+import { Success, CustomError, ResponseObjectType } from '../helpers/response';
 
 export class TagController {
-    public getTags(req: any, res: any) {
-      Tag.find(
-        { "name": /req.body.substr/i }, 
-        function(error, tags) { 
-          if (error) {
-            response.customError(res, 500, error);
-            console.log(req);
-          } else {
-              if (tags === null) {
-                  response.customError(res, 400, 'No tags found');
-                  return;
-              } else {
-                  response.success(res, tags);
-                  return;
-              }
-          }
-        }
-    );
+    public search(req: any, res: any) {
+        Tag.find({ "name": { $regex: req.body.substr } }, (err, tags) => {
+            if (err) {
+                return CustomError(res, 500, err);
+            }
+            return Success(res, ResponseObjectType.Array, "tags", tags)
+        });
     }
 
-    public createTags(req: any, res: any) {
-        console.log("Creating tags...")
-        if (req.body.name) {
-            var tagData = req.body.names;
-            Tag.update(tagData, function (err, tags) {
-              if (err) {
-                response.customError(res, 400, err.message);
-              } else {
-                response.success(res, tags);
-              }
+    public createOrEdit(req: any, res: any) {
+        if (this.validateRequiredParams(req)) {
+            return Tag.update({ upsert: true }, this.createResponseObject(req), (err, tag) => {
+                if (err) {
+                    return CustomError(res, 500, err.message);
+                }
+                return Success(res, ResponseObjectType.Object, "tag", tag);
             });
-        } else {
-            response.customError(res, 400, 'All fields required.');
+        }
+        return CustomError(res, 400, 'All fields required.');
+    }
+
+    private validateRequiredParams(req: any): boolean {
+        return req.body.name;
+    }
+
+    private createResponseObject(req: any): any {
+        return {
+            name: req.body.name,
+            count: req.body.count || 0
         }
     }
 }

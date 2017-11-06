@@ -8,8 +8,9 @@
   "scripts": {
     "build": "node_modules/.bin/cross-env node_modules/.bin/webpack --config webpack.config.ts",
     "build:backend": "node_modules/.bin/cross-env node_modules/.bin/webpack --config webpack.config.server.ts",
-    "start:backend": "npm run build:backend && node dist/server.bundle.js",
-    "start:frontend": "npm run build && nf start",
+    "debug": "node --nolazy --inspect-brk=8000 dist/server.bundle.js",
+    "start:backend": "npm run build:backend && node_modules/.bin/nodemon dist/server.bundle.js",
+    "start:frontend": "npm run build && node_modules/.bin/webpack-dev-server --config webpack.config.ts --hot --inline",
     "clean": "node_modules/.bin/rimraf dist",
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\" \"mongod\" "
   },
@@ -29,6 +30,7 @@
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.8",
+    "react-swipeable-views": "^0.12.8",
     "react-tap-event-plugin": "^3.0.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
@@ -56,8 +58,8 @@
     "express-session": "^1.15.6",
     "favicons-webpack-plugin": "^0.0.7",
     "file-loader": "^1.1.5",
-    "foreman": "^2.0.0",
     "html-webpack-plugin": "^2.30.1",
+    "mongoose-seed": "^0.4.0",
     "nodemon": "^1.12.1",
     "react-hot-loader": "^3.1.1",
     "rimraf": "^2.6.1",
