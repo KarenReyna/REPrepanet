@@ -18,7 +18,11 @@
             "Config/*": ["src/frontend/config/*"],
             "Containers/*": ["src/frontend/containers/*"],
             "Logic/*": ["src/frontend/logic/*"],
-            "Presentational/*": ["src/frontend/presentational/*"]
+            "Presentational/*": ["src/frontend/presentational/*"],
+            "Controllers/*": ["src/backend/controllers/*"],
+            "Models/*": ["src/backend/models/*"],
+            "Routes/*": ["src/backend/routes/*"],
+            "Helpers/*": ["src/backend/helpers/*"]
         },
         "experimentalDecorators": true,
         "types": [

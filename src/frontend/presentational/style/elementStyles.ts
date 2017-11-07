@@ -22,7 +22,7 @@ const Styles = {
                 height: '100px',
                 marginTop: '10px',
                 display: 'flex',
-                'justify-content': 'center'
+                justifyContent: 'center'
             }
         },
         logo: {

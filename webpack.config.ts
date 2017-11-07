@@ -8,8 +8,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const config: webpack.Configuration = {
     entry: [
         "react-hot-loader/patch",
-        "./src/frontend/config/index.tsx",
-        './src/frontend/presentational/style/main.scss'
+        "./src/frontend/config/index.tsx"
     ],
     output: {
         path: path.join(__dirname, 'dist'),
@@ -29,7 +28,9 @@ const config: webpack.Configuration = {
     },
 
     plugins: [
-        new ExtractTextPlugin('home.css'),
+        new ExtractTextPlugin('home.css', {
+            allChunks: true
+        }),
         new FaviconsWebpackPlugin('./src/frontend/presentational/assets/melon.png'),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
@@ -53,7 +54,7 @@ const config: webpack.Configuration = {
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract("style", "css!sass") 
+                loader: ExtractTextPlugin.extract("css!sass") 
             },
             {
               test: /\.(jpg|png|svg)$/,
