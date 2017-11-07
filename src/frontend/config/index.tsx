@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from "react-hot-loader";
 import { App } from 'Config/app';
+// Stylesheets
+require('Presentational/style/home.scss');
 
 const rootEl = document.getElementById("root");
 

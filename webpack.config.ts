@@ -54,7 +54,7 @@ const config: webpack.Configuration = {
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract("css!sass") 
+                loader: ExtractTextPlugin.extract('css-loader!sass-loader') 
             },
             {
               test: /\.(jpg|png|svg)$/,
