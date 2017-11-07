@@ -1,9 +1,10 @@
-$white: '#F1F1F1';
-$blue: '#B2D3EF';
-$gray: '#555555';
+$white: #F1F1F1;
+$blue: #B2D3EF;
+$gray: #555555;
 
-body {
+html, body {
   background-color: $blue;
+  margin: 0;
 }
 .root {
     display: 'flex';
