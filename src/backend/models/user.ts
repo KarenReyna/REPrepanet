@@ -2,9 +2,7 @@ import { Schema, model, Document, Model } from 'mongoose';
 import * as bcrypt from 'bcrypt-nodejs';
 
 // instance methods
-interface IUser extends IUserDocument {
-  comparePassword(password: string): boolean;
-}
+interface IUser extends IUserDocument { }
 
 // class methods
 interface IUserModel extends Model<IUser> {
@@ -22,31 +20,25 @@ interface IUserDocument extends Document {
 // database attributes (should be the same as IUserDocument)
 var UserSchema = new Schema({
   name: { type: String, maxlength: 200, required: true },
-  email: { type: String, maxlength: 100, required: true },
+  email: { type: String, maxlength: 100, required: true, unique: true },
   password: { type: String, maxlength: 1000, required: true },
   isAdmin: { type: Boolean, default: false, required: true }
 });
 
 // authenticate input against database
-UserSchema.statics.authenticate = (email, password, callback) => {
-  return User.findOne({ email: email }).exec(function (err, user) {
-    if (err) {
-      return callback(err)
-    } else if (!user) {
-      var err: any = new Error('User not found.');
+UserSchema.statics.authenticate = async (email, password, callback) => {
+  return await User.findOne({ email: email }).exec((err, user) => {
+    if (!err && user && !bcrypt.compareSync(password, user.password)) {
+      err = new Error("Wrong email or password.");
       err.status = 401;
+    } else if (!err && !user) {
+      err = new Error("Wrong email or password.");
+      err.status = 401;
+    }
+    if (err) {
       return callback(err);
     }
-    if (user.comparePassword(password) === true) {
-      return callback(null, user);
-    }
-    return callback();
   });
-}
-
-UserSchema.methods.comparePassword = (password): boolean => {
-  if (bcrypt.compareSync(password, this.password)) return true;
-  return false;
 }
 
 // hashing a password before saving it to the database

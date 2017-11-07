@@ -3,11 +3,16 @@ import { Category } from '../models/category';
 import { User } from '../models/user';
 import { Tag } from '../models/tag';
 import { Success, CustomError, ResponseObjectType } from '../helpers/response';
+import { isUserLoggedInAsync } from '../helpers/currentUser';
 
 export class ResourceController {
-    public createOrEdit(req: any, res: any) {
+    public async createOrEdit(req: any, res: any) {
+        var loggedIn = await isUserLoggedInAsync(req);
+        if (!loggedIn) {
+            return CustomError(res, 403, "Please login to access.");
+        }
         if (this.validateRequiredParams(req)) {
-            return Resource.update({ upsert: true }, this.createResponseObject(req), (err, resource) => {
+            return await Resource.update({ upsert: true }, this.createResponseObject(req), (err, resource) => {
                 if (err) {
                     return CustomError(res, 500, err.message);
                 }
@@ -17,8 +22,8 @@ export class ResourceController {
         return CustomError(res, 400, 'All fields required.');
     }
 
-    public index(_: any, res: any) {
-        return Resource.find().exec((err, resources) => {
+    public async index(_: any, res: any) {
+        return await Resource.find().exec((err, resources) => {
             if (err) {
                 return CustomError(res, 500, err.message);
             }
@@ -26,8 +31,12 @@ export class ResourceController {
         });
     }
 
-    public delete(req: any, res: any) {
-        return Resource.findByIdAndRemove(req.params.id, (err, resource) => {
+    public async delete(req: any, res: any) {
+        var loggedIn = await isUserLoggedInAsync(req);
+        if (!loggedIn) {
+            return CustomError(res, 403, "Please login to access.");
+        }
+        return await Resource.findByIdAndRemove(req.params.id, (err, resource) => {
             if (err) {
                 return CustomError(res, 500, err.message);
             }

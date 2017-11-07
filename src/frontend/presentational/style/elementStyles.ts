@@ -1,24 +1,28 @@
 const Styles = {
     colors: {
         green: '#63BB67',
-        white: '#ffffff',
+        white: '#F1F1F1',
+        blue: '#B2D3EF',
+        gray: '#555555'
     },
-    button: {
-        class: 'uk-button uk-button-primary',
-    },
-    navButton: {
-        class: 'uk-button uk-button-primary',
-        style: {
-            textAlign: 'right',
-            float: 'right',
-        }
-    },
+    // button: {
+    //     class: 'uk-button uk-button-primary',
+    // },
+    // navButton: {
+    //     class: 'uk-button uk-button-primary',
+    //     style: {
+    //         textAlign: 'right',
+    //         float: 'right',
+    //     }
+    // },
     navbar: {
         navbar: {
             class: 'uk-container',
             style: {
-                height: '50px',
+                height: '100px',
                 marginTop: '10px',
+                display: 'flex',
+                'justify-content': 'center'
             }
         },
         logo: {

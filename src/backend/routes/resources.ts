@@ -7,7 +7,8 @@ var resources = new ResourceController();
 
 router
     .get('/', resources.index)
-    .post('/update', resources.createOrEdit)
-    .delete('/:id/delete', resources.delete)
+    // .post('/:id/edit', resources.edit)
+    // .post('/new', resources.create)
+    .delete('/delete/:id', resources.delete)
 
 module.exports = router;

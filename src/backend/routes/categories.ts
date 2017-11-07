@@ -7,6 +7,7 @@ var categories = new CategoryController();
 
 router
     .get('/', categories.index)
-    .post('/update', categories.createOrEdit)
+    .post('/new', categories.create)
+    .post('/:id/edit', categories.edit)
 
 module.exports = router;

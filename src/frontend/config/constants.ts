@@ -78,4 +78,4 @@ export var fetchHeader = {
     'Content-Type' : 'application/json'
 }
 
-export var serverUrl = "http://localhost:5100/"
+export var serverUrl = "http://localhost:8000/"

@@ -3,11 +3,13 @@ import * as path from "path";
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 // We use require because the lib doesn't have typings
 var FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config: webpack.Configuration = {
     entry: [
         "react-hot-loader/patch",
         "./src/frontend/config/index.tsx",
+        './src/frontend/presentational/style/main.scss'
     ],
     output: {
         path: path.join(__dirname, 'dist'),
@@ -27,6 +29,7 @@ const config: webpack.Configuration = {
     },
 
     plugins: [
+        new ExtractTextPlugin('home.css'),
         new FaviconsWebpackPlugin('./src/frontend/presentational/assets/melon.png'),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
@@ -47,6 +50,10 @@ const config: webpack.Configuration = {
                 ],
                 exclude: path.resolve(__dirname, 'node_modules'),
                 include: path.resolve(__dirname, "src/frontend"),
+            },
+            {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract("style", "css!sass") 
             },
             {
               test: /\.(jpg|png|svg)$/,

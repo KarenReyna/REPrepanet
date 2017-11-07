@@ -8,7 +8,7 @@ var users = new UserController();
 router
     .get('/', users.index)
     .get('/:id', users.get)
-    .get('/profile', users.currentUser)    
-    .post('/update', users.createOrEdit)
+    .post('/new', users.create)
+    .post('/:id/edit', users.edit)
 
 module.exports = router;
