@@ -7,8 +7,8 @@ export function all() {
         dispatch(createAction(TagActions.All, null, 
             null, Status.WaitingOnServer));
         get('api/tags/')
-            .then((tags) => dispatch(
-                createAction(TagActions.All, tags as Tag[], null, 
+            .then((response) => dispatch(
+                createAction(TagActions.All, response.tags as Tag[], null, 
                     Status.Ready)))
             .catch((error) => dispatch(
                 createAction(TagActions.All, null, error, Status.Failed)));

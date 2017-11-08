@@ -17,6 +17,7 @@ connect(serverConfig.mongoURL, { useMongoClient: true }, (error: any) => {
 });
 
 const app = express();
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -45,7 +46,7 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/resources', resourcesRoutes);
 app.use('/api/tags', tagsRoutes);
 app.use(errorHandler);
-app.use(cors());
+
 // Enable CORS on ExpressJS to avoid cross-origin errors when calling this server using AJAX
 // We are authorizing all domains to be able to manage information via AJAX (this is just for development)
 app.use((req, res, next) => {

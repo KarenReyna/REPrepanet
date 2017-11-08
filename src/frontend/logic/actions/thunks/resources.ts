@@ -7,8 +7,8 @@ export function update(resource: Resource) {
         dispatch(createAction(ResourceActions.Update, null, 
             null, Status.WaitingOnServer));
         post(resource, 'api/resources/update/')
-            .then(resource => dispatch(
-                createAction(ResourceActions.Update, resource as Resource, 
+            .then(response => dispatch(
+                createAction(ResourceActions.Update, response.resource as Resource, 
                     null, Status.Ready)))
             .catch((error) => dispatch(
                 createAction(ResourceActions.Update, null, error, 
@@ -34,8 +34,8 @@ export function all() {
         dispatch(createAction(ResourceActions.All, null, 
             null, Status.WaitingOnServer));
         get('api/resources/')
-            .then((resources) => dispatch(
-                createAction(ResourceActions.All, resources as Resource[], 
+            .then((response) => dispatch(
+                createAction(ResourceActions.All, response.resources as Resource[], 
                     null, Status.Ready)))
             .catch((error) => dispatch(
                 createAction(ResourceActions.All, null, error, Status.Failed)));

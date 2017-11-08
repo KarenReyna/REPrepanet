@@ -74,7 +74,8 @@ const config: webpack.Configuration = {
     devServer: {
         hot: true,
         inline: true,
-        historyApiFallback: true
+        historyApiFallback: true,
+        headers: { "Access-Control-Allow-Origin": "*"}
     }
 
 };

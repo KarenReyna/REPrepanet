@@ -12,8 +12,8 @@ export function login(loginAttempt: LoginAttempt) {
         dispatch(createAction(UserActions.Login, null, 
             null, Status.WaitingOnServer));
         post(loginAttempt, 'api/users/login/')
-            .then(user => dispatch(
-                createAction(UserActions.Login, user as User, null, 
+            .then(response => dispatch(
+                createAction(UserActions.Login, response.user as User, null, 
                     Status.Ready)))
             .catch((error) => dispatch(
                 createAction(UserActions.Login, null, error, 
@@ -40,8 +40,8 @@ export function update(user: User) {
         dispatch(createAction(UserActions.Update, null, 
             null, Status.WaitingOnServer));
         post(user, 'api/users/update/')
-            .then(user => dispatch(
-                createAction(UserActions.Update, user as User, 
+            .then(response => dispatch(
+                createAction(UserActions.Update, response.user as User, 
                     null, Status.Ready)))
             .catch((error) => dispatch(
                 createAction(UserActions.Update, null, error, 
@@ -67,8 +67,8 @@ export function all() {
         dispatch(createAction(UserActions.All, null, 
             null, Status.WaitingOnServer));
         get('api/users/')
-            .then((users) => dispatch(
-                createAction(UserActions.All, users as User[], null, 
+            .then((response) => dispatch(
+                createAction(UserActions.All, response.users as User[], null, 
                     Status.Ready)))
             .catch((error) => dispatch(
                 createAction(UserActions.All, null, error, Status.Failed)));

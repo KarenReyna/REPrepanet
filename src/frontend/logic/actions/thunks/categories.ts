@@ -7,8 +7,8 @@ export function update(category: Category) {
         dispatch(createAction(CategoryActions.Update, null, 
             null, Status.WaitingOnServer));
         post(category, 'api/categories/update/')
-            .then(category => dispatch(
-                createAction(CategoryActions.Update, category as Category, 
+            .then(response => dispatch(
+                createAction(CategoryActions.Update, response.category as Category, 
                     null, Status.Ready)))
             .catch((error) => dispatch(
                 createAction(CategoryActions.Update, null, error, 
@@ -35,8 +35,8 @@ export function all() {
         dispatch(createAction(CategoryActions.All, null, 
             null, Status.WaitingOnServer));
         get('api/categories/')
-            .then((categories) => dispatch(
-                createAction(CategoryActions.All, categories as Category[], 
+            .then((response) => dispatch(
+                createAction(CategoryActions.All, response.categories as Category[], 
                     null, Status.Ready)))
             .catch((error) => dispatch(
                 createAction(CategoryActions.All, null, error, 
