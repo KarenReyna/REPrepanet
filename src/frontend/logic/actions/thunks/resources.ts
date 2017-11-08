@@ -33,7 +33,7 @@ export function all() {
     return (dispatch:any) => {
         dispatch(createAction(ResourceActions.All, null, 
             null, Status.WaitingOnServer));
-        get('api/resources')
+        get('api/resources/')
             .then((resources) => dispatch(
                 createAction(ResourceActions.All, resources as Resource[], 
                     null, Status.Ready)))
@@ -60,7 +60,7 @@ export function remove(resourceId: string) {
     return (dispatch:any) => {
         dispatch(createAction(ResourceActions.Remove, null, 
             null, Status.WaitingOnServer));
-        del('api/resources' + resourceId)
+        del('api/resources/' + resourceId)
             .then(() => dispatch(
                 createAction(ResourceActions.Remove, null, null, 
                     Status.Ready)))

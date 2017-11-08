@@ -1,4 +1,4 @@
-import { User } from '../models/user';
+import * as User from '../models/user';
 import { Success, CustomError, ResponseObjectType } from '../helpers/response';
 import { isUserLoggedInAsync } from '../helpers/currentUser';
 
@@ -6,7 +6,7 @@ import { isUserLoggedInAsync } from '../helpers/currentUser';
 export class SessionController {
     public async login(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
-        if (!loggedIn) {
+        if (loggedIn) {
             return CustomError(res, 401, "User already logged in.");
         }
         if (SessionController.validateRequiredParams(req)) {

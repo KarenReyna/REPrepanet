@@ -1,13 +1,6 @@
-import { Schema, Document, Model, model } from 'mongoose';
-import { IUpdate } from '.'
+import { Schema, Model, model } from 'mongoose';
+import { IUpdate, ICategory } from '.'
 
-interface ICategoryDocument extends Document {
-    name: string,
-    description: string,
-    updated_by: Array<IUpdate>,    
-}
-
-interface ICategory extends ICategoryDocument { }
 interface ICategoryModel extends Model<ICategory> { }
 
 var CategorySchema = new Schema({
@@ -16,5 +9,14 @@ var CategorySchema = new Schema({
     updated_by: { type: Array<IUpdate>(), default: [] },    
 });
 
-var Category: ICategoryModel = model<ICategory, ICategoryModel>('Category', CategorySchema);
-export { Category, ICategory, ICategoryModel, ICategoryDocument };
+var Category: any;
+try {
+    if (model('Category')) {
+        Category = model('Category');
+    }
+} catch (e) {
+    if (e.name === 'MissingSchemaError') {
+        Category = model<ICategory, ICategoryModel>('Category', CategorySchema);
+    }
+}
+export = Category;

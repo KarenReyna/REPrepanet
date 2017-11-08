@@ -1,4 +1,4 @@
-import { User } from '../models/user';
+import * as User from '../models/user';
 import { Success, CustomError, ResponseObjectType } from '../helpers/response';
 import { isUserLoggedInAsync, getCurrentUserAsync, currentUserIsAdminAsync } from '../helpers/currentUser';
 
@@ -86,7 +86,7 @@ export class UserController {
         if (!isAdmin) {
             return CustomError(res, 403, "You are not an admin.")
         }
-        await User.findOneAndUpdate({ _id: req.params.id }, UserController.createResponseObject(req),
+        await User.findOneAndUpdate({ _id: req.params.id }, UserController.createUpdateObject(req),
             { new: true, fields: "id name email isAdmin" }, (err, user) => {
                 if (err) {
                     return CustomError(res, 400, err.message);
@@ -112,4 +112,21 @@ export class UserController {
             isAdmin: req.body.isAdmin
         }
     }
+
+    private static createUpdateObject(req: any): any {
+        var obj: any = {};
+        if (req.body.name != null) {
+            obj.name = req.body.name;
+        }
+        if (req.body.email != null) {
+            obj.email = req.body.email;
+        }
+        if (req.body.password != null) {
+            obj.password = req.body.password;
+        }
+        if (req.body.isAdmin != null) {
+            obj.isAdmin = req.body.isAdmin;
+        }
+        return obj
+    }        
 }

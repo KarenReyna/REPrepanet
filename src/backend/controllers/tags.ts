@@ -1,4 +1,4 @@
-import { Tag } from '../models/Tag';
+import * as Tag from '../models/Tag';
 import { Success, CustomError, ResponseObjectType } from '../helpers/response';
 import { isUserLoggedInAsync } from '../helpers/currentUser';
 
@@ -8,7 +8,11 @@ export class TagController {
         if (!loggedIn) {
             return CustomError(res, 403, "Please login to access.");
         }
-        return await Tag.find({ "name": { $regex: req.body.substr } }, (err, tags) => {
+        var query = {};
+        if (req.query.q) {
+            query = { name: { $regex: req.query.q } };
+        }
+        return await Tag.find(query, "id name count", (err, tags) => {
             if (err) {
                 return CustomError(res, 500, err);
             }
@@ -16,30 +20,65 @@ export class TagController {
         });
     }
 
-    public async createOrEdit(req: any, res: any) {
+    public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
             return CustomError(res, 403, "Please login to access.");
         }
-        if (this.validateRequiredParams(req)) {
-            return await Tag.update({ upsert: true }, this.createResponseObject(req), (err, tag) => {
+        if (TagController.validateRequiredParams(req)) {
+            return await Tag.create(TagController.createResponseObject(req), (err, tag) => {
                 if (err) {
                     return CustomError(res, 500, err.message);
                 }
-                return Success(res, ResponseObjectType.Object, "tag", tag);
+                return Success(res, ResponseObjectType.Object, "tag", {
+                    id: tag.id,
+                    name: tag.name,
+                    count: tag.count
+                });
             });
         }
         return CustomError(res, 400, 'All fields required.');
     }
 
-    private validateRequiredParams(req: any): boolean {
+    public async edit(req: any, res: any) {
+        var loggedIn = await isUserLoggedInAsync(req);
+        if (!loggedIn) {
+            return CustomError(res, 403, "Please login to access.");
+        }
+        await Tag.findOneAndUpdate({ _id: req.params.id }, 
+            TagController.createUpdateObject(req),
+            { new: true, fields: "id name count" }, (err, tag) => {
+                if (err) {
+                    return CustomError(res, 400, err.message);
+                }
+
+                if (!tag) {
+                    return CustomError(res, 404, "tag not found");
+                }
+
+                return Success(res, ResponseObjectType.Object, "tag", tag);
+            });
+    }
+
+    private static validateRequiredParams(req: any): boolean {
         return req.body.name;
     }
 
-    private createResponseObject(req: any): any {
+    private static createResponseObject(req: any): any {
         return {
             name: req.body.name,
             count: req.body.count || 0
         }
+    }
+
+    private static createUpdateObject(req: any): any {
+        var obj: any = {};
+        if (req.body.name != null) {
+            obj.name = req.body.name;
+        }
+        if (req.body.count != null) {
+            obj.count = req.body.count;
+        }
+        return obj
     }
 }

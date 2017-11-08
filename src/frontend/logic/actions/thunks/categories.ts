@@ -34,7 +34,7 @@ export function all() {
     return (dispatch:any) => {
         dispatch(createAction(CategoryActions.All, null, 
             null, Status.WaitingOnServer));
-        get('api/categories')
+        get('api/categories/')
             .then((categories) => dispatch(
                 createAction(CategoryActions.All, categories as Category[], 
                     null, Status.Ready)))
@@ -62,7 +62,7 @@ export function remove(categoryId: string) {
     return (dispatch:any) => {
         dispatch(createAction(CategoryActions.Remove, null, 
             null, Status.WaitingOnServer));
-        del('api/categories' + categoryId)
+        del('api/categories/' + categoryId)
             .then(() => dispatch(
                 createAction(CategoryActions.Remove, null, null, 
                     Status.Ready)))

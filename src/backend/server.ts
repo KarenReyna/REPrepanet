@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import { connect, connection } from "mongoose";
 import * as session from 'express-session';
 import * as mongoConnect from 'connect-mongo';
-
+import * as cors from 'cors';
 import serverConfig from './config';
 
 var MongoStore = mongoConnect(session);
@@ -36,16 +36,16 @@ var usersRoutes = require('./routes/users');
 var categoriesRoutes = require('./routes/categories');
 var resourcesRoutes = require('./routes/resources');
 var sessionsRoutes = require('./routes/sessions');
-// var tagsRoutes = require('./routes/tags');
+var tagsRoutes = require('./routes/tags');
 var errorHandler = require('./routes/errorHandler');
 
 app.use('/api', sessionsRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/resources', resourcesRoutes);
-// app.use('/api/tags', tagsRoutes);
+app.use('/api/tags', tagsRoutes);
 app.use(errorHandler);
-
+app.use(cors());
 // Enable CORS on ExpressJS to avoid cross-origin errors when calling this server using AJAX
 // We are authorizing all domains to be able to manage information via AJAX (this is just for development)
 app.use((req, res, next) => {
@@ -62,6 +62,10 @@ app.use((req, res, next) => {
 });
 
 app.use(function(_, res, __) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length");
+  
   res.status(404).json("Not found");
 });
 

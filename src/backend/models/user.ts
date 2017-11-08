@@ -1,20 +1,11 @@
-import { Schema, model, Document, Model } from 'mongoose';
-import * as bcrypt from 'bcrypt-nodejs';
+import { Schema, model, Model } from 'mongoose';
+import { IUser } from '.';
 
-// instance methods
-interface IUser extends IUserDocument { }
+import * as bcrypt from 'bcrypt-nodejs';
 
 // class methods
 interface IUserModel extends Model<IUser> {
   authenticate(email, password, callback)
-}
-
-// object attributes
-interface IUserDocument extends Document {
-  name: string,
-  email: string,
-  password: string,
-  isAdmin: boolean,
 }
 
 // database attributes (should be the same as IUserDocument)
@@ -52,6 +43,14 @@ UserSchema.pre('save', (next) => {
   });
 });
 
-var User: IUserModel = model<IUser, IUserModel>('User', UserSchema);
-
-export { User, IUser, IUserModel, IUserDocument };
+var User: any;
+try {
+    if (model('User')) {
+      User = model('User');
+    }
+} catch (e) {
+    if (e.name === 'MissingSchemaError') {
+      User = model<IUser, IUserModel>('User', UserSchema);
+    }
+}
+export = User;

@@ -6,8 +6,8 @@ var router: Router = Router();
 var tag = new TagController();
 
 router
-    .post('/', tag.search)
-    // .delete('/new', tag.create)
-    // .get('/:id/edit', tag.edit)
+    .get('/', tag.search)
+    .post('/new', tag.create)
+    .post('/:id/edit', tag.edit)
 
 module.exports = router;

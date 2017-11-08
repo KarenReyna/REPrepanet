@@ -25,7 +25,7 @@ export function logout() {
     return (dispatch:any) => {
         dispatch(createAction(UserActions.Logout, null, 
             null, Status.WaitingOnServer));
-        get('api/users/logout')
+        get('api/users/logout/')
             .then(() => dispatch(
                 createAction(UserActions.Logout, null, null, 
                     Status.Ready)))
@@ -66,7 +66,7 @@ export function all() {
     return (dispatch:any) => {
         dispatch(createAction(UserActions.All, null, 
             null, Status.WaitingOnServer));
-        get('api/users')
+        get('api/users/')
             .then((users) => dispatch(
                 createAction(UserActions.All, users as User[], null, 
                     Status.Ready)))

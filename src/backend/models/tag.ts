@@ -1,17 +1,9 @@
-import { Schema, Document, Model, model } from 'mongoose';
-
-// instance methods
-interface ITag extends ITagDocument { }
+import { Schema, Model, model } from 'mongoose';
+import { ITag } from '.';
 
 // class methods
 interface ITagModel extends Model<ITag> {
     findOrCreateBatch(tags: any, callback?: (err, tags) => void);
-}
-
-// object attributes
-interface ITagDocument extends Document {
-    name: string,
-    count: number
 }
 
 // database attributes (should be the same as ITagModel)
@@ -20,30 +12,43 @@ var TagSchema = new Schema({
     count: { type: Number, default: 1 }
 });
 
-TagSchema.statics.findOrCreateBatch = (tagsNames: Array<string>, callback?: (errs, tags) => void) => {
+TagSchema.statics.findOrCreateBatch = async (tagsNames: Array<string>, callback?: (errs, tags) => void): Promise<Array<any>> => {
     var rawTags: any[] = [];
     var errs: any[] = [];
-    tagsNames.forEach(tagName => {
-        var query = Tag.where("name", tagName);
-        query.findOne((err, tag) => {
+    for (var i = 0; i < tagsNames.length; i++) {
+        var tagName = tagsNames[i].trim();
+        var tag = await Tag.findOne({ name: tagName }, "name count", (err, _) => {
             if (err) errs.push(err);
-            if (tag) {
-                tag.count += 1;
-                return Tag.update({}, tag, (err, rawTag) => {
-                    if (err) errs.push(err);
-                    rawTags.push({ name: rawTag.name });
-                });
-            }
-            return Tag.create({ name: tagName, count: 1 }, (err, rawTag) => {
-                if (err) errs.push(err);
-                rawTags.push({ name: rawTag.name });
-            });
         });
-    });
+        if (tag) {
+            tag.count += 1;
+            var updatedTag = await Tag.findOneAndUpdate({ _id: tag.id },
+                { count: tag.count },
+                { new: true, fields: "id name count" }).catch(e => {
+                    errs.push(e);
+                });
+            rawTags.push({ name: updatedTag.name });
+        } else {
+            var createdTag = await Tag.create({ name: tagName, count: 1 }, (err, _) => {
+                if (err) errs.push(err);
+            });
+            rawTags.push({ name: createdTag.name });
+        }
+    }
     if (callback) {
         callback(errs, rawTags);
     }
+    return rawTags;
 }
 
-var Tag: ITagModel = model<ITag, ITagModel>('Tag', TagSchema);
-export { Tag, ITag, ITagModel, ITagDocument };
+var Tag: any;
+try {
+    if (model('Tag')) {
+        Tag = model('Tag');
+    }
+} catch (e) {
+    if (e.name === 'MissingSchemaError') {
+        Tag = model<ITag, ITagModel>('Tag', TagSchema);
+    }
+}
+export = Tag;

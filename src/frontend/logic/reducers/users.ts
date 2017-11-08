@@ -60,8 +60,6 @@ export function users (
         case UserActions.All:
             return all(state, action);
 
-
-
         case UserActions.Remove:
             return remove(state, action);
 

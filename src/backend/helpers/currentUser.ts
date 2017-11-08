@@ -1,4 +1,4 @@
-import { User } from '../models/user';
+import * as User from '../models/user';
 
 var _currentUser: any;
 

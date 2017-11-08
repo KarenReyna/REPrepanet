@@ -16,6 +16,7 @@
     "seed": "node_modules/.bin/seed"
   },
   "dependencies": {
+    "@types/cors": "^2.8.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "concurrently": "^3.5.0",

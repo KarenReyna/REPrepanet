@@ -1,4 +1,4 @@
-import { Category } from '../models/category';
+import * as Category from '../models/category';
 import { Success, CustomError, ResponseObjectType } from '../helpers/response';
 import { isUserLoggedInAsync, getCurrentUserAsync, currentUserIsAdminAsync } from '../helpers/currentUser';
 
@@ -50,15 +50,11 @@ export class CategoryController {
                     return CustomError(res, 404, "category not found");
                 }
 
-                return Success(res, ResponseObjectType.Object, "user", category);
+                return Success(res, ResponseObjectType.Object, "category", category);
             });
     }
 
-    public async index(req: any, res: any) {
-        var loggedIn = await isUserLoggedInAsync(req);
-        if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
-        }
+    public async index(_: any, res: any) {
         return await Category.find({}, "id name description updated_by").exec((err, categories) => {
             if (err) {
                 return CustomError(res, 500, err);
@@ -89,10 +85,10 @@ export class CategoryController {
     private static async createUpdateObject(req: any): Promise<any> {
         var currentUser = await getCurrentUserAsync(req);
         var obj: any = {};
-        if (req.body.name) {
+        if (req.body.name != null) {
             obj.name = req.body.name;
         }
-        if (req.body.description) {
+        if (req.body.description != null) {
             obj.description = req.body.description;
         }
 

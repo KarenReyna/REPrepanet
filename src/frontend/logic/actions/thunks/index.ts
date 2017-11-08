@@ -21,7 +21,6 @@ function evaluate(response: any): Promise<any> {
 export function post(object: any, route: string) {
     return fetch(
         serverUrl + route, {
-        mode: 'cors',
         method: 'POST',
         headers: fetchHeader,
         body: JSON.stringify({
@@ -33,7 +32,6 @@ export function post(object: any, route: string) {
 export function get(route: string) {
     return fetch(
         serverUrl + route, {
-        mode: 'cors',
         method: 'GET',
         headers: fetchHeader
     }).then(response => { return evaluate(response) })
@@ -42,7 +40,6 @@ export function get(route: string) {
 export function del(route: string) {
     return fetch(
         serverUrl + route, {
-        mode: 'cors',
         method: 'DELETE',
         headers: fetchHeader
     }).then(response => { return evaluate(response) })

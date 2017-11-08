@@ -6,7 +6,7 @@ export function all() {
     return (dispatch:any) => {
         dispatch(createAction(TagActions.All, null, 
             null, Status.WaitingOnServer));
-        get('api/tags')
+        get('api/tags/')
             .then((tags) => dispatch(
                 createAction(TagActions.All, tags as Tag[], null, 
                     Status.Ready)))
