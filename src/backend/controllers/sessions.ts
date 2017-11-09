@@ -15,7 +15,7 @@ export class SessionController {
                 if (err) error = err;
             });
             if (error) {
-                return CustomError(res, 400, error.message);
+                return CustomError(res, 400, 'Incorrect email or password.');
             }
 
             req.session.auth_token = user.id;

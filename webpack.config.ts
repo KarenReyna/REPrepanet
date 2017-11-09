@@ -31,7 +31,7 @@ const config: webpack.Configuration = {
         new ExtractTextPlugin('home.css', {
             allChunks: true
         }),
-        new FaviconsWebpackPlugin('./src/frontend/presentational/assets/melon.png'),
+        new FaviconsWebpackPlugin('./src/frontend/presentational/assets/logo.svg'),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({

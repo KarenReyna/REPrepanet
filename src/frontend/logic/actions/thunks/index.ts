@@ -13,9 +13,10 @@ export var thunks = {
 
 function evaluate(response: any): Promise<any> {
     if (!response.ok) {
-        throw Error(response.statusText);
+        throw response;
     }
-    return response.json();
+    else
+        return response.json();
 }
 
 export function post(object: any, route: string) {

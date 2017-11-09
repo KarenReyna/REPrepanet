@@ -41,13 +41,14 @@ function login(state, action: Action) {
 function logout(state) {
     return {
         ...state,
-        current: {}
+        current: {},
+        login: { open: true }
     }
 }
 
 export function users (
     state = {
-        login: { open: false },
+        login: { open: true },
         update: { open: false, object: {} },
         current: {} as User,
         all: [] as User[],

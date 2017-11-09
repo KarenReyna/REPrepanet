@@ -11,7 +11,7 @@ export function login(loginAttempt: LoginAttempt) {
     return (dispatch: any) => {
         dispatch(createAction(UserActions.Login, null, 
             null, Status.WaitingOnServer));
-        post(loginAttempt, 'api/users/login/')
+        post(loginAttempt, 'api/login/')
             .then(response => dispatch(
                 createAction(UserActions.Login, response.user as User, null, 
                     Status.Ready)))
@@ -25,7 +25,7 @@ export function logout() {
     return (dispatch:any) => {
         dispatch(createAction(UserActions.Logout, null, 
             null, Status.WaitingOnServer));
-        get('api/users/logout/')
+        get('api/logout/')
             .then(() => dispatch(
                 createAction(UserActions.Logout, null, null, 
                     Status.Ready)))
@@ -70,8 +70,10 @@ export function all() {
             .then((response) => dispatch(
                 createAction(UserActions.All, response.users as User[], null, 
                     Status.Ready)))
-            .catch((error) => dispatch(
-                createAction(UserActions.All, null, error, Status.Failed)));
+            .catch((error) => {dispatch(
+                createAction(UserActions.Remove, null, error, 
+                    Status.Failed))
+            });
     };
 }
 
@@ -95,8 +97,16 @@ export function remove(userId: string) {
         del('api/users/' + userId)
             .then(() => dispatch(
                 createAction(UserActions.Remove, null, null, Status.Ready)))
-            .catch((error) => dispatch(
+            .catch((error) => {
+                const status = error.response ? error.response.status : 500
+                if (status === 404) {
+                  console.log('Not found');
+                } else {
+                  console.log('Other error');
+                }
+                dispatch(
                 createAction(UserActions.Remove, null, error, 
-                    Status.Failed)));
+                    Status.Failed))
+            });
     };
 }

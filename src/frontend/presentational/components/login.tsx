@@ -2,22 +2,22 @@ import * as React from 'react';
 import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
-import { LinearProgress } from 'material-ui/Progress';
+import { FormControl } from 'material-ui/Form';
+import Input, { InputAdornment, InputLabel } from 'material-ui/Input';
+import IconButton from 'material-ui/IconButton';
+// import { LinearProgress } from 'material-ui/Progress';
+import Visibility from 'material-ui-icons/Visibility';
+import VisibilityOff from 'material-ui-icons/VisibilityOff';  
 
 export class Login extends React.Component<any, any> {
-  constructor(props: any) {
+  handleChange: (name: any) => (event: any) => void;
+  constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: ""
+      email: '',
+      password: '',
+      showPassword: false
     }
-  }
-
-  handleChange(type: string | undefined, newValue: string | undefined) {
-    let newState = type && type == "email" ? 
-      { email: newValue } : type == "password" ? 
-      { password: newValue } : {};
-    this.setState(newState);
   }
 
   public render() {
@@ -34,25 +34,39 @@ export class Login extends React.Component<any, any> {
               label="Correo electrónico"
               type="email"
               fullWidth
+              onChange={(event) => {
+                this.setState({
+                email: event.target.value
+              });}
+            }
             /><br />
-            <TextField
-              autoFocus
-              margin="dense"
+            <FormControl>
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <Input
               id="password"
-              label="Contraseña"
-              type="password"
-              fullWidth
-              onChange={(e) => this.handleChange((e.target as HTMLElement).dataset.type, (e.target as HTMLElement).dataset.txt)}
-            /><br />
-            {this.props.failed && <p>El usuario y/o contraseña están incorrectos</p>}
-            {this.props.waiting && <LinearProgress mode="indeterminate" />}
+              onChange={(event) => {
+                  this.setState({
+                  password: event.target.value
+                });}
+              }
+              type={this.state.showPassword ? 'text' : 'password'}
+              value={this.state.password}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={(_) => {
+                      this.setState({ showPassword: !this.state.showPassword });
+                    }}
+                    onMouseDown={(event) => { event.preventDefault(); }}
+                  >
+                    {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button 
-              onClick = {this.props.hide} 
-              color="primary">
-                Cancelar
-            </Button>,
             <Button 
               onClick = {() => this.props.submit({email: this.state.email, 
                 password: this.state.password})}

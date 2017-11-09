@@ -4,65 +4,79 @@ import { connect } from 'react-redux';
 import { thunks } from 'Logic/actions/thunks';
 import { createAction } from 'Logic/actions';
 
+import { isEmpty } from 'Config/helper';
+
 import {
   Status,
   UserActions,
   CategoryActions,
-  ResourceActions
+  ResourceActions,
+  LoginAttempt
 } from 'Config/constants';
 
 import { AdminView } from 'Presentational/components/adminView';
 import { UpdateCategory } from 'Presentational/components/updateCategory';
 import { UpdateResource } from 'Presentational/components/updateResource';
 import { UpdateUser } from 'Presentational/components/updateUser';
+import { Login } from 'Presentational/components/login';
 
 class Admin extends React.Component<any, any> {
-  constructor() {
-    super();
-  }
-
-  componentDidMount() {
-    this.props.loadCategories();
-    this.props.loadResources();
-    this.props.loadUsers();
+  willReceiveProps(nextProps) {
+    if(!isEmpty(nextProps.users.current)) {
+        this.props.loadCategories();
+        this.props.loadResources();
+        this.props.loadUsers();
+    }
   }
 
   render() {
     return (
       <div>
-        <AdminView
-            updateUserShow = {this.props.updateUserShow}
-            updateResourceShow = {this.props.updateResourceShow}
-            updateCategoryShow = {this.props.updateCategoryShow}
-            users = {this.props.users}
-            resources = {this.props.resources}
-            categories = {this.props.categories}
-        />
-        <UpdateUser 
-            visible = {this.props.users.update.open}
-            hide = {this.props.updateUserHide}
-            submit = {this.props.updateUser}
-            waiting = {this.props.users.status == Status.WaitingOnServer}
-            failed = {this.props.users.status == Status.Failed}
-            user = { this.props.users.update.object }
-        />
-        <UpdateCategory
-            visible = {this.props.categories.update.open}
-            hide = {this.props.updateCategoryHide}
-            submit = {this.props.updateCategory}
-            waiting = {this.props.categories.status == Status.WaitingOnServer}
-            failed = {this.props.categories.status == Status.Failed}
-            category = { this.props.categories.update.object }
-        />
-        <UpdateResource
-            visible = {this.props.resources.update.open}
-            hide = {this.props.updateResourceHide}
-            submit = {this.props.updateResource}
-            waiting = {this.props.resources.status == Status.WaitingOnServer}
-            failed = {this.props.resources.status == Status.Failed}
-            resource = { this.props.resources.update.object }
-            categories =  { this.props.categories }
-        />
+        {!isEmpty(this.props.users.current) &&
+            <AdminView
+                updateUserShow = {this.props.updateUserShow}
+                updateResourceShow = {this.props.updateResourceShow}
+                updateCategoryShow = {this.props.updateCategoryShow}
+                users = {this.props.users}
+                resources = {this.props.resources}
+                categories = {this.props.categories}
+            /> &&
+            <UpdateUser 
+                visible = {this.props.users.update.open}
+                hide = {this.props.updateUserHide}
+                submit = {this.props.updateUser}
+                waiting = {this.props.users.status == Status.WaitingOnServer}
+                failed = {this.props.users.status == Status.Failed}
+                user = { this.props.users.update.object }
+            /> &&
+            <UpdateCategory
+                visible = {this.props.categories.update.open}
+                hide = {this.props.updateCategoryHide}
+                submit = {this.props.updateCategory}
+                waiting = {this.props.categories.status == Status.WaitingOnServer}
+                failed = {this.props.categories.status == Status.Failed}
+                category = { this.props.categories.update.object }
+            /> &&
+            <UpdateResource
+                visible = {this.props.resources.update.open}
+                hide = {this.props.updateResourceHide}
+                submit = {this.props.updateResource}
+                waiting = {this.props.resources.status == Status.WaitingOnServer}
+                failed = {this.props.resources.status == Status.Failed}
+                resource = { this.props.resources.update.object }
+                categories =  { this.props.categories }
+            />
+        }
+        <Login
+            visible = {this.props.users.login.open}
+            hide = {this.props.loginHide}
+            submit = {this.props.loginSubmit}
+            waiting = {this.props.users.status == 
+                                    Status.WaitingOnServer}
+            failed = {this.props.users.error && 
+                    this.props.users.error.status && 
+                    this.props.users.error.status == 400}
+        />  
       </div>
     );
   }
@@ -100,6 +114,11 @@ function mapDispatchToProps(dispatch: any) {
           createAction(ResourceActions.Update, resource, null, Status.WaitingOnUser)),
         updateResourceHide: () => dispatch(
             createAction(ResourceActions.Update, null, null, Status.Ready)),
+
+        loginSubmit: (loginAttempt: LoginAttempt) => 
+            dispatch(thunks.users.login(loginAttempt)),
+        loginHide: () => dispatch(
+            createAction(UserActions.Login, null, null, Status.Ready)),
     }
 }
 
