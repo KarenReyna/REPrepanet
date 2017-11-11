@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { history } from 'Logic/store';
 
 import Main from 'Containers/home';
-import Admin from 'Containers/admin';
+import Login from 'Containers/login';
 
 import { ConnectedRouter } from 'react-router-redux'
 
@@ -13,7 +13,7 @@ export class Routes extends React.Component<any, any> {
       <ConnectedRouter history={history}>
         <div>
           <Route exact path="/" component={Main}/>
-          <Route path="/admin" component={Admin}/>
+          <Route path="/login" component={Login}/>
         </div>
       </ConnectedRouter>
     );
