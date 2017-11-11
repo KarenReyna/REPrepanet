@@ -2,7 +2,7 @@ import * as webpack from "webpack";
 import * as path from "path";
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 // We use require because the lib doesn't have typings
-var FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+// var FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config: webpack.Configuration = {
@@ -31,7 +31,7 @@ const config: webpack.Configuration = {
         new ExtractTextPlugin('home.css', {
             allChunks: true
         }),
-        new FaviconsWebpackPlugin('./src/frontend/presentational/assets/logo.svg'),
+        // new FaviconsWebpackPlugin('./src/frontend/presentational/assets/logo.svg'),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({

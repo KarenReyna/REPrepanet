@@ -14,59 +14,69 @@ import {
   LoginAttempt
 } from 'Config/constants';
 
-import { AdminView } from 'Presentational/components/adminView';
-import { UpdateCategory } from 'Presentational/components/updateCategory';
-import { UpdateResource } from 'Presentational/components/updateResource';
-import { UpdateUser } from 'Presentational/components/updateUser';
+// import { AdminView } from 'Presentational/components/adminView';
+// import { UpdateCategory } from 'Presentational/components/updateCategory';
+// import { UpdateResource } from 'Presentational/components/updateResource';
+// import { UpdateUser } from 'Presentational/components/updateUser';
 import { Login } from 'Presentational/components/login';
 
 class Admin extends React.Component<any, any> {
-  willReceiveProps(nextProps) {
-    if(!isEmpty(nextProps.users.current)) {
-        this.props.loadCategories();
-        this.props.loadResources();
-        this.props.loadUsers();
+    adminViews = <div></div>
+    componentWillReceiveProps(nextProps) {
+        if(!isEmpty(nextProps.users.current) && 
+            nextProps.users.current._id != this.props.users.current._id) {
+            this.props.loadCategories();
+            this.props.loadResources();
+            this.props.loadUsers();
+        }
+        // if(!isEmpty(nextProps.users.all) 
+        //     && nextProps.users.all.length != this.props.users.all.length)
+        //     userUpdateView = <UpdateUser 
+        //                             visible = {this.props.users.update.open}
+        //                             hide = {this.props.updateUserHide}
+        //                             submit = {this.props.updateUser}
+        //                             waiting = {this.props.users.status == Status.WaitingOnServer}
+        //                             failed = {this.props.users.status == Status.Failed}
+        //                             user = { this.props.users.update.object }
+        //                         />
+
+        // if(!isEmpty(nextProps.users.all) && 
+        //     !isEmpty(nextProps.resources.all) && 
+        //     !isEmpty(nextProps.categories.all))
+        //     this.adminViews = (<div>
+        //         <AdminView
+        //             updateUserShow = {this.props.updateUserShow}
+        //             updateResourceShow = {this.props.updateResourceShow}
+        //             updateCategoryShow = {this.props.updateCategoryShow}
+        //             users = {this.props.users}
+        //             resources = {this.props.resources}
+        //             categories = {this.props.categories}
+        //         /> 
+                
+        //         <UpdateCategory
+        //             visible = {this.props.categories.update.open}
+        //             hide = {this.props.updateCategoryHide}
+        //             submit = {this.props.updateCategory}
+        //             waiting = {this.props.categories.status == Status.WaitingOnServer}
+        //             failed = {this.props.categories.status == Status.Failed}
+        //             category = { this.props.categories.update.object }
+        //         /> 
+        //         <UpdateResource
+        //             visible = {this.props.resources.update.open}
+        //             hide = {this.props.updateResourceHide}
+        //             submit = {this.props.updateResource}
+        //             waiting = {this.props.resources.status == Status.WaitingOnServer}
+        //             failed = {this.props.resources.status == Status.Failed}
+        //             resource = { this.props.resources.update.object }
+        //             categories =  { this.props.categories }
+        //         />
+        //     </div>)
     }
-  }
 
   render() {
     return (
       <div>
-        {!isEmpty(this.props.users.current) &&
-            <AdminView
-                updateUserShow = {this.props.updateUserShow}
-                updateResourceShow = {this.props.updateResourceShow}
-                updateCategoryShow = {this.props.updateCategoryShow}
-                users = {this.props.users}
-                resources = {this.props.resources}
-                categories = {this.props.categories}
-            /> &&
-            <UpdateUser 
-                visible = {this.props.users.update.open}
-                hide = {this.props.updateUserHide}
-                submit = {this.props.updateUser}
-                waiting = {this.props.users.status == Status.WaitingOnServer}
-                failed = {this.props.users.status == Status.Failed}
-                user = { this.props.users.update.object }
-            /> &&
-            <UpdateCategory
-                visible = {this.props.categories.update.open}
-                hide = {this.props.updateCategoryHide}
-                submit = {this.props.updateCategory}
-                waiting = {this.props.categories.status == Status.WaitingOnServer}
-                failed = {this.props.categories.status == Status.Failed}
-                category = { this.props.categories.update.object }
-            /> &&
-            <UpdateResource
-                visible = {this.props.resources.update.open}
-                hide = {this.props.updateResourceHide}
-                submit = {this.props.updateResource}
-                waiting = {this.props.resources.status == Status.WaitingOnServer}
-                failed = {this.props.resources.status == Status.Failed}
-                resource = { this.props.resources.update.object }
-                categories =  { this.props.categories }
-            />
-        }
+        {this.adminViews}
         <Login
             visible = {this.props.users.login.open}
             hide = {this.props.loginHide}
