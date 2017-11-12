@@ -3,18 +3,37 @@ import Navbar from 'Presentational/elements/Navbar';
 // import Button from 'Presentational/elements/Button';
 import NavButton from 'Presentational/elements/NavButton';
 import Container from 'Presentational/elements/Container';
-import CollectionCard from 'Presentational/elements/CollectionCard';
+// import CollectionCard from 'Presentational/elements/CollectionCard';
+import CollectionCardV2 from 'Presentational/elements/CollectionCardV2';
 // import ResourceCard from 'Presentational/elements/ResourceCard';
 import Styles from 'Presentational/style/elementStyles';
 import { Status } from 'Config/constants';
 import { LinearProgress } from 'material-ui/Progress';
 
-function createContent(object) {
+// function createContent(object) {
+//   switch(object.status) {
+//     case Status.Ready:
+//       if(object && object.all && object.all.length > 0)
+//         return object.all.map((category) => (
+//           <CollectionCard key={object.all._id} title={category.title} />
+//         ));
+//       return (<p>No hay categorías</p>);
+//     case Status.Failed:
+//       return (<p>No hay conexión a Internet</p>);
+//     case Status.WaitingOnServer:
+//     default:
+//       return (<LinearProgress mode="indeterminate" />);
+//   }
+// }
+
+function createContentV2(object, resources) {
+  if(resources.all != null && resources.all.length > 0)
+    console.log(resources.all);
   switch(object.status) {
     case Status.Ready:
-      if(object && object.all && object.all.length > 0)
+      if(object && object.all && object.all.length > 0 && resources.all != null && resources.all.length > 0)
         return object.all.map((category) => (
-          <CollectionCard key={object.all._id} title={category.title} />
+          <CollectionCardV2 key={object.all._id} title={category.name} resources = {resources}/>
         ));
       return (<p>No hay categorías</p>);
     case Status.Failed:
@@ -27,8 +46,8 @@ function createContent(object) {
 
 export class Home extends React.Component<any, any> {
   public render() {
-    let categoryContent = createContent(this.props.categories);
-    let resourceContent = createContent(this.props.resources);
+    let categoryContent = createContentV2(this.props.categories, this.props.resources);
+    // let resourceContent = createContent(this.props.resources);
     
     return (
       <div>
@@ -48,10 +67,10 @@ export class Home extends React.Component<any, any> {
           <h3>Categorías</h3>
             {categoryContent}
         </Container>
-        <Container>
+        {/* <Container>
           <h3>Recursos populares</h3>
             {resourceContent}
-        </Container>
+        </Container> */}
       </div>
     );
   }

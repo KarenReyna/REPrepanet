@@ -86,6 +86,27 @@ const Styles = {
             class: "uk-nav uk-nav-default",
         },
     },
+    root: {
+        style:{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+        }
+      },
+      gridList: {
+        style:{
+        width: 500,
+        height: 200,
+        overflowY: 'auto',
+        }
+      },
+      gridListResources: {
+        style:{
+            display: 'flex',
+            flexWrap: 'nowrap',
+            overflowX: 'auto',
+        }
+    },
 }
 
 export default Styles;
