@@ -63,8 +63,10 @@ export function remove(state, action: IAction) {
             objects = state.all;
             if(objects && objects.length > 0)
             {
-                index = objects.indexOf(action.object);
-                objects = objects.splice(index, 1);
+                index = objects.findIndex(obj => obj._id === action.object._id);
+                if(index != -1) {
+                    objects.splice(index, 1);
+                }
                 return {
                     ...state,
                     all: objects,

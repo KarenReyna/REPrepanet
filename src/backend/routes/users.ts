@@ -10,5 +10,6 @@ router
     .get('/:id', users.get)
     .post('/new', users.create)
     .post('/:id/edit', users.edit)
+    .delete('/:id', users.delete)
 
 module.exports = router;

@@ -31,7 +31,7 @@ export class TagController {
                     return CustomError(res, 500, err.message);
                 }
                 return Success(res, ResponseObjectType.Object, "tag", {
-                    id: tag.id,
+                    _id: tag._id,
                     name: tag.name,
                     count: tag.count
                 });
@@ -56,7 +56,11 @@ export class TagController {
                     return CustomError(res, 404, "tag not found");
                 }
 
-                return Success(res, ResponseObjectType.Object, "tag", tag);
+                return Success(res, ResponseObjectType.Object, "tag", {
+                    _id: tag._id,
+                    name: tag.name,
+                    count: tag.count
+                });
             });
     }
 

@@ -17,7 +17,7 @@ export class ResourceController {
                     return CustomError(res, 500, err.message);
                 }
                 return Success(res, ResponseObjectType.Object, "resource", {
-                    id: resource.id,
+                    _id: resource._id,
                     name: resource.name,
                     description: resource.description,
                     url: resource.url,
@@ -48,7 +48,15 @@ export class ResourceController {
                     return CustomError(res, 404, "resource not found");
                 }
 
-                return Success(res, ResponseObjectType.Object, "resource", resource);
+                return Success(res, ResponseObjectType.Object, "resource", {
+                    _id: resource._id,
+                    name: resource.name,
+                    description: resource.description,
+                    url: resource.url,
+                    tags: resource.tags,
+                    category: resource.category,
+                    updated_by: resource.updated_by
+                });
             });
     }
 
@@ -79,7 +87,7 @@ export class ResourceController {
     }
 
     private static async createResponseObject(req: any): Promise<any> {
-        var category = await Category.findById(req.body.category_id, 'name description').exec();
+        var category = await Category.findById(req.body.categoryid, 'name description').exec();
         var currentUser = await getCurrentUserAsync(req);
         let tags = [];
         if (req.body.tags != null) {
@@ -119,8 +127,8 @@ export class ResourceController {
         if (req.body.tags != null) {
             obj.tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
         }
-        if (req.body.category_id != null) {
-            obj.category = await Category.findById(req.body.category_id, 'name description').exec();
+        if (req.body.categoryid != null) {
+            obj.category = await Category.findById(req.body.categoryid, 'name description').exec();
         }
         if (req.body.type != null) {
             obj.type = req.body.type;

@@ -18,9 +18,9 @@ export class SessionController {
                 return CustomError(res, 400, 'Incorrect email or password.');
             }
 
-            req.session.auth_token = user.id;
+            req.session.auth_token = user._id;
             return Success(res, ResponseObjectType.Object, "user", {
-                id: user.id,
+                _id: user._id,
                 name: user.name,                
                 email: user.email
             });

@@ -9,5 +9,6 @@ router
     .get('/', categories.index)
     .post('/new', categories.create)
     .post('/:id/edit', categories.edit)
+    .delete('/:id', categories.delete)
 
 module.exports = router;

@@ -68,9 +68,10 @@ export class UserController {
                     return CustomError(res, 500, err.message);
                 }
                 return Success(res, ResponseObjectType.Object, "user", {
-                    id: user.id,
-                    name: user.name,                
-                    email: user.email
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    isAdmin: user.isAdmin
                 });
             });
         }
@@ -96,8 +97,26 @@ export class UserController {
                     return CustomError(res, 404, "user not found");
                 }
 
-                return Success(res, ResponseObjectType.Object, "user", user);
+                return Success(res, ResponseObjectType.Object, "user", {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    isAdmin: user.isAdmin
+                });
             });
+    }
+
+    public async delete(req: any, res: any) {
+        var loggedIn = await isUserLoggedInAsync(req);
+        if (!loggedIn) {
+            return CustomError(res, 403, "Please login to access.");
+        }
+        return await User.findByIdAndRemove(req.params.id, (err, user) => {
+            if (err) {
+                return CustomError(res, 500, err.message);
+            }
+            return Success(res, ResponseObjectType.Object, "user", user);
+        });
     }
 
     private static validateRequiredParams(req: any): boolean {

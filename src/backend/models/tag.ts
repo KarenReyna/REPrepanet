@@ -22,7 +22,7 @@ TagSchema.statics.findOrCreateBatch = async (tagsNames: Array<string>, callback?
         });
         if (tag) {
             tag.count += 1;
-            var updatedTag = await Tag.findOneAndUpdate({ _id: tag.id },
+            var updatedTag = await Tag.findOneAndUpdate({ _id: tag._id },
                 { count: tag.count },
                 { new: true, fields: "id name count" }).catch(e => {
                     errs.push(e);

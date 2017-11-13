@@ -2,33 +2,30 @@ import { Category, CategoryActions, Status } from 'Config/constants';
 import { createAction } from 'Logic/actions';
 import { post, get, del } from 'Logic/actions/thunks';
 
-export function update(category: Category) {
+export function update(category: Category, editing: boolean) {
     return (dispatch: any) => {
         dispatch(createAction(CategoryActions.Update, null, 
             null, Status.WaitingOnServer));
-        post(category, 'api/categories/update/')
+        if(editing){
+            post(category, 'api/categories/' + category._id + '/edit/')
+                .then(response => dispatch(
+                    createAction(CategoryActions.Update, response.category as Category, 
+                        null, Status.Ready)))
+                .catch((error) => dispatch(
+                    createAction(CategoryActions.Update, null, error, 
+                        Status.Failed)));
+        }
+        else {
+            post(category, 'api/categories/new/')
             .then(response => dispatch(
                 createAction(CategoryActions.Update, response.category as Category, 
                     null, Status.Ready)))
             .catch((error) => dispatch(
                 createAction(CategoryActions.Update, null, error, 
                     Status.Failed)));
+        }
     };
 }
-
-// export function create(categoryAttempt: Category) {
-//     return (dispatch: any) => {
-//         dispatch(createAction(CategoryActions.New, null, 
-//             null, Status.WaitingOnServer));
-//         post(categoryAttempt, 'api/categories/new/')
-//             .then(category => dispatch(
-//                 createAction(CategoryActions.New, category as Category, 
-//                     null, Status.Ready)))
-//             .catch((error) => dispatch(
-//                 createAction(CategoryActions.New, null, error, 
-//                     Status.Failed)));
-//     };
-// }
 
 export function all() {
     return (dispatch:any) => {
@@ -44,30 +41,16 @@ export function all() {
     };
 }
 
-// export function edit(category: Category) {
-//     return (dispatch: any) => {
-//         dispatch(createAction(CategoryActions.Edit, null, 
-//             null, Status.WaitingOnServer));
-//         post(category, 'api/categories/' + category._id +'/edit')
-//             .then(category => dispatch(
-//                 createAction(CategoryActions.Edit, category as Category, 
-//                     null, Status.Ready)))
-//             .catch((error) => dispatch(
-//                 createAction(CategoryActions.Edit, null, error, 
-//                     Status.Failed)));
-//     };
-// }
-
-export function remove(categoryId: string) {
+export function remove(category: Category) {
     return (dispatch:any) => {
         dispatch(createAction(CategoryActions.Remove, null, 
             null, Status.WaitingOnServer));
-        del('api/categories/' + categoryId)
+        del('api/categories/' + category._id)
             .then(() => dispatch(
-                createAction(CategoryActions.Remove, null, null, 
+                createAction(CategoryActions.Remove, category, null, 
                     Status.Ready)))
             .catch((error) => dispatch(
-                createAction(CategoryActions.Remove, null, error, 
+                createAction(CategoryActions.Remove, category, error, 
                     Status.Failed)));
     };
 }

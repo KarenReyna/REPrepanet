@@ -19,7 +19,7 @@ export class CategoryController {
                     return CustomError(res, 500, err.message);
                 }
                 return Success(res, ResponseObjectType.Object, "category", {
-                    id: category.id,
+                    _id: category._id,
                     name: category.name,
                     updated_by: category.updated_by,
                     description: category.description
@@ -50,8 +50,31 @@ export class CategoryController {
                     return CustomError(res, 404, "category not found");
                 }
 
-                return Success(res, ResponseObjectType.Object, "category", category);
+                return Success(res, ResponseObjectType.Object, "category", {
+                    _id: category._id,
+                    name: category.name,
+                    updated_by: category.updated_by,
+                    description: category.description
+                });
             });
+    }
+
+    public async delete(req: any, res: any) {
+        var loggedIn = await isUserLoggedInAsync(req);
+        if (!loggedIn) {
+            return CustomError(res, 403, "Please login to access.");
+        }
+        return await Category.findByIdAndRemove(req.params.id, (err, category) => {
+            if (err) {
+                return CustomError(res, 500, err.message);
+            }
+            return Success(res, ResponseObjectType.Object, "category", {
+                _id: category._id,
+                name: category.name,
+                updated_by: category.updated_by,
+                description: category.description
+            });
+        });
     }
 
     public async index(_: any, res: any) {
