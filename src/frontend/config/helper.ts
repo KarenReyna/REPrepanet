@@ -12,6 +12,6 @@ export function isRecentlyReady(previous, next): boolean {
 }
 
 export function hasRecentlyFailed(previous, next): boolean {
-  return previous.status == Status.WaitingOnServer && 
-  next.status == Status.Failed
+  return previous.status != next.status && 
+          next.status == Status.Failed
 }

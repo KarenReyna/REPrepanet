@@ -6,14 +6,15 @@ import { createAction } from 'Logic/actions';
 
 import {
   Status,
-  CategoryActions
+  UserActions
 } from 'Config/constants';
 
 import { AdminView } from 'Presentational/components/adminView';
-import { UpdateCategory } from 'Presentational/components/updateCategory';
-import { isEmpty, isRecentlyReady, hasRecentlyFailed } from 'Config/helper';
+import { UpdateUser } from 'Presentational/components/updateUser';
+import { isEmpty, hasRecentlyFailed } from 'Config/helper';
 
 class Admin extends React.Component<any, any> {
+    state = {view: <div></div>};
     componentDidMount() {
         if(isEmpty(this.props.session.current)) {
             this.props.loadProfile();
@@ -21,29 +22,35 @@ class Admin extends React.Component<any, any> {
     }
 
     componentDidUpdate(prevProps) {
-        if(isRecentlyReady(prevProps.session, this.props.session)) {
-            this.props.loadCategories();
+        if(prevProps.session.current != this.props.session.current) {
+            this.props.loadUsers();
         }
         if(hasRecentlyFailed(prevProps.session, this.props.session)) {
             this.props.history.push('/login');
         }
+        if(prevProps.users.all == null && this.props.users.all != null) {
+            this.setState({view: <div>
+                    <AdminView
+                        updateUserShow = {this.props.updateUserShow}
+                        users = {this.props.users}
+                    />
+
+                    <UpdateUser
+                        visible = {this.props.users.update.open}
+                        hide = {this.props.updateUserHide}
+                        submit = {this.props.updateUser}
+                        waiting = {this.props.users.status == Status.WaitingOnServer}
+                        failed = {this.props.users.status == Status.Failed}
+                        user = { this.props.users.update.object }
+                    />
+            </div>});
+        }
     }
 
     render() {
-        return (<div>
-                    <AdminView
-                            updateCategoryShow = {this.props.updateCategoryShow}
-                            categories = {this.props.categories}
-                        /> 
-
-                        <UpdateCategory
-                            visible = {this.props.categories.update.open}
-                            hide = {this.props.updateCategoryHide}
-                            submit = {this.props.updateCategory}
-                            waiting = {this.props.categories.status == Status.WaitingOnServer}
-                            failed = {this.props.categories.status == Status.Failed}
-                            category = { this.props.categories.update.object }
-                        />
+        return (
+            <div>
+                { this.state.view }
             </div>);
     }
 }
@@ -59,15 +66,15 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        loadCategories: () => dispatch(thunks.categories.all()),
+        loadUsers: () => dispatch(thunks.users.all()),
         loadProfile: () => dispatch(thunks.session.profile()),
 
-        updateCategory: (category) => dispatch(thunks.categories.update(category)),
+        updateUser: (user) => dispatch(thunks.categories.update(user)),
 
-        updateCategoryShow: (category) => dispatch(
-          createAction(CategoryActions.Update, category, null, Status.WaitingOnUser)),
-        updateCategoryHide: () => dispatch(
-            createAction(CategoryActions.Update, null, null, Status.Ready))
+        updateUserShow: (user) => dispatch(
+          createAction(UserActions.Update, user, null, Status.WaitingOnUser)),
+        updateUserHide: () => dispatch(
+            createAction(UserActions.Update, null, null, Status.Ready))
     }
 }
 
