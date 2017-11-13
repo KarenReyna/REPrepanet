@@ -48,7 +48,7 @@ export type User = {
     email?: string,
     password?: string,
     passwordConf?: string,
-    privileges?: string[],
+    isAdmin?: boolean,
     _id?: string
 }
 
@@ -61,6 +61,7 @@ export type Category = {
     _id?: string,
     name?: string,
     description?: string,
+    updatedBy?: any[]
 }
 
 export type Resource = {
@@ -68,14 +69,15 @@ export type Resource = {
     name?: string,
     description?: string,
     url?: string,
-    imageurl?: string,
-    category?: string,
-    tags?: string[]
+    imageUrl?: string,
+    category?: Category,
+    tags?: Tag[]
 }
 
 export type Tag = {
     _id?: string,
-    name?: string
+    name?: string,
+    count?: number
 }
 
 export var fetchHeader = [

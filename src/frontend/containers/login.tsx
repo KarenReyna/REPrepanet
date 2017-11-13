@@ -19,8 +19,8 @@ class Login extends React.Component<any, any> {
         }
     }
 
-    componentDidUpdate() {
-        if(!isEmpty(this.props.session.current)) {
+    componentWillReceiveProps(nextProps) {
+        if(!isEmpty(nextProps.session.current)) {
             this.props.history.push('/admin');
         }
     }

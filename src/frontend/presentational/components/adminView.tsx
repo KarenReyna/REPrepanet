@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
-import { UserList } from 'Presentational/components/userList';
+import { CustomList } from 'Presentational/components/customList';
 
 export class AdminView extends React.Component<any, any> {
   state = {
@@ -21,9 +21,13 @@ export class AdminView extends React.Component<any, any> {
           >
             <Tab label="Administradores"/>
             <Tab label="Colaboradores"/>
+            <Tab label="Categorías" />
+            <Tab label="Recursos" />
           </Tabs>
-          {value === 0 && <UserList users = {this.props.users}/>}
-          {value === 1 && <UserList users = {this.props.users}/>}
+          {value === 0 && <CustomList items = {this.props.admins}/>}
+          {value === 1 && <CustomList items = {this.props.collabs}/>}
+          {value === 2 && <CustomList items = {this.props.categories}/>}
+          {value === 3 && <CustomList items = {this.props.resources}/>}
         </Paper>
       )
   }

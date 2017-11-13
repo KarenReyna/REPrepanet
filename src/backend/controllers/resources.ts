@@ -18,10 +18,9 @@ export class ResourceController {
                 }
                 return Success(res, ResponseObjectType.Object, "resource", {
                     id: resource.id,
-                    title: resource.title,
+                    name: resource.name,
                     description: resource.description,
                     url: resource.url,
-                    imageurl: resource.imageurl,
                     tags: resource.tags,
                     category: resource.category,
                     updated_by: resource.updated_by
@@ -39,7 +38,7 @@ export class ResourceController {
         var resourceObject = await ResourceController.createUpdateObject(req);
         await Resource.findOneAndUpdate({ _id: req.params.id },
             resourceObject,
-            { new: true, fields: "id title description url image tags category updated_by type" },
+            { new: true, fields: "id name description url tags category updated_by type" },
             (err, resource) => {
                 if (err) {
                     return CustomError(res, 400, err.message);
@@ -54,7 +53,7 @@ export class ResourceController {
     }
 
     public async index(_: any, res: any) {
-        return await Resource.find({}, "id title description url image tags category updated_by type").exec((err, resources) => {
+        return await Resource.find({}, "id name description url tags category updated_by type").exec((err, resources) => {
             if (err) {
                 return CustomError(res, 500, err.message);
             }
@@ -76,12 +75,11 @@ export class ResourceController {
     }
 
     private static validateRequiredParams(req: any): boolean {
-        return req.body.title && req.body.description && req.body.url && req.body.type; //&& req.body.imageurl
+        return req.body.name && req.body.description && req.body.url && req.body.type;
     }
 
     private static async createResponseObject(req: any): Promise<any> {
-        let imageurl = req.body.imageurl || "";
-        var category = await Category.findById(req.body.category_id, 'title description').exec();
+        var category = await Category.findById(req.body.category_id, 'name description').exec();
         var currentUser = await getCurrentUserAsync(req);
         let tags = [];
         if (req.body.tags != null) {
@@ -89,16 +87,15 @@ export class ResourceController {
         }
 
         return {
-            title: req.body.title,
+            name: req.body.name,
             description: req.body.description,
             url: req.body.url,
-            image: imageurl,
             tags: tags,
             category: category,
             type: req.body.type,
             updated_by: [{
                 user: {
-                    title: currentUser.title,
+                    name: currentUser.name,
                     email: currentUser.email
                 },
                 at: Date.now()
@@ -110,8 +107,8 @@ export class ResourceController {
         var currentUser = await getCurrentUserAsync(req);
 
         var obj: any = {};
-        if (req.body.title != null) {
-            obj.title = req.body.title;
+        if (req.body.name != null) {
+            obj.name = req.body.name;
         }
         if (req.body.description != null) {
             obj.description = req.body.description;
@@ -119,14 +116,11 @@ export class ResourceController {
         if (req.body.url != null) {
             obj.url = req.body.url;
         }
-        if (req.body.imageurl != null) {
-            obj.image = req.body.imageurl;
-        }
         if (req.body.tags != null) {
             obj.tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
         }
         if (req.body.category_id != null) {
-            obj.category = await Category.findById(req.body.category_id, 'title description').exec();
+            obj.category = await Category.findById(req.body.category_id, 'name description').exec();
         }
         if (req.body.type != null) {
             obj.type = req.body.type;
@@ -139,7 +133,7 @@ export class ResourceController {
             $push: {
                 updated_by: {
                     user: {
-                        title: currentUser.title,
+                        name: currentUser.name,
                         email: currentUser.email
                     },
                     at: Date.now()

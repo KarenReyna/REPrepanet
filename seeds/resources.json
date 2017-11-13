@@ -1,7 +1,6 @@
 [
     {
-        "title": "Cómo hacer un videojuego",
-        "image": "http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png",
+        "name": "Cómo hacer un videojuego",
         "url": "google.com",
         "description": "Guía para hacer un videojuego en Java",
         "tags": [
@@ -28,8 +27,7 @@
         "type": "web"
     },
     {
-        "title": "Ruby on rails",
-        "image": "http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png",
+        "name": "Ruby on rails",
         "url": "google.com",
         "description": "Guía para hacer páginas web en Ruby on rails",
         "tags": [
@@ -59,8 +57,7 @@
         "type": "web"
     },
     {
-        "title": "React y Redux",
-        "image": "http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png",
+        "name": "React y Redux",
         "url": "google.com",
         "description": "Guía para hacer páginas web con React y Redux",
         "tags": [
@@ -90,8 +87,7 @@
         "type": "web"
     },
     {
-        "title": "Fluorescentes",
-        "image": "http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png",
+        "name": "Fluorescentes",
         "url": "google.com",
         "description": "Guía para hacer un fluorescente",
         "tags": [
@@ -115,8 +111,7 @@
         "type": "web"
     },
     {
-        "title": "Teoría sobre los cosmos",
-        "image": "http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png",
+        "name": "Teoría sobre los cosmos",
         "url": "google.com",
         "description": "Todo lo que debes saber sobre los cosmos",
         "tags": [
@@ -140,8 +135,7 @@
         "type": "web"
     },
     {
-        "title": "Literarios Mexicanos Modernos",
-        "image": "http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png",
+        "name": "Literarios Mexicanos Modernos",
         "url": "google.com",
         "description": "Teoría sobre los mejores escritores mexicanos modernos",
         "tags": [
@@ -165,8 +159,7 @@
         "type": "web"
     },
     {
-        "title": "Jeff Koons",
-        "image": "http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png",
+        "name": "Jeff Koons",
         "url": "google.com",
         "description": "Teoría sobre el escultor Jeff Koons",
         "tags": [
