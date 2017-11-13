@@ -1,8 +1,13 @@
+import {Action} from 'redux';
+
+export enum SessionActions {
+    Login = 'LOGIN',
+    Logout = 'LOGOUT'
+}
+
 export enum UserActions {
     Update = 'UPDATE_USER',
     All = 'ALL_USERS',
-    Login = 'LOGIN',
-    Logout = 'LOGOUT',
     Remove = 'REMOVE_USER'
 }
 
@@ -31,7 +36,7 @@ export enum Status {
     Failed = 'FAILED'
 }
 
-export type Action = {
+export interface IAction extends Action {
     type: UserActions | CategoryActions | ResourceActions | TagActions,
     object: any,
     error: any,
@@ -73,9 +78,9 @@ export type Tag = {
     name?: string
 }
 
-export var fetchHeader = {
-    'Accept' : 'application/json',
-    'Content-Type' : 'application/json'
-}
+export var fetchHeader = [
+    ['Accept', 'application/json'],
+    ['Content-Type', 'application/json']
+]
 
-export var serverUrl = "http://localhost:8000/"
+export var serverUrl =  'http://localhost:8000/';

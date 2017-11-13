@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import { connect, connection } from "mongoose";
 import * as session from 'express-session';
 import * as mongoConnect from 'connect-mongo';
-import * as cors from 'cors';
+
 import serverConfig from './config';
 
 var MongoStore = mongoConnect(session);
@@ -17,7 +17,22 @@ connect(serverConfig.mongoURL, { useMongoClient: true }, (error: any) => {
 });
 
 const app = express();
-app.use(cors());
+
+// Enable CORS on ExpressJS to avoid cross-origin errors when calling this server using AJAX
+// We are authorizing all domains to be able to manage information via AJAX (this is just for development)
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length");
+  res.header("Access-Control-Allow-Credentials",  "true");
+
+  if ('OPTIONS' === req.method){
+    res.send(200);
+  }
+  else {
+    next();
+  }
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -47,25 +62,11 @@ app.use('/api/resources', resourcesRoutes);
 app.use('/api/tags', tagsRoutes);
 app.use(errorHandler);
 
-// Enable CORS on ExpressJS to avoid cross-origin errors when calling this server using AJAX
-// We are authorizing all domains to be able to manage information via AJAX (this is just for development)
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length");
-  
-  if ('OPTIONS' === req.method){
-    res.send(200);
-  }
-  else {
-    next();
-  }
-});
-
 app.use(function(_, res, __) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length");
+  res.header("Access-Control-Allow-Credentials",  "true");
   
   res.status(404).json("Not found");
 });

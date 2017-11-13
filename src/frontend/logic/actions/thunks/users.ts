@@ -1,39 +1,10 @@
 import { 
     User, 
-    LoginAttempt, 
     UserActions, 
     Status 
 } from 'Config/constants';
 import { createAction } from 'Logic/actions';
 import { post, get, del } from 'Logic/actions/thunks';
-
-export function login(loginAttempt: LoginAttempt) {
-    return (dispatch: any) => {
-        dispatch(createAction(UserActions.Login, null, 
-            null, Status.WaitingOnServer));
-        post(loginAttempt, 'api/login/')
-            .then(response => dispatch(
-                createAction(UserActions.Login, response.user as User, null, 
-                    Status.Ready)))
-            .catch((error) => dispatch(
-                createAction(UserActions.Login, null, error, 
-                    Status.Failed)));
-    };
-}
-
-export function logout() {
-    return (dispatch:any) => {
-        dispatch(createAction(UserActions.Logout, null, 
-            null, Status.WaitingOnServer));
-        get('api/logout/')
-            .then(() => dispatch(
-                createAction(UserActions.Logout, null, null, 
-                    Status.Ready)))
-            .catch((error) => dispatch(
-                createAction(UserActions.Logout, null, error, 
-                    Status.Failed)));
-    };
-}
 
 export function update(user: User) {
     return (dispatch: any) => {

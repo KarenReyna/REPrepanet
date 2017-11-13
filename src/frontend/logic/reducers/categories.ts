@@ -1,10 +1,13 @@
 import { 
     Category, 
     CategoryActions, 
-    Action, 
     Status 
 } from 'Config/constants';
-import { all, remove, update } from 'Logic/reducers';
+import { all, remove, update, IReducerState } from 'Logic/reducers';
+
+interface ICategoriesState extends IReducerState {
+    update: any
+}
 
 export function categories (
     state = {
@@ -13,7 +16,7 @@ export function categories (
         status: Status.Ready ,
         error: {}
     }, 
-    action: Action ) {
+    action): ICategoriesState {
 
     switch(action.type) {
 
@@ -27,6 +30,6 @@ export function categories (
         return update(state, action);
 
         default:
-            return { ...state }
+            return { ...state } as ICategoriesState;
     }
 }

@@ -1,7 +1,7 @@
-import {  Action } from 'Config/constants';
+import { IAction } from 'Config/constants';
 
 export function createAction(type: any, object: any, error: any = {}, 
-    status: any): Action {
+    status: any): IAction {
     return {
         type: type,
         object: object,

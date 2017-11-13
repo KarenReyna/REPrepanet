@@ -1,12 +1,19 @@
 import { combineReducers } from 'redux';
-import { Status, Action } from 'Config/constants';
+import { Status, IAction } from 'Config/constants';
 import { resources } from './resources';
 import { categories } from './categories';
 import { users } from './users';
 import { tags } from './tags';
+import { session } from './session';
 import { routerReducer } from 'react-router-redux';
 
-export function update(state, action:Action) {
+export interface IReducerState {
+    all: Array<any>,
+    error: any,
+    status: Status
+}
+
+export function update(state, action:IAction) {
     switch(action.status){
         case Status.Ready:
             if(action.object)
@@ -47,7 +54,7 @@ export function update(state, action:Action) {
     }
 }
 
-export function remove(state, action: Action) {
+export function remove(state, action: IAction) {
     let objects: any[];
     let index: number;
 
@@ -79,7 +86,7 @@ export function remove(state, action: Action) {
     }
 }
 
-export function all(state, action) {
+export function all(state, action: IAction) {
     return {
         ...state,
         status: action.status,
@@ -88,12 +95,27 @@ export function all(state, action) {
     }
 }
 
+export interface IState {
+    all: any[];
+    error: any;
+    status: Status;
+}
+
+export interface IModel extends IState {
+    update: { open: boolean, object: any }
+}
+
+export interface ISession extends IState {
+    login: { open: boolean, object: any }
+}
+
 const rootReducer = combineReducers({
     resources,
     categories,
     users,
     tags,
+    session,
     router: routerReducer
 });
-  
+
 export default rootReducer

@@ -1,10 +1,13 @@
 import {
     Resource,
     ResourceActions,
-    Action,
     Status
 } from 'Config/constants';
-import { all, remove, update } from 'Logic/reducers';
+import { all, remove, update, IReducerState } from 'Logic/reducers';
+
+interface IResourcesState extends IReducerState {
+    update: any
+}
 
 export function resources (
     state = {
@@ -13,7 +16,7 @@ export function resources (
         status: Status.Ready,
         error: {}
     },
-    action: Action ) {
+    action): IResourcesState {
 
     switch(action.type) {
 
