@@ -6,7 +6,7 @@ import Container from 'Presentational/elements/Container';
 // import CollectionCard from 'Presentational/elements/CollectionCard';
 import CollectionCardV2 from 'Presentational/elements/CollectionCardV2';
 // import ResourceCard from 'Presentational/elements/ResourceCard';
-import Styles from 'Presentational/style/elementStyles';
+// import Styles from 'Presentational/style/elementStyles';
 import { Status } from 'Config/constants';
 import { LinearProgress } from 'material-ui/Progress';
 
