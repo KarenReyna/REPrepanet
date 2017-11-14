@@ -5,8 +5,7 @@ import TextField from 'material-ui/TextField';
 import { LinearProgress } from 'material-ui/Progress';
 import { Category } from 'Config/constants';
 import { 
-  isEmpty,
-  containsOnly
+  isEmpty
 } from 'Config/helper';
 
 export class UpdateCategory extends React.Component<any, any> {
@@ -20,18 +19,7 @@ export class UpdateCategory extends React.Component<any, any> {
 
   componentWillReceiveProps(nextProps) {
     if(!isEmpty(nextProps.object)) {
-      console.log(containsOnly(nextProps.object));
-      if(containsOnly(nextProps.object) && !nextProps.failed && !nextProps.waiting) {
-        this.setState({
-          category: {
-            name: '',
-            description: ''
-          } as Category,
-          editing: false
-        });
-      }
-
-      else if(!nextProps.failed && !nextProps.waiting) {
+      if(!nextProps.failed && !nextProps.waiting) {
         this.setState({
           category: {
             name: nextProps.object.name,
@@ -40,6 +28,15 @@ export class UpdateCategory extends React.Component<any, any> {
           editing: true
         });
       }
+    }
+    else {
+      this.setState({
+        category: {
+          name: '',
+          description: ''
+        } as Category,
+        editing: false
+      });
     }
   }
 
