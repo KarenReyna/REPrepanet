@@ -35,7 +35,19 @@ html, body {
 
 .resourceCard {
   max-width: 200px;
+  min-height: 100px;
   margin: 10px;
   float: left;
   overflow: auto;
+  position: relative;
+}
+
+.resourceCardActions {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.resourceCardContent {
+  margin-bottom: 55px;
 }

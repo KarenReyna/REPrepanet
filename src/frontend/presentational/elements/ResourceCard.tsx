@@ -50,31 +50,22 @@ export default class ResourceCard extends React.Component<any, any> {
         return(
             <div>
             <Card className="resourceCard">
-                <CardContent>
+                <CardContent className={classnames({["resourceCardContent"]: !this.state.expanded,})}>
                     <Typography type="headline" component="h2">
                         {this.props.resource.title}
                     </Typography>
                 </CardContent>
-                <CardActions disableActionSpacing>
+                <CardActions disableActionSpacing className={classnames({["resourceCardActions"]: !this.state.expanded,})}>
                     <IconButton aria-label="Share">
-                                                
-                        <div className="Demo__container">
-                            <div className="Demo__some-network">
-                                <FacebookShareButton
-                                    url={shareUrl}
-                                    quote={title}
-                                    className="Demo__some-network__share-button">
-                                <FacebookIcon
-                                  size={32}
-                                  round />
-                                </FacebookShareButton>
-
-                            </div>
-                        </div>
-
+                        <FacebookShareButton
+                            url={shareUrl}
+                            quote={title}
+                        >
+                        <FacebookIcon
+                            size={32}
+                            round />
+                        </FacebookShareButton>
                     </IconButton>
-                    
-
                     <div style={styles.flexGrow} />
                     <IconButton
                         className={classnames("expand", {
