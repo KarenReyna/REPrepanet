@@ -34,7 +34,7 @@ html, body {
 }
 
 .resourceCard {
-  max-width: 200px;
+  width: 200px;
   min-height: 100px;
   margin: 10px;
   float: left;
@@ -42,12 +42,12 @@ html, body {
   position: relative;
 }
 
-.resourceCardActions {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-}
+// .resourceCardActions {
+//   position: absolute;
+//   width: 100%;
+//   bottom: 0;
+// }
 
-.resourceCardContent {
-  margin-bottom: 55px;
-}
+// .resourceCardContent {
+//   margin-bottom: 55px;
+// }
