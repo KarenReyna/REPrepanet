@@ -71,7 +71,8 @@ export type Resource = {
     url?: string,
     imageUrl?: string,
     category?: Category,
-    tags?: Tag[]
+    tags?: Tag[],
+    type?: string
 }
 
 export type Tag = {

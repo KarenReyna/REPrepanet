@@ -17,10 +17,10 @@ export class UpdateResource extends React.Component<any, any> {
     resource: {
       name: '',
       description: '',
-      category: '',
       url: '',
+      tags: ['tag1', 'tag2', 'tag3'],
+      category: '',
       type: '',
-      tags: []
     } as Resource,
     editing: false,
     chips: [],
@@ -58,10 +58,10 @@ export class UpdateResource extends React.Component<any, any> {
           resource: {
             name: nextProps.object.name,
             description: nextProps.object.description,
-            category: nextProps.object.category,
             url: nextProps.object.url,
-            type: nextProps.object.type,
-            tags: nextProps.object.tags
+            tags: nextProps.object.tags,
+            category: nextProps.object.category,
+            type: nextProps.object.type
           } as Resource,
           editing: true
         });
@@ -72,15 +72,39 @@ export class UpdateResource extends React.Component<any, any> {
         resource: {
           name: '',
           description: '',
-          category: '',
           url: '',
+          tags: ['tag1', 'tag2', 'tag3'],
+          category: '',
           type: '',
-          tags: []
         } as Resource,
         editing: false
       });
     }
   }
+
+//   onBeforeRequestAdd(chip) {
+//     return chip.length >= 3;
+//   }
+
+//   handleRequestAdd(chip) {
+//     this.setState({
+//       chips: [...this.state.chips, chip],
+//       resource: {
+//         ...this.state.resource,
+//         tags: [...this.state.chips, chip]
+//       }
+//     })
+//   }
+
+//   handleRequestDelete (deletedChip) {
+//     this.setState({
+//       chips: this.state.chips.filter((c) => c !== deletedChip),
+//       resource: {
+//         ...this.state.resource,
+//         tags: this.state.chips.filter((c) => c !== deletedChip)
+//       }
+//     })
+// }
 
   public render() {
     var handleChange = (name) => e => {
@@ -104,6 +128,7 @@ export class UpdateResource extends React.Component<any, any> {
 
     var handleSubmit = () => {
       let resource = this.state.resource
+      console.log(resource);
       if(this.state.editing) {
         resource._id = this.props.object._id;
       }
@@ -160,7 +185,22 @@ export class UpdateResource extends React.Component<any, any> {
                 onChange={handleChange('url')}
               /><br />
 
-              <br />
+              <TextField
+                label="Tipo"
+                value={this.state.resource.type}
+                rows={2}
+                multiline={true}
+                onChange={handleChange('type')}
+              /><br />
+
+              {/* <TextField
+                label="Tipo"
+                value={this.state.resource.tags}
+                rows={2}
+                multiline={true}
+                onChange={handleChange('tags')}
+              /><br /> */}
+
               {/* <ChipInput
                   value={this.state.chips}
                   onBeforeRequestAdd={(chip) => this.onBeforeRequestAdd(chip)}
