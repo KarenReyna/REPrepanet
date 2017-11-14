@@ -6,7 +6,7 @@ export class TagController {
     public async search(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         var query = {};
         if (req.query.q) {
@@ -23,7 +23,7 @@ export class TagController {
     public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         if (TagController.validateRequiredParams(req)) {
             return await Tag.create(TagController.createResponseObject(req), (err, tag) => {
@@ -37,13 +37,13 @@ export class TagController {
                 });
             });
         }
-        return CustomError(res, 400, 'All fields required.');
+        return CustomError(res, 400, 'Todos los campos son requeridos.');
     }
 
     public async edit(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         await Tag.findOneAndUpdate({ _id: req.params.id }, 
             TagController.createUpdateObject(req),
@@ -53,7 +53,7 @@ export class TagController {
                 }
 
                 if (!tag) {
-                    return CustomError(res, 404, "tag not found");
+                    return CustomError(res, 404, "Etiqueta no encontrada.");
                 }
 
                 return Success(res, ResponseObjectType.Object, "tag", {

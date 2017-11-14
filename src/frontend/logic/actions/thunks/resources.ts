@@ -4,6 +4,7 @@ import { post, get, del } from 'Logic/actions/thunks';
 
 export function update(resource: Resource, editing: boolean) {
     return (dispatch: any) => {
+        console.log(editing);
         dispatch(createAction(ResourceActions.Update, null, 
             null, Status.WaitingOnServer));
         if(editing){
