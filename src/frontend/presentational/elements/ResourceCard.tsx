@@ -4,9 +4,11 @@ import * as React from 'react';
 import Card, { CardContent, CardActions } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
-import ShareIcon from 'material-ui-icons/Share';
+//import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
+
+import { ShareButtons, generateShareIcon} from 'react-share';
 // import {
 //     ShareButtons,
 //     // ShareCounts,
@@ -15,25 +17,29 @@ import Collapse from 'material-ui/transitions/Collapse';
 // import FacebookShareButton from 'react-share';
 //import { withStyles } from 'material-ui/styles';
 
+
 const styles = {
     flexGrow: {
       flex: '1 1 auto',
     },
   };
 
-//   const {
-//     FacebookShareButton
-//   } = ShareButtons;
-//   const {
-//     FacebookShareCount,
-//   } = ShareCounts;
-// const shareUrl = 'http://github.com';
+const {
+  FacebookShareButton,
+} = ShareButtons;
+
+
+
+const FacebookIcon = generateShareIcon('facebook');
+
 export default class ResourceCard extends React.Component<any, any> {
     state = { 
         expanded : false,
     };
 
     public render() {
+        const shareUrl = 'http://github.com';
+        const title = 'GitHub';
         var classnames = require('classnames');
 
         var handleExpandClick = ()=> {
@@ -51,11 +57,24 @@ export default class ResourceCard extends React.Component<any, any> {
                 </CardContent>
                 <CardActions disableActionSpacing>
                     <IconButton aria-label="Share">
-                        <ShareIcon />
+                                                
+                        <div className="Demo__container">
+                            <div className="Demo__some-network">
+                                <FacebookShareButton
+                                    url={shareUrl}
+                                    quote={title}
+                                    className="Demo__some-network__share-button">
+                                <FacebookIcon
+                                  size={32}
+                                  round />
+                                </FacebookShareButton>
+
+                            </div>
+                        </div>
+
                     </IconButton>
-                    {/* <FacebookShareButton url={shareUrl}>
-                        <ShareIcon />
-                    </FacebookShareButton> */}
+                    
+
                     <div style={styles.flexGrow} />
                     <IconButton
                         className={classnames("expand", {
