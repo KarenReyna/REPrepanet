@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Styles from 'Presentational/style/elementStyles';
-
+//import Styles from 'Presentational/style/elementStyles';
+import ResourceCard from 'Presentational/elements/ResourceCard';
 export default class CollectionCardV2 extends React.Component<any, any> {
     public render() {
       return(
@@ -12,12 +12,9 @@ export default class CollectionCardV2 extends React.Component<any, any> {
                     return (
                         this.props.resources.all.filter(({category}) => category.name === this.props.title)
                         .map((resource2) => (
-                            <div className={Styles.collectionCardHead.class} style={Styles.collectionCardHead.style}>
-                                <div className={Styles.collectionCardBody.class}>
-                                    <a className={Styles.collectionCardText.class}>{resource2.title}</a>
-                                </div>
-                            </div>
+                            <ResourceCard resource={resource2}/>
                         ))
+                        
                     );
                 }
             })()}

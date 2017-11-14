@@ -78,6 +78,19 @@ const Styles = {
     resourceCardText: {
         class: "uk-button uk-button-text",
     },
+    expand: {
+        style: {
+            transform: 'rotate(0deg)',
+        }
+    },
+    expandOpen: {
+        style: {
+            transform: 'rotate(180deg)',
+        }
+    },
+    flexGrow: {
+        flex: '1 1 auto',
+    },
     menu: {
         container: {
             class: "uk-width-1-2@s uk-width-2-5@m",
