@@ -116,7 +116,8 @@ class Admin extends React.Component<any, any> {
                     hide = { this.props.hideResource }
                     failed = { this.props.resources.status == Status.Failed }
                     waiting = { this.props.resources.status == Status.WaitingOnServer }
-                    submit = {this.props.updateResource}/>
+                    submit = {this.props.updateResource}
+                    categories = {this.props.categories}/>
             </div>);
     }
 }

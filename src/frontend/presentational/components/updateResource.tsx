@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import Input, { InputLabel } from 'material-ui/Input';
-import { Resource} from 'Config/constants';
+import { Resource, Status } from 'Config/constants';
 import { LinearProgress } from 'material-ui';
 import { 
   isEmpty
@@ -37,19 +37,19 @@ export class UpdateResource extends React.Component<any, any> {
     ));
   }
 
-  // private createContent(object) {
-  //   switch(object.status) {
-  //     case Status.Ready:
-  //       if(object && object.all && object.all.length > 0)
-  //         return this.menuItems(object.all);
-  //       return (<p>No hay categorías ni recursos</p>);
-  //     case Status.Failed:
-  //       return (<p>No hay conexión a Internet</p>);
-  //     case Status.WaitingOnServer:
-  //     default:
-  //       return (<LinearProgress mode="indeterminate" />);
-  //   }
-  // }
+  private createContent(object) {
+    switch(object.status) {
+      case Status.Ready:
+        if(object && object.all && object.all.length > 0)
+          return this.menuItems(object.all);
+        return (<p>No hay categorías ni recursos</p>);
+      case Status.Failed:
+        return (<p>No hay conexión a Internet</p>);
+      case Status.WaitingOnServer:
+      default:
+        return (<LinearProgress mode="indeterminate" />);
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     if(!isEmpty(nextProps.object)) {
@@ -83,8 +83,6 @@ export class UpdateResource extends React.Component<any, any> {
   }
 
   public render() {
-    let categoryContent = this.props.categories
-    console.log(categoryContent);
     var handleChange = (name) => e => {
         this.setState({
           resource: { 
@@ -93,6 +91,16 @@ export class UpdateResource extends React.Component<any, any> {
           }
         });
     };
+
+    var handleSelectFieldChange= (name) => e => {
+      this.setState({
+        selectFieldValue: e.target.value,
+        resource: {
+          ...this.state.resource,
+          [name]: e.target.value
+        }
+      });
+  };
 
     var handleSubmit = () => {
       let resource = this.state.resource
@@ -103,7 +111,7 @@ export class UpdateResource extends React.Component<any, any> {
     }
 
     var title = this.state.editing? 'Editar Recurso' : 'Registrar Recurso';
-    
+    let categoryContent = this.createContent(this.props.categories);
     return (
         <Dialog 
           open = {this.props.visible}
@@ -137,9 +145,10 @@ export class UpdateResource extends React.Component<any, any> {
                 <Select
                   input={<Input id="category" />}
                   value={this.state.selectFieldValue}
-                  onChange={handleChange('category')}
+                  onChange={handleSelectFieldChange('category')}
+                  fullWidth={true}
                 >
-                  {/* {categoryContent} */}
+                  {categoryContent}
                 </Select>
               <br />
                   
