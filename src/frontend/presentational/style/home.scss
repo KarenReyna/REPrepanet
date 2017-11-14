@@ -27,3 +27,9 @@ html, body {
     flex-wrap: 'nowrap';
     overflow-x: 'auto';
   }
+.expand {
+  transform: rotate(0deg);
+}
+.expandOpen {
+  transform: rotate(180deg);
+}

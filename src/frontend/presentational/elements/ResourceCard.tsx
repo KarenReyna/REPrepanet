@@ -1,13 +1,16 @@
 import * as React from 'react';
-//import Styles from 'Presentational/style/elementStyles';
-//mport PropTypes from 'prop-types';
 import Card, { CardContent, CardActions } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
-//import { withStyles } from 'material-ui/styles';
+// import {
+//     ShareButtons,
+//     // ShareCounts,
+//     // generateShareIcon
+//   } from 'react-share';
+import { FacebookShareButton } from 'react-share';
 
 const styles = {
     flexGrow: {
@@ -15,20 +18,28 @@ const styles = {
     },
   };
 
+//   const {
+//     FacebookShareButton
+//   } = ShareButtons;
+//   const {
+//     FacebookShareCount,
+//   } = ShareCounts;
+const shareUrl = 'http://github.com';
 export default class ResourceCard extends React.Component<any, any> {
     state = { 
         expanded : false,
     };
-
-    handleExpandClick = () => {
-        this.setState({
-            expanded: !this.state.expanded
-        });
-    }
+    
+    
 
     public render() {
         var classnames = require('classnames');
 
+        var handleExpandClick = ()=> {
+            this.setState({
+              expanded: !this.state.expanded
+            });
+        };
         return(
             <Card>
                 <CardContent>
@@ -37,17 +48,20 @@ export default class ResourceCard extends React.Component<any, any> {
                     </Typography>
                 </CardContent>
                 <CardActions disableActionSpacing>
-                    <IconButton aria-label="Share">
+                    <div>
+                    <FacebookShareButton url={shareUrl}>
                         <ShareIcon />
-                    </IconButton>
+                    </FacebookShareButton>
+                    </div>
+                    
                     <div style={styles.flexGrow} />
                     <IconButton
                         className={classnames("expand", {
                             ["expandOpen"]: this.state.expanded,
                         })}
-                        onClick={this.handleExpandClick}
+                        onClick={handleExpandClick}
                         aria-expanded={this.state.expanded}
-                        aria-lable="Show more"
+                        aria-label="Show more"
                     >
                         <ExpandMoreIcon />
                     </IconButton>
@@ -57,8 +71,10 @@ export default class ResourceCard extends React.Component<any, any> {
                         <Typography paragraph>
                             {this.props.resource.description}
                         </Typography>
-                        <Typography paragraph>
-                            {this.props.resource.url}
+                        <Typography component="a">
+                            <a href={this.props.resource.url}>
+                                {this.props.resource.url}
+                            </a>
                         </Typography>
                     </CardContent>
                 </Collapse>
