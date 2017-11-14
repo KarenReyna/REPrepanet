@@ -91,7 +91,7 @@ export default class Resources extends React.Component<any, any> {
         index={this.state.value}
         onChangeIndex={this.handleChangeIndex}
         >
-          {this.tabContainers(this.props.categories)}
+        {this.tabContainers(this.props.categories)}
         </SwipeableViews>
       </div>
     );
