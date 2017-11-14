@@ -33,13 +33,7 @@ const {
 } = ShareCounts;
 
 const FacebookIcon = generateShareIcon('facebook');
-//   const {
-//     FacebookShareButton
-//   } = ShareButtons;
-//   const {
-//     FacebookShareCount,
-//   } = ShareCounts;
-// const shareUrl = 'http://github.com';
+
 export default class ResourceCard extends React.Component<any, any> {
     state = { 
         expanded : false,
@@ -90,9 +84,6 @@ export default class ResourceCard extends React.Component<any, any> {
                     </IconButton>
                     
 
-                    {/* <FacebookShareButton url={shareUrl}>
-                        <ShareIcon />
-                    </FacebookShareButton> */}
                     <div style={styles.flexGrow} />
                     <IconButton
                         className={classnames("expand", {
