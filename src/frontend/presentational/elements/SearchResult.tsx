@@ -12,7 +12,7 @@ export default class SearchResult extends React.Component<any, any> {
                 search = search.replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
       
                 var filterByTitle = resources.all.filter((resource) => {
-                  resource = resource.title.toLowerCase();
+                  resource = resource.name.toLowerCase();
                   resource = resource.replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
                   return resource.indexOf(search.toLowerCase()) !== -1; 
                 });
@@ -34,7 +34,7 @@ export default class SearchResult extends React.Component<any, any> {
       
                 resourcesFiltered = resourcesFiltered.filter((resource, index, self) =>
                   index === self.findIndex((t) => (
-                    t.title === resource.title
+                    t.name === resource.name
                   )
                 ));
                 

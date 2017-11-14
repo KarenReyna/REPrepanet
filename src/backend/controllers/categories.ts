@@ -6,11 +6,11 @@ export class CategoryController {
     public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         var isAdmin = await currentUserIsAdminAsync(req);
         if (!isAdmin) {
-            return CustomError(res, 403, "You are not an admin.")
+            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
         }
         if (CategoryController.validateRequiredParams(req)) {
             var categoryObject = await CategoryController.createResponseObject(req);
@@ -19,24 +19,24 @@ export class CategoryController {
                     return CustomError(res, 500, err.message);
                 }
                 return Success(res, ResponseObjectType.Object, "category", {
-                    id: category.id,
+                    _id: category._id,
                     name: category.name,
                     updated_by: category.updated_by,
                     description: category.description
                 });
             });
         }
-        return CustomError(res, 400, 'All fields required.');
+        return CustomError(res, 400, 'Todos los campos son requeridos.');
     }
 
     public async edit(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         var isAdmin = await currentUserIsAdminAsync(req);
         if (!isAdmin) {
-            return CustomError(res, 403, "You are not an admin.")
+            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
         }
         var categoryObject = await CategoryController.createUpdateObject(req);        
         await Category.findOneAndUpdate({ _id: req.params.id }, 
@@ -50,8 +50,31 @@ export class CategoryController {
                     return CustomError(res, 404, "category not found");
                 }
 
-                return Success(res, ResponseObjectType.Object, "category", category);
+                return Success(res, ResponseObjectType.Object, "category", {
+                    _id: category._id,
+                    name: category.name,
+                    updated_by: category.updated_by,
+                    description: category.description
+                });
             });
+    }
+
+    public async delete(req: any, res: any) {
+        var loggedIn = await isUserLoggedInAsync(req);
+        if (!loggedIn) {
+            return CustomError(res, 403, "Por favor inicia sesión.");
+        }
+        return await Category.findByIdAndRemove(req.params.id, (err, category) => {
+            if (err) {
+                return CustomError(res, 500, err.message);
+            }
+            return Success(res, ResponseObjectType.Object, "category", {
+                _id: category._id,
+                name: category.name,
+                updated_by: category.updated_by,
+                description: category.description
+            });
+        });
     }
 
     public async index(_: any, res: any) {

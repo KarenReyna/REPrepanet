@@ -2,32 +2,31 @@ import { Resource, ResourceActions, Status } from 'Config/constants';
 import { createAction } from 'Logic/actions';
 import { post, get, del } from 'Logic/actions/thunks';
 
-export function update(resource: Resource) {
+export function update(resource: Resource, editing: boolean) {
     return (dispatch: any) => {
+        console.log(editing);
         dispatch(createAction(ResourceActions.Update, null, 
             null, Status.WaitingOnServer));
-        post(resource, 'api/resources/update/')
+        if(editing){
+            post(resource, 'api/resources/' + resource._id + '/edit/')
+                .then(response => dispatch(
+                    createAction(ResourceActions.Update, response.resource as Resource, 
+                        null, Status.Ready)))
+                .catch((error) => dispatch(
+                    createAction(ResourceActions.Update, null, error, 
+                        Status.Failed)));
+        }
+        else {
+            post(resource, 'api/resources/new/')
             .then(response => dispatch(
                 createAction(ResourceActions.Update, response.resource as Resource, 
                     null, Status.Ready)))
             .catch((error) => dispatch(
                 createAction(ResourceActions.Update, null, error, 
                     Status.Failed)));
+        }
     };
 }
-
-// export function create(resource: Resource) {
-//     return (dispatch: any) => {
-//         dispatch(createAction(ResourceActions.New, null, 
-//             null, Status.WaitingOnServer));
-//         post(resource, 'api/resources/new/')
-//             .then(resource => dispatch(
-//                 createAction(ResourceActions.New, resource as Resource, 
-//                     null, Status.Ready)))
-//             .catch((error) => dispatch(
-//                 createAction(ResourceActions.New, null, error, Status.Failed)));
-//     };
-// }
 
 export function all() {
     return (dispatch:any) => {
@@ -42,30 +41,16 @@ export function all() {
     };
 }
 
-// export function edit(resource: Resource) {
-//     return (dispatch: any) => {
-//         dispatch(createAction(ResourceActions.Edit, null, 
-//             null, Status.WaitingOnServer));
-//         post(resource, 'api/resources/' + resource._id + '/edit/')
-//             .then(resource => dispatch(
-//                 createAction(ResourceActions.Edit, resource as Resource, 
-//                     null, Status.Ready)))
-//             .catch((error) => dispatch(
-//                 createAction(ResourceActions.Edit, null, error, 
-//                     Status.Failed)));
-//     };
-// }
-
-export function remove(resourceId: string) {
+export function remove(resource: Resource) {
     return (dispatch:any) => {
         dispatch(createAction(ResourceActions.Remove, null, 
             null, Status.WaitingOnServer));
-        del('api/resources/' + resourceId)
+        del('api/resources/' + resource._id)
             .then(() => dispatch(
-                createAction(ResourceActions.Remove, null, null, 
+                createAction(ResourceActions.Remove, resource, null, 
                     Status.Ready)))
             .catch((error) => dispatch(
-                createAction(ResourceActions.Remove, null, error, 
+                createAction(ResourceActions.Remove, resource, error, 
                     Status.Failed)));
     };
 }

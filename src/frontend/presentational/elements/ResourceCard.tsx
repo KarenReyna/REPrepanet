@@ -39,7 +39,7 @@ export default class ResourceCard extends React.Component<any, any> {
 
     public render() {
         const shareUrl = this.props.resource.url;
-        const title = this.props.resource.title;
+        const title = this.props.resource.name;
         var classnames = require('classnames');
 
         var handleExpandClick = ()=> {
@@ -52,7 +52,7 @@ export default class ResourceCard extends React.Component<any, any> {
             <Card className="resourceCard">
                 <CardContent className={classnames({["resourceCardContent"]: !this.state.expanded,})}>
                     <Typography type="headline" component="h2">
-                        {this.props.resource.title}
+                        {this.props.resource.name}
                     </Typography>
                 </CardContent>
                 <CardActions disableActionSpacing className={classnames({["resourceCardActions"]: !this.state.expanded,})}>

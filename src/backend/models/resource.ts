@@ -6,8 +6,7 @@ interface IResourceModel extends Model<IResource> { }
 
 // database attributes (should be the same as IResourceModel)
 var ResourceSchema = new Schema({
-    title: { type: String, maxlength: 100, required: true },
-    image: { type: String, maxlength: 1000 },
+    name: { type: String, maxlength: 100, required: true },
     url: { type: String, maxlength: 1000, required: true },
     description: { type: String, maxlength: 20000, required: true },
     tags: { type: Array(), default: [] },

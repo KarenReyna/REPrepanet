@@ -6,11 +6,11 @@ export class UserController {
     public async currentUser(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         var user = await getCurrentUserAsync(req);
         if (!user) {
-            return CustomError(res, 500, "No user logged in.")
+            return CustomError(res, 500, "No han iniciado sesión.")
         }
         return Success(res, ResponseObjectType.Object, "user", user)
     }
@@ -18,11 +18,11 @@ export class UserController {
     public async get(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión");
         }
         var isAdmin = await currentUserIsAdminAsync(req);
         if (!isAdmin) {
-            return CustomError(res, 403, "You are not an admin.")
+            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
         }
         return await User.findById(req.params.id, "id name email isAdmin").exec((err, user) => {
             if (err) {
@@ -35,11 +35,11 @@ export class UserController {
     public async index(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         var isAdmin = await currentUserIsAdminAsync(req);
         if (!isAdmin) {
-            return CustomError(res, 403, "You are not an admin.")
+            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
         }
         return await User.find({}, "id name email isAdmin").exec((err, users) => {
             if (err) {
@@ -52,15 +52,15 @@ export class UserController {
     public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         var isAdmin = await currentUserIsAdminAsync(req);
         if (!isAdmin) {
-            return CustomError(res, 403, "You are not an admin.")
+            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
         }
         if (UserController.validateRequiredParams(req)) {
             if (req.body.password !== req.body.passwordConf) {
-                return CustomError(res, 400, 'Password and password confirmation do not match.');
+                return CustomError(res, 400, 'La contraseña y la confirmación de contraseña no coinciden.');
             }
 
             return await User.create(UserController.createResponseObject(req), (err, user: any) => {
@@ -68,23 +68,24 @@ export class UserController {
                     return CustomError(res, 500, err.message);
                 }
                 return Success(res, ResponseObjectType.Object, "user", {
-                    id: user.id,
-                    name: user.name,                
-                    email: user.email
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    isAdmin: user.isAdmin
                 });
             });
         }
-        return CustomError(res, 400, 'All fields required.');
+        return CustomError(res, 400, 'Todos los campos son requeridos.');
     }
 
     public async edit(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         var isAdmin = await currentUserIsAdminAsync(req);
         if (!isAdmin) {
-            return CustomError(res, 403, "You are not an admin.")
+            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
         }
         await User.findOneAndUpdate({ _id: req.params.id }, UserController.createUpdateObject(req),
             { new: true, fields: "id name email isAdmin" }, (err, user) => {
@@ -93,11 +94,29 @@ export class UserController {
                 }
 
                 if (!user) {
-                    return CustomError(res, 404, "user not found");
+                    return CustomError(res, 404, "No se encontro al usuario.");
                 }
 
-                return Success(res, ResponseObjectType.Object, "user", user);
+                return Success(res, ResponseObjectType.Object, "user", {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    isAdmin: user.isAdmin
+                });
             });
+    }
+
+    public async delete(req: any, res: any) {
+        var loggedIn = await isUserLoggedInAsync(req);
+        if (!loggedIn) {
+            return CustomError(res, 403, "Por favor inicia sesión.");
+        }
+        return await User.findByIdAndRemove(req.params.id, (err, user) => {
+            if (err) {
+                return CustomError(res, 500, err.message);
+            }
+            return Success(res, ResponseObjectType.Object, "user", user);
+        });
     }
 
     private static validateRequiredParams(req: any): boolean {

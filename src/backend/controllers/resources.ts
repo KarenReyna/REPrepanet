@@ -8,7 +8,7 @@ export class ResourceController {
     public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         if (ResourceController.validateRequiredParams(req)) {
             var resourceObject = await ResourceController.createResponseObject(req);
@@ -17,44 +17,53 @@ export class ResourceController {
                     return CustomError(res, 500, err.message);
                 }
                 return Success(res, ResponseObjectType.Object, "resource", {
-                    id: resource.id,
-                    title: resource.title,
+                    _id: resource._id,
+                    name: resource.name,
                     description: resource.description,
                     url: resource.url,
-                    imageurl: resource.imageurl,
                     tags: resource.tags,
                     category: resource.category,
+                    type: resource.type,
                     updated_by: resource.updated_by
                 });
             });
         }
-        return CustomError(res, 400, 'All fields required.');
+        return CustomError(res, 400, 'Todos los campos son requeridos.');
     }
 
     public async edit(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         var resourceObject = await ResourceController.createUpdateObject(req);
         await Resource.findOneAndUpdate({ _id: req.params.id },
             resourceObject,
-            { new: true, fields: "id title description url image tags category updated_by type" },
+            { new: true, fields: "id name description url tags category updated_by type" },
             (err, resource) => {
                 if (err) {
                     return CustomError(res, 400, err.message);
                 }
 
                 if (!resource) {
-                    return CustomError(res, 404, "resource not found");
+                    return CustomError(res, 404, "No se encontró el recurso.");
                 }
 
-                return Success(res, ResponseObjectType.Object, "resource", resource);
+                return Success(res, ResponseObjectType.Object, "resource", {
+                    _id: resource._id,
+                    name: resource.name,
+                    description: resource.description,
+                    url: resource.url,
+                    tags: resource.tags,
+                    category: resource.category,
+                    type: resource.type,
+                    updated_by: resource.updated_by
+                });
             });
     }
 
     public async index(_: any, res: any) {
-        return await Resource.find({}, "id title description url image tags category updated_by type").exec((err, resources) => {
+        return await Resource.find({}, "id name description url tags category updated_by type").exec((err, resources) => {
             if (err) {
                 return CustomError(res, 500, err.message);
             }
@@ -65,7 +74,7 @@ export class ResourceController {
     public async delete(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         return await Resource.findByIdAndRemove(req.params.id, (err, resource) => {
             if (err) {
@@ -76,29 +85,28 @@ export class ResourceController {
     }
 
     private static validateRequiredParams(req: any): boolean {
-        return req.body.title && req.body.description && req.body.url && req.body.type; //&& req.body.imageurl
+        return req.body.name && req.body.description && req.body.url && req.body.type;
     }
 
     private static async createResponseObject(req: any): Promise<any> {
-        let imageurl = req.body.imageurl || "";
-        var category = await Category.findById(req.body.category_id, 'title description').exec();
+        var category = await Category.findById(req.body.category, 'name description').exec();
         var currentUser = await getCurrentUserAsync(req);
         let tags = [];
+
         if (req.body.tags != null) {
-            tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
+            tags = await Tag.findOrCreateBatch(req.body.tags);
         }
 
         return {
-            title: req.body.title,
+            name: req.body.name,
             description: req.body.description,
             url: req.body.url,
-            image: imageurl,
             tags: tags,
             category: category,
             type: req.body.type,
             updated_by: [{
                 user: {
-                    title: currentUser.title,
+                    name: currentUser.name,
                     email: currentUser.email
                 },
                 at: Date.now()
@@ -110,8 +118,8 @@ export class ResourceController {
         var currentUser = await getCurrentUserAsync(req);
 
         var obj: any = {};
-        if (req.body.title != null) {
-            obj.title = req.body.title;
+        if (req.body.name != null) {
+            obj.name = req.body.name;
         }
         if (req.body.description != null) {
             obj.description = req.body.description;
@@ -119,14 +127,16 @@ export class ResourceController {
         if (req.body.url != null) {
             obj.url = req.body.url;
         }
-        if (req.body.imageurl != null) {
-            obj.image = req.body.imageurl;
-        }
         if (req.body.tags != null) {
-            obj.tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
+            var tagsArray = [];
+            for(var i = 0; i < req.body.tags.length; i++) {
+                var tag = req.body.tags[i];
+                tagsArray.push(tag.name as never);
+            }
+            obj.tags = await Tag.findOrCreateBatch(tagsArray);
         }
-        if (req.body.category_id != null) {
-            obj.category = await Category.findById(req.body.category_id, 'title description').exec();
+        if (req.body.categoryid != null) {
+            obj.category = await Category.findById(req.body.categoryid, 'name description').exec();
         }
         if (req.body.type != null) {
             obj.type = req.body.type;
@@ -139,7 +149,7 @@ export class ResourceController {
             $push: {
                 updated_by: {
                     user: {
-                        title: currentUser.title,
+                        name: currentUser.name,
                         email: currentUser.email
                     },
                     at: Date.now()

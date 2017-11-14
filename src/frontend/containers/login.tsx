@@ -11,24 +11,31 @@ import {
 } from 'Config/constants';
 
 import { LoginForm } from 'Presentational/components/login';
+
 class Login extends React.Component<any, any> {
-    componentWillReceiveProps(nextProps) {
-        if (!isEmpty(nextProps.users.current)){
-            this.props.history.push('/');
+    componentDidMount() {
+        if(isEmpty(this.props.session.current)) {
+            this.props.loadProfile();
         }
     }
+
+    componentWillReceiveProps(nextProps) {
+        if(!isEmpty(nextProps.session.current)) {
+            this.props.history.push('/admin');
+        }
+    }
+
   render() {
     return (
       <div>
         <LoginForm
-            visible = {this.props.users.login.open}
-            hide = {this.props.loginHide}
+            visible = {this.props.session.login.open}
             submit = {this.props.loginSubmit}
-            waiting = {this.props.users.status == 
+            waiting = {this.props.session.status == 
                                     Status.WaitingOnServer}
-            failed = {this.props.users.error && 
-                    this.props.users.error.status && 
-                    this.props.users.error.status == 400}
+            failed = {this.props.session.error && 
+                    this.props.session.error.status && 
+                    this.props.session.error.status == 400}
         />  
       </div>
     );
@@ -37,14 +44,16 @@ class Login extends React.Component<any, any> {
 
 function mapStateToProps(state: any) {
     return {
-        users: state.users,
+        session: state.session
     }
 }
 
 function mapDispatchToProps(dispatch: any) {
     return {
         loginSubmit: (loginAttempt: LoginAttempt) => 
-            dispatch(thunks.users.login(loginAttempt)),
+
+            dispatch(thunks.session.login(loginAttempt)),
+        loadProfile: () => dispatch(thunks.session.profile())
     }
 }
 

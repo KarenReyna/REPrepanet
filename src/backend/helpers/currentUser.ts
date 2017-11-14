@@ -3,7 +3,7 @@ import * as User from '../models/user';
 var _currentUser: any;
 
 export async function getCurrentUserAsync(req: any): Promise<any> {
-    if (_currentUser && _currentUser.id == req.session.auth_token){
+    if (_currentUser && _currentUser._id == req.session.auth_token){
         return _currentUser;
     }
 

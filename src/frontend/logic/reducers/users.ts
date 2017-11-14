@@ -1,61 +1,22 @@
 import { 
     User, 
-    UserActions, 
-    Action, 
+    UserActions,
     Status 
 } from 'Config/constants';
-import { all, remove, update } from 'Logic/reducers';
+import { all, remove, update, IReducerState } from 'Logic/reducers';
 
-function login(state, action: Action) {
-    switch(action.status){
-        case Status.Ready:
-            return {
-                ...state,
-                current: action.object,
-                status: action.status,
-                login: { open: false },
-                error: {}
-            }
-        case Status.WaitingOnServer:
-            return {
-                ...state,
-                status: action.status,
-            }
-        case Status.WaitingOnUser:
-        case Status.Failed:
-            return {
-                ...state,
-                status: action.status,
-                login: { open: true },
-                error: action.error
-            }
-        default:
-            return {
-                ...state,
-                status: action.status,
-                error: {}
-            }
-    }
-}
-
-function logout(state) {
-    return {
-        ...state,
-        current: {},
-        login: { open: true }
-    }
+interface IUserState extends IReducerState {
+    update: any
 }
 
 export function users (
     state = {
-        login: { open: true },
         update: { open: false, object: {} },
-        current: {} as User,
         all: [] as User[],
         status: Status.Ready,
         error: {}
     },
-    action: Action ) {
+    action): IUserState {
 
     switch(action.type) {
         case UserActions.All:
@@ -65,15 +26,9 @@ export function users (
             return remove(state, action);
 
         case UserActions.Update:
-        return update(state, action);
-
-        case UserActions.Login:
-            return login(state, action);
-
-        case UserActions.Logout:
-            return logout(state);
+            return update(state, action);
 
         default:
-            return state;
+            return { ...state };
     }
 }

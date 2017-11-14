@@ -23,8 +23,7 @@ export class LoginForm extends React.Component<any, any> {
   public render() {
     return (
       <Dialog 
-        open = {this.props.visible}
-        onRequestClose={this.props.hide}>
+        open = {this.props.visible}>
           <DialogTitle>Entrar</DialogTitle>
           <DialogContent>
              <TextField

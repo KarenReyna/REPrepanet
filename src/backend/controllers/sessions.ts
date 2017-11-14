@@ -7,7 +7,7 @@ export class SessionController {
     public async login(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (loggedIn) {
-            return CustomError(res, 401, "User already logged in.");
+            return CustomError(res, 401, "El usuario ya ha iniciado una sesión.");
         }
         if (SessionController.validateRequiredParams(req)) {
             var error: any = null;
@@ -15,23 +15,23 @@ export class SessionController {
                 if (err) error = err;
             });
             if (error) {
-                return CustomError(res, 400, 'Incorrect email or password.');
+                return CustomError(res, 400, 'Correo o contraseña incorrectos.');
             }
 
-            req.session.auth_token = user.id;
+            req.session.auth_token = user._id;
             return Success(res, ResponseObjectType.Object, "user", {
-                id: user.id,
+                _id: user._id,
                 name: user.name,                
                 email: user.email
             });
         }
-        return CustomError(res, 400, 'All fields required.');
+        return CustomError(res, 400, 'Todos los campos son requeridos.');
     }
 
     public async logout(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         if (!!req.session.auth_token) {
             req.session.auth_token = null;

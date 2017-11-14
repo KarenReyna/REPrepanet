@@ -75,7 +75,7 @@ const config: webpack.Configuration = {
         hot: true,
         inline: true,
         historyApiFallback: true,
-        headers: { "Access-Control-Allow-Origin": "*"}
+        headers: { "Access-Control-Allow-Origin": "http:localhost:8080"}
     }
 
 };

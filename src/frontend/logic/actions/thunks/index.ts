@@ -3,12 +3,14 @@ import * as categories from './categories';
 import * as resources from './resources';
 import * as users from './users';
 import * as tags from './tags';
+import * as session from './session';
 
 export var thunks = {
     resources: resources,
     categories: categories,
     users: users,
-    tags: tags
+    tags: tags,
+    session: session
 }
 
 function evaluate(response: any): Promise<any> {
@@ -24,6 +26,8 @@ export function post(object: any, route: string) {
         serverUrl + route, {
         method: 'POST',
         headers: fetchHeader,
+        mode: 'cors',
+        credentials: "include",
         body: JSON.stringify({
             ...object
         })
@@ -34,7 +38,9 @@ export function get(route: string) {
     return fetch(
         serverUrl + route, {
         method: 'GET',
-        headers: fetchHeader
+        mode: 'cors',
+        headers: fetchHeader,
+        credentials: 'include'
     }).then(response => { return evaluate(response) })
 }
 
@@ -42,6 +48,8 @@ export function del(route: string) {
     return fetch(
         serverUrl + route, {
         method: 'DELETE',
-        headers: fetchHeader
+        mode: 'cors',
+        headers: fetchHeader,
+        credentials: "include"
     }).then(response => { return evaluate(response) })
 }
