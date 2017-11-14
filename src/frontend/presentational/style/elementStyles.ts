@@ -78,6 +78,9 @@ const Styles = {
     resourceCardText: {
         class: "uk-button uk-button-text",
     },
+    flexGrow: {
+        flex: '1 1 auto',
+    },
     menu: {
         container: {
             class: "uk-width-1-2@s uk-width-2-5@m",
@@ -85,6 +88,27 @@ const Styles = {
         list: {
             class: "uk-nav uk-nav-default",
         },
+    },
+    root: {
+        style:{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+        }
+      },
+      gridList: {
+        style:{
+        width: 500,
+        height: 200,
+        overflowY: 'auto',
+        }
+      },
+      gridListResources: {
+        style:{
+            display: 'flex',
+            flexWrap: 'nowrap',
+            overflowX: 'auto',
+        }
     },
 }
 

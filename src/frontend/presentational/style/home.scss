@@ -23,7 +23,31 @@ html, body {
   }
 
 .gridListResources {
-    display: 'flex';
-    flex-wrap: 'nowrap';
+    clear: both;
     overflow-x: 'auto';
   }
+.expand {
+  transform: rotate(0deg);
+}
+.expandOpen {
+  transform: rotate(180deg);
+}
+
+.resourceCard {
+  width: 200px;
+  min-height: 100px;
+  margin: 10px;
+  float: left;
+  overflow: auto;
+  position: relative;
+}
+
+// .resourceCardActions {
+//   position: absolute;
+//   width: 100%;
+//   bottom: 0;
+// }
+
+// .resourceCardContent {
+//   margin-bottom: 55px;
+// }

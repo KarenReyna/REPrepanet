@@ -51,6 +51,7 @@ function mapStateToProps(state: any) {
 function mapDispatchToProps(dispatch: any) {
     return {
         loginSubmit: (loginAttempt: LoginAttempt) => 
+
             dispatch(thunks.session.login(loginAttempt)),
         loadProfile: () => dispatch(thunks.session.profile())
     }
