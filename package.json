@@ -23,7 +23,7 @@
     "express": "^4.16.2",
     "history": "^4.7.2",
     "material-ui": "^1.0.0-beta.20",
-    "material-ui-chip-input": "^0.18.2",
+    "material-ui-chip-input": "^0.18.3",
     "material-ui-icons": "^1.0.0-beta.17",
     "mongoose": "^4.12.3",
     "node-mongo-seeds": "^2.3.1",

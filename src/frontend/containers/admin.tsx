@@ -14,6 +14,8 @@ import {
 
 import { AdminView } from 'Presentational/components/adminView';
 import { UpdateUser } from 'Presentational/components/updateUser';
+import { UpdateCategory } from 'Presentational/components/updateCategory';
+import { UpdateResource } from 'Presentational/components/updateResource';
 import { isEmpty, isRecentlyReady, hasRecentlyFailed } from 'Config/helper';
 
 class Admin extends React.Component<any, any> {
@@ -94,6 +96,7 @@ class Admin extends React.Component<any, any> {
                     deleteCategory = { this.props.deleteCategory }
                     deleteResource = { this.props.deleteResource }
                 />
+
                 <UpdateUser 
                     visible = { this.props.users.update.open }
                     object = { this.props.users.update.object } 
@@ -101,6 +104,23 @@ class Admin extends React.Component<any, any> {
                     failed = { this.props.users.status == Status.Failed }
                     waiting = { this.props.users.status == Status.WaitingOnServer }
                     submit = {this.props.updateUser}/>
+                
+                <UpdateCategory 
+                    visible = { this.props.categories.update.open }
+                    object = { this.props.categories.update.object } 
+                    hide = { this.props.hideCategory }
+                    failed = { this.props.categories.status == Status.Failed }
+                    waiting = { this.props.categories.status == Status.WaitingOnServer }
+                    submit = {this.props.updateCategory}/>
+                
+                <UpdateResource 
+                    categories = { this.props.categories }
+                    visible = { this.props.resources.update.open }
+                    object = { this.props.resources.update.object } 
+                    hide = { this.props.hideResource }
+                    failed = { this.props.resources.status == Status.Failed }
+                    waiting = { this.props.resources.status == Status.WaitingOnServer }
+                    submit = {this.props.updateResource}/>
             </div>);
     }
 }

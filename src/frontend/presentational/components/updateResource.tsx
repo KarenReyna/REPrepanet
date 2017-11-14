@@ -46,17 +46,6 @@ export class UpdateResource extends React.Component<any, any> {
     })
   }
 
-  handleChange(type: string | undefined, newValue: string | undefined) {
-    let newState = type && 
-      type == "name" ? 
-        { resource: {...this.state.resource, name: newValue}} : 
-      type == "description" ? 
-        { resource: {...this.state.resource, description: newValue}} : 
-      type == "url" ? 
-        { resource: {...this.state.resource, url: newValue}} : {}
-    this.setState(newState);
-  }
-
   handleSelectFieldChange(event) {
     this.setState({
       selectFieldValue: event.target.value,
@@ -82,7 +71,7 @@ export class UpdateResource extends React.Component<any, any> {
       case Status.Ready:
         if(object && object.all && object.all.length > 0)
           return this.menuItems(object.all);
-        return (<p>No hay categorías ni recursos</p>);
+        return (<p>No hay categorías</p>);
       case Status.Failed:
         return (<p>No hay conexión a Internet</p>);
       case Status.WaitingOnServer:
@@ -92,6 +81,11 @@ export class UpdateResource extends React.Component<any, any> {
   }
 
   public render() {
+    var handleChange = (name) => e => {
+        this.setState({
+            [name]: e.target.value
+        });
+    };
     let categoryContent = this.createContent(this.props.categories);
     return (
       <Dialog 
@@ -101,17 +95,13 @@ export class UpdateResource extends React.Component<any, any> {
         <DialogContent>
         <TextField
           label = "Nombre"
-          data-type="name"
-          onChange={(e) => this.handleChange((e.target as HTMLElement).dataset.type, 
-            (e.target as HTMLElement).dataset.txt)}/>
+          onChange={handleChange('name')}/>
         <br />
         <TextField
           label = "Descripción"
-          data-type="description"
           multiline= {true}
           rows = {2}
-          onChange={(e) => this.handleChange((e.target as HTMLElement).dataset.type, 
-            (e.target as HTMLElement).dataset.txt)}/>
+          onChange={handleChange('description')}/>
         <br />
         <InputLabel htmlFor="category-helper">Categoría</InputLabel>
         <Select
@@ -123,16 +113,8 @@ export class UpdateResource extends React.Component<any, any> {
         </Select>
         <br />
         <TextField
-          data-type="url"
           label = "URL"
-          onChange={(e) => this.handleChange((e.target as HTMLElement).dataset.type, 
-            (e.target as HTMLElement).dataset.txt)}/>
-        <br />
-        <Button
-          raised>
-          Imagen
-          <input type="file" />
-        </Button>
+          onChange={handleChange('url')}/>
         <br />
         {/* <ChipInput
           value={this.state.chips}
