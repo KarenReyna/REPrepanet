@@ -23,8 +23,7 @@ html, body {
   }
 
 .gridListResources {
-    display: 'flex';
-    flex-wrap: 'nowrap';
+    clear: both;
     overflow-x: 'auto';
   }
 .expand {
@@ -32,4 +31,11 @@ html, body {
 }
 .expandOpen {
   transform: rotate(180deg);
+}
+
+.resourceCard {
+  max-width: 200px;
+  margin: 10px;
+  float: left;
+  overflow: auto;
 }

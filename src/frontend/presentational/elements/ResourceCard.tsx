@@ -1,4 +1,6 @@
 import * as React from 'react';
+//import Styles from 'Presentational/style/elementStyles';
+//mport PropTypes from 'prop-types';
 import Card, { CardContent, CardActions } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
@@ -10,7 +12,8 @@ import Collapse from 'material-ui/transitions/Collapse';
 //     // ShareCounts,
 //     // generateShareIcon
 //   } from 'react-share';
-import { FacebookShareButton } from 'react-share';
+// import FacebookShareButton from 'react-share';
+//import { withStyles } from 'material-ui/styles';
 
 const styles = {
     flexGrow: {
@@ -24,13 +27,11 @@ const styles = {
 //   const {
 //     FacebookShareCount,
 //   } = ShareCounts;
-const shareUrl = 'http://github.com';
+// const shareUrl = 'http://github.com';
 export default class ResourceCard extends React.Component<any, any> {
     state = { 
         expanded : false,
     };
-    
-    
 
     public render() {
         var classnames = require('classnames');
@@ -41,19 +42,20 @@ export default class ResourceCard extends React.Component<any, any> {
             });
         };
         return(
-            <Card>
+            <div>
+            <Card className="resourceCard">
                 <CardContent>
                     <Typography type="headline" component="h2">
                         {this.props.resource.title}
                     </Typography>
                 </CardContent>
                 <CardActions disableActionSpacing>
-                    <div>
-                    <FacebookShareButton url={shareUrl}>
+                    <IconButton aria-label="Share">
                         <ShareIcon />
-                    </FacebookShareButton>
-                    </div>
-                    
+                    </IconButton>
+                    {/* <FacebookShareButton url={shareUrl}>
+                        <ShareIcon />
+                    </FacebookShareButton> */}
                     <div style={styles.flexGrow} />
                     <IconButton
                         className={classnames("expand", {
@@ -79,6 +81,7 @@ export default class ResourceCard extends React.Component<any, any> {
                     </CardContent>
                 </Collapse>
             </Card> 
+            </div>
                   
       );
   }

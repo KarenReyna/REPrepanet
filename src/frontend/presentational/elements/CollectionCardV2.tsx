@@ -4,7 +4,7 @@ import ResourceCard from 'Presentational/elements/ResourceCard';
 export default class CollectionCardV2 extends React.Component<any, any> {
     public render() {
       return(
-        <div>
+        <div className="gridListResources">
             <h3>{this.props.title}</h3>
             
             {(() => {
@@ -12,7 +12,9 @@ export default class CollectionCardV2 extends React.Component<any, any> {
                     return (
                         this.props.resources.all.filter(({category}) => category.name === this.props.title)
                         .map((resource2) => (
+                           
                             <ResourceCard resource={resource2}/>
+                            
                         ))
                         
                     );
