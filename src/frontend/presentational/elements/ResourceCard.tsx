@@ -38,8 +38,8 @@ export default class ResourceCard extends React.Component<any, any> {
     };
 
     public render() {
-        const shareUrl = 'http://github.com';
-        const title = 'GitHub';
+        const shareUrl = this.props.resource.url;
+        const title = this.props.resource.title;
         var classnames = require('classnames');
 
         var handleExpandClick = ()=> {
