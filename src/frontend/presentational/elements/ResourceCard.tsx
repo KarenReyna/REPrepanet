@@ -1,21 +1,10 @@
 import * as React from 'react';
-//import Styles from 'Presentational/style/elementStyles';
-//mport PropTypes from 'prop-types';
 import Card, { CardContent, CardActions } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
-//import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
-
 import { ShareButtons, generateShareIcon} from 'react-share';
-// import {
-//     ShareButtons,
-//     // ShareCounts,
-//     // generateShareIcon
-//   } from 'react-share';
-// import FacebookShareButton from 'react-share';
-//import { withStyles } from 'material-ui/styles';
 
 
 const styles = {
