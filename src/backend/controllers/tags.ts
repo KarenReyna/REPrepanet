@@ -1,4 +1,4 @@
-import * as Tag from '../models/Tag';
+import * as Tag from '../models/tag';
 import { Success, CustomError, ResponseObjectType } from '../helpers/response';
 import { isUserLoggedInAsync } from '../helpers/currentUser';
 

@@ -14,6 +14,7 @@ import {
 
 import { AdminView } from 'Presentational/components/adminView';
 import { UpdateUser } from 'Presentational/components/updateUser';
+import { UpdateCategory } from 'Presentational/components/updateCategory';
 import { isEmpty, isRecentlyReady, hasRecentlyFailed } from 'Config/helper';
 
 class Admin extends React.Component<any, any> {
@@ -101,6 +102,13 @@ class Admin extends React.Component<any, any> {
                     failed = { this.props.users.status == Status.Failed }
                     waiting = { this.props.users.status == Status.WaitingOnServer }
                     submit = {this.props.updateUser}/>
+                <UpdateCategory 
+                    visible = { this.props.categories.update.open }
+                    object = { this.props.categories.update.object } 
+                    hide = { this.props.hideCategory }
+                    failed = { this.props.categories.status == Status.Failed }
+                    waiting = { this.props.categories.status == Status.WaitingOnServer }
+                    submit = {this.props.updateCategory}/>
             </div>);
     }
 }
@@ -134,8 +142,8 @@ function mapDispatchToProps(dispatch: any) {
         hideResource: () => dispatch(createAction(ResourceActions.Update, null, null, Status.Ready)),
 
         deleteUser: (user) => dispatch(thunks.users.remove(user)),
-        deleteCategory: (user) => dispatch(thunks.users.remove(user)),
-        deleteResource: (user) => dispatch(thunks.users.remove(user)),
+        deleteCategory: (category) => dispatch(thunks.categories.remove(category)),
+        deleteResource: (resource) => dispatch(thunks.resources.remove(resource)),
     }
 }
 

@@ -1,10 +1,15 @@
 import {
   Status,
-  User
+  User,
+  Category
 } from 'Config/constants';
 
 export function containsOnlyIsAdmin(user: User): boolean {
   return !user.name && !user.email && !user.password && user.isAdmin != undefined;
+}
+
+export function containsOnly(category: Category): boolean {
+  return !category.name && !category.description != undefined;
 }
 
 export function isEmpty(object): boolean {
