@@ -51,7 +51,7 @@ export default class ResourceCard extends React.Component<any, any> {
             <div>
             <Card className="resourceCard">
                 <CardContent className={classnames({["resourceCardContent"]: !this.state.expanded,})}>
-                    <Typography type="headline" component="h2">
+                    <Typography type="subheading" component="h2">
                         {this.props.resource.name}
                     </Typography>
                 </CardContent>
@@ -62,7 +62,7 @@ export default class ResourceCard extends React.Component<any, any> {
                             quote={title}
                         >
                         <FacebookIcon
-                            size={32}
+                            size={24}
                             round />
                         </FacebookShareButton>
                     </IconButton>
