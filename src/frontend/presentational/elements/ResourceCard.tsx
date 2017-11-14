@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
 
-import { ShareButtons, ShareCounts, generateShareIcon} from 'react-share';
+import { ShareButtons, generateShareIcon} from 'react-share';
 // import {
 //     ShareButtons,
 //     // ShareCounts,
@@ -28,9 +28,7 @@ const {
   FacebookShareButton,
 } = ShareButtons;
 
-const {
-  FacebookShareCount,
-} = ShareCounts;
+
 
 const FacebookIcon = generateShareIcon('facebook');
 
@@ -59,27 +57,20 @@ export default class ResourceCard extends React.Component<any, any> {
                 </CardContent>
                 <CardActions disableActionSpacing>
                     <IconButton aria-label="Share">
-                        
-                        return (
-                            <div className="Demo__container">
-                                <div className="Demo__some-network">
-                                  <FacebookShareButton
+                                                
+                        <div className="Demo__container">
+                            <div className="Demo__some-network">
+                                <FacebookShareButton
                                     url={shareUrl}
                                     quote={title}
                                     className="Demo__some-network__share-button">
-                               <FacebookIcon
+                                <FacebookIcon
                                   size={32}
                                   round />
-                                  </FacebookShareButton>
+                                </FacebookShareButton>
 
-                                <FacebookShareCount
-                                    url={shareUrl}
-                                    className="Demo__some-network__share-count">
-                                    {count => count}
-                                </FacebookShareCount>
-                                </div>
                             </div>
-                            );
+                        </div>
 
                     </IconButton>
                     
