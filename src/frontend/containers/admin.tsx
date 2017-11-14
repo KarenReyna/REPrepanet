@@ -15,6 +15,7 @@ import {
 import { AdminView } from 'Presentational/components/adminView';
 import { UpdateUser } from 'Presentational/components/updateUser';
 import { UpdateCategory } from 'Presentational/components/updateCategory';
+import { UpdateResource } from 'Presentational/components/updateResource';
 import { isEmpty, isRecentlyReady, hasRecentlyFailed } from 'Config/helper';
 
 class Admin extends React.Component<any, any> {
@@ -109,6 +110,13 @@ class Admin extends React.Component<any, any> {
                     failed = { this.props.categories.status == Status.Failed }
                     waiting = { this.props.categories.status == Status.WaitingOnServer }
                     submit = {this.props.updateCategory}/>
+                <UpdateResource 
+                    visible = { this.props.resources.update.open }
+                    object = { this.props.resources.update.object } 
+                    hide = { this.props.hideResource }
+                    failed = { this.props.resources.status == Status.Failed }
+                    waiting = { this.props.resources.status == Status.WaitingOnServer }
+                    submit = {this.props.updateResource}/>
             </div>);
     }
 }
