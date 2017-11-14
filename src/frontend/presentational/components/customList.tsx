@@ -8,7 +8,7 @@ import AddIcon from 'material-ui-icons/Add';
 import TextField from 'material-ui/TextField';
 import Container from 'Presentational/elements/Container';
 
-function listElements(items, search) {
+function listElements(items, search, showFunction, deleteFunction) {
   search = search.toLowerCase();
   search = search.replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
 
@@ -32,12 +32,12 @@ function listElements(items, search) {
                   <ListItemSecondaryAction>
                     <IconButton 
                       aria-label="Edit"
-                      onClick={() => this.props.show(item)}>
+                      onClick={() => showFunction(item)}>
                         <EditIcon/>
                     </IconButton>
                     <IconButton 
                       aria-label="Delete"
-                      onClick={() => this.props.delete(item)}>
+                      onClick={() => deleteFunction(item)}>
                         <DeleteIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
@@ -74,7 +74,7 @@ export class CustomList extends React.Component<any, any> {
             />
             <br />
             <br />
-          {listElements(this.props.items, this.state.search)}
+          {listElements(this.props.items, this.state.search, this.props.show, this.props.delete)}
           </Container>
         <Button 
           fab 
