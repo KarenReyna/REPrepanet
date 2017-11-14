@@ -8,7 +8,7 @@ export class ResourceController {
     public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         if (ResourceController.validateRequiredParams(req)) {
             var resourceObject = await ResourceController.createResponseObject(req);
@@ -23,17 +23,18 @@ export class ResourceController {
                     url: resource.url,
                     tags: resource.tags,
                     category: resource.category,
+                    type: resource.type,
                     updated_by: resource.updated_by
                 });
             });
         }
-        return CustomError(res, 400, 'All fields required.');
+        return CustomError(res, 400, 'Todos los campos son requeridos.');
     }
 
     public async edit(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         var resourceObject = await ResourceController.createUpdateObject(req);
         await Resource.findOneAndUpdate({ _id: req.params.id },
@@ -45,7 +46,7 @@ export class ResourceController {
                 }
 
                 if (!resource) {
-                    return CustomError(res, 404, "resource not found");
+                    return CustomError(res, 404, "No se encontró el recurso.");
                 }
 
                 return Success(res, ResponseObjectType.Object, "resource", {
@@ -55,6 +56,7 @@ export class ResourceController {
                     url: resource.url,
                     tags: resource.tags,
                     category: resource.category,
+                    type: resource.type,
                     updated_by: resource.updated_by
                 });
             });
@@ -72,7 +74,7 @@ export class ResourceController {
     public async delete(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Please login to access.");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         return await Resource.findByIdAndRemove(req.params.id, (err, resource) => {
             if (err) {
@@ -87,11 +89,12 @@ export class ResourceController {
     }
 
     private static async createResponseObject(req: any): Promise<any> {
-        var category = await Category.findById(req.body.categoryid, 'name description').exec();
+        var category = await Category.findById(req.body.category, 'name description').exec();
         var currentUser = await getCurrentUserAsync(req);
         let tags = [];
+
         if (req.body.tags != null) {
-            tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
+            tags = await Tag.findOrCreateBatch(req.body.tags);
         }
 
         return {
@@ -125,7 +128,12 @@ export class ResourceController {
             obj.url = req.body.url;
         }
         if (req.body.tags != null) {
-            obj.tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
+            var tagsArray = [];
+            for(var i = 0; i < req.body.tags.length; i++) {
+                var tag = req.body.tags[i];
+                tagsArray.push(tag.name as never);
+            }
+            obj.tags = await Tag.findOrCreateBatch(tagsArray);
         }
         if (req.body.categoryid != null) {
             obj.category = await Category.findById(req.body.categoryid, 'name description').exec();
