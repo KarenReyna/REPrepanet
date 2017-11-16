@@ -24,6 +24,14 @@ class Admin extends React.Component<any, any> {
         collabs: null
     }
 
+    componentWillMount() {
+        if(this.props.session.current) {
+            this.props.loadUsers();
+            this.props.loadCategories();
+            this.props.loadResources();
+        }
+    }
+
     componentDidMount() {
         if(isEmpty(this.props.session.current)) {
             this.props.loadProfile();
