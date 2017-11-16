@@ -19,36 +19,41 @@ export class AdminView extends React.Component<any, any> {
             textColor="primary"
             fullWidth>
 
-            <Tab label="Administradores"/>
-            <Tab label="Colaboradores"/>
+            {this.props.admins != null && <Tab label="Administradores"/>}
+            {this.props.admins != null && <Tab label="Colaboradores"/>}
             <Tab label="Categorías" />
             <Tab label="Recursos" />
 
           </Tabs>
-          {value === 0 &&
+          {(value === 0 && this.props.admins != null)? 
             <CustomList
               items = {this.props.admins}
               show = {this.props.showUser(true)}
               hide = {this.props.hideUser}
-              delete = {this.props.deleteUser}/>}
-          {value === 1 &&
+              delete = {this.props.deleteUser}/>
+              : null}
+          {(value === 1 && this.props.admins != null)? 
             <CustomList
               items = {this.props.collabs}
               show = {this.props.showUser(false)}
               hide = {this.props.hideUser}
-              delete = {this.props.deleteUser}/>}
-          {value === 2 &&
+              delete = {this.props.deleteUser}/>
+              : null}
+              
+          {(value === 2 || value === 0 && this.props.admins == null)?
             <CustomList
               items = {this.props.categories}
               show = {this.props.showCategory}
               hide = {this.props.hideCategory}
-              delete = {this.props.deleteCategory}/>}
-          {value === 3 && 
+              delete = {this.props.deleteCategory}/>
+              : null}
+          {(value === 3 || value === 1 && this.props.admins == null)?
             <CustomList
               items = {this.props.resources}
               show = {this.props.showResource}
               hide = {this.props.hideResource}
-              delete = {this.props.deleteResource}/>}
+              delete = {this.props.deleteResource}/>
+              : null}
         </Paper>
       )
   }
