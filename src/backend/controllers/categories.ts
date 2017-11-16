@@ -8,10 +8,6 @@ export class CategoryController {
         if (!loggedIn) {
             return CustomError(res, 403, "Por favor inicia sesión.");
         }
-        var isAdmin = await currentUserIsAdminAsync(req);
-        if (!isAdmin) {
-            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
-        }
         if (CategoryController.validateRequiredParams(req)) {
             var categoryObject = await CategoryController.createResponseObject(req);
             return await Category.create(categoryObject, (err, category: any) => {
