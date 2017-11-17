@@ -110,6 +110,13 @@ const Styles = {
             overflowX: 'auto',
         }
     },
+    logoutButton: {
+        style: {
+            float: 'right',
+            height: '25px',
+            marginRight: '0px',
+        }
+    },
 }
 
 export default Styles;

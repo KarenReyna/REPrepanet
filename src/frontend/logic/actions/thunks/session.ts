@@ -34,6 +34,7 @@ export function login(loginAttempt: LoginAttempt) {
 }
 
 export function logout() {
+    console.log("logout");
   return (dispatch:any) => {
       dispatch(createAction(SessionActions.Logout, null, 
           null, Status.WaitingOnServer));

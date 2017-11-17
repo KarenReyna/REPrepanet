@@ -1,7 +1,10 @@
 import * as React from 'react';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
+import Button from 'material-ui/Button';
 import { CustomList } from 'Presentational/components/customList';
+import Styles from 'Presentational/style/elementStyles';
+import Navbar from 'Presentational/elements/Navbar';
 
 export class AdminView extends React.Component<any, any> {
   state = {
@@ -11,7 +14,17 @@ export class AdminView extends React.Component<any, any> {
   public render() {
       const { value } = this.state;
       return (
+        <div>
+          <Navbar title="REPrepanet"/>
+  
         <Paper>
+            <Button 
+                onClick = {this.props.logout}
+                color="primary"
+                style={Styles.logoutButton.style}>
+                Cerrar sesión
+            </Button>
+            <br />
           <Tabs
             value={this.state.value}
             onChange= {(_, value) => {this.setState({ value })}}
@@ -55,6 +68,7 @@ export class AdminView extends React.Component<any, any> {
               delete = {this.props.deleteResource}/>
               : null}
         </Paper>
+        </div>
       )
   }
 }

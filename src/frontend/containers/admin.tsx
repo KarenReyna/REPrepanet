@@ -58,6 +58,9 @@ class Admin extends React.Component<any, any> {
                     collabs: collabs
                 });
         }
+        if(isEmpty(nextProps.session.current)) {
+            this.props.history.push('/login');
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -103,6 +106,8 @@ class Admin extends React.Component<any, any> {
                     deleteUser = { this.props.deleteUser }
                     deleteCategory = { this.props.deleteCategory }
                     deleteResource = { this.props.deleteResource }
+
+                    logout = {this.props.logout}
                 />
                 <UpdateUser 
                     visible = { this.props.users.update.open }
@@ -161,6 +166,8 @@ function mapDispatchToProps(dispatch: any) {
         deleteUser: (user) => dispatch(thunks.users.remove(user)),
         deleteCategory: (category) => dispatch(thunks.categories.remove(category)),
         deleteResource: (resource) => dispatch(thunks.resources.remove(resource)),
+
+        logout: () => dispatch(thunks.session.logout()),
     }
 }
 

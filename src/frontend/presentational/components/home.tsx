@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Navbar from 'Presentational/elements/Navbar';
-import NavButton from 'Presentational/elements/NavButton';
 import Container from 'Presentational/elements/Container';
 import CollectionCardV2 from 'Presentational/elements/CollectionCardV2';
 import {  Status } from 'Config/constants';
@@ -49,9 +48,7 @@ export class Home extends React.Component<any, any> {
 
     return (
       <div>
-        <Navbar title="REPrepanet">
-          <NavButton label="Entrar" onClick={this.props.loginShow} />
-        </Navbar>
+        <Navbar title="REPrepanet"/>
 
         <Container>
           <TextField

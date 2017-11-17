@@ -13,8 +13,8 @@ export default class Navbar extends React.Component<any, any> {
                     style={Styles.navbar.logo.style}>
                     <img src={'/src/frontend/presentational/assets/logo.svg'}/>
                 </a>
-                {/* {this.props.children} */}
             </div>
+            {/* {this.props.children && this.props.children} */}
           </div>
       );
   }
