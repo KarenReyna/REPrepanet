@@ -8,7 +8,13 @@ const config: webpack.Configuration = {
         filename: "server.bundle.js",
     },
     resolve: {
-        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+        alias: {
+            Controllers: path.resolve(__dirname, 'src/backend/controllers'),
+            Models: path.resolve(__dirname, 'src/backend/models'),
+            Routes: path.resolve(__dirname, 'src/backend/routes'),
+            Helpers: path.resolve(__dirname, 'src/backend/helpers')
+        }
     },
     target: 'node',
     node: {
@@ -32,7 +38,7 @@ const config: webpack.Configuration = {
             },
         ]
     },
-    devtool: 'source-map',    
+    devtool: 'source-map',
 };
 
 export default config;

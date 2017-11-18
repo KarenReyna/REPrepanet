@@ -1,0 +1,53 @@
+$white: #F1F1F1;
+$blue: #B2D3EF;
+$gray: #555555;
+
+html, body {
+  background-color: $blue;
+  margin: 0;
+}
+.root {
+    display: 'flex';
+    flex-wrap: 'wrap';
+    justify-content: 'space-around';
+  }
+
+.homeImage {
+    height: 400
+  }
+
+.gridList {
+    width: 500;
+    height: 200;
+    overflow-y: 'auto';
+  }
+
+.gridListResources {
+    clear: both;
+    overflow-x: 'auto';
+  }
+.expand {
+  transform: rotate(0deg);
+}
+.expandOpen {
+  transform: rotate(180deg);
+}
+
+.resourceCard {
+  width: 200px;
+  min-height: 100px;
+  margin: 10px;
+  float: left;
+  overflow: auto;
+  position: relative;
+}
+
+// .resourceCardActions {
+//   position: absolute;
+//   width: 100%;
+//   bottom: 0;
+// }
+
+// .resourceCardContent {
+//   margin-bottom: 55px;
+// }
