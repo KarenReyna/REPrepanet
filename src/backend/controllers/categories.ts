@@ -1,16 +1,12 @@
 import * as Category from '../models/category';
 import { Success, CustomError, ResponseObjectType } from '../helpers/response';
-import { isUserLoggedInAsync, getCurrentUserAsync, currentUserIsAdminAsync } from '../helpers/currentUser';
+import { isUserLoggedInAsync, getCurrentUserAsync } from '../helpers/currentUser';
 
 export class CategoryController {
     public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
             return CustomError(res, 403, "Por favor inicia sesión.");
-        }
-        var isAdmin = await currentUserIsAdminAsync(req);
-        if (!isAdmin) {
-            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
         }
         if (CategoryController.validateRequiredParams(req)) {
             var categoryObject = await CategoryController.createResponseObject(req);
@@ -33,10 +29,6 @@ export class CategoryController {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
             return CustomError(res, 403, "Por favor inicia sesión.");
-        }
-        var isAdmin = await currentUserIsAdminAsync(req);
-        if (!isAdmin) {
-            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
         }
         var categoryObject = await CategoryController.createUpdateObject(req);        
         await Category.findOneAndUpdate({ _id: req.params.id }, 

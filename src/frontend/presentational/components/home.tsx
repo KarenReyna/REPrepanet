@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { LinearProgress } from 'material-ui/Progress';
 import Grid from 'material-ui/Grid';
 

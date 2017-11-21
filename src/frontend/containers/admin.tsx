@@ -21,7 +21,16 @@ import { isEmpty, isRecentlyReady, hasRecentlyFailed } from 'Config/helper';
 class Admin extends React.Component<any, any> {
     state = {
         admins: null,
-        collabs: null
+        collabs: null,
+        tags: null
+    }
+
+    componentWillMount() {
+        if(this.props.session.current) {
+            this.props.loadUsers();
+            this.props.loadCategories();
+            this.props.loadResources();
+        }
     }
 
     componentDidMount() {
@@ -50,6 +59,21 @@ class Admin extends React.Component<any, any> {
                     collabs: collabs
                 });
         }
+
+
+        if(nextProps.tags.all != null &&
+            isRecentlyReady(this.props.tags, nextProps.tags)) {
+                let tags: string[];
+                tags = nextProps.tags.all.map((tag) => tag.name);
+                this.setState({
+                    tags: tags
+                });
+            }
+
+        if(isEmpty(nextProps.session.current)) {
+            this.props.history.push('/login');
+        }
+
     }
 
     componentDidUpdate(prevProps) {
@@ -57,6 +81,7 @@ class Admin extends React.Component<any, any> {
             this.props.loadUsers();
             this.props.loadCategories();
             this.props.loadResources();
+            this.props.loadTags();
         }
         if(hasRecentlyFailed(prevProps.session, this.props.session)) {
             this.props.history.push('/login');
@@ -95,6 +120,8 @@ class Admin extends React.Component<any, any> {
                     deleteUser = { this.props.deleteUser }
                     deleteCategory = { this.props.deleteCategory }
                     deleteResource = { this.props.deleteResource }
+
+                    logout = {this.props.logout}
                 />
                 <UpdateUser 
                     visible = { this.props.users.update.open }
@@ -117,7 +144,8 @@ class Admin extends React.Component<any, any> {
                     failed = { this.props.resources.status == Status.Failed }
                     waiting = { this.props.resources.status == Status.WaitingOnServer }
                     submit = {this.props.updateResource}
-                    categories = {this.props.categories}/>
+                    categories = {this.props.categories}
+                    tags = {this.state.tags}/>
             </div>);
     }
 }
@@ -127,7 +155,8 @@ function mapStateToProps(state: any) {
         session: state.session,
         users: state.users,
         categories: state.categories,
-        resources: state.resources
+        resources: state.resources,
+        tags: state.tags
     }
 }
 
@@ -137,6 +166,7 @@ function mapDispatchToProps(dispatch: any) {
         loadProfile: () => dispatch(thunks.session.profile()),
         loadCategories: () => dispatch(thunks.categories.all()),
         loadResources: () => dispatch(thunks.resources.all()),
+        loadTags: () => dispatch(thunks.tags.all()),
 
         updateUser: (user, editing) => dispatch(thunks.users.update(user, editing)),
         updateCategory: (category, editing) => dispatch(thunks.categories.update(category, editing)),
@@ -153,6 +183,8 @@ function mapDispatchToProps(dispatch: any) {
         deleteUser: (user) => dispatch(thunks.users.remove(user)),
         deleteCategory: (category) => dispatch(thunks.categories.remove(category)),
         deleteResource: (resource) => dispatch(thunks.resources.remove(resource)),
+
+        logout: () => dispatch(thunks.session.logout()),
     }
 }
 
