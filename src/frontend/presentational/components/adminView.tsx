@@ -43,14 +43,16 @@ export class AdminView extends React.Component<any, any> {
               items = {this.props.admins}
               show = {this.props.showUser(true)}
               hide = {this.props.hideUser}
-              delete = {this.props.deleteUser}/>
+              delete = {this.props.deleteUser}
+              description = {false}/>
               : null}
           {(value === 1 && this.props.admins != null)? 
             <CustomList
               items = {this.props.collabs}
               show = {this.props.showUser(false)}
               hide = {this.props.hideUser}
-              delete = {this.props.deleteUser}/>
+              delete = {this.props.deleteUser}
+              description = {false}/>
               : null}
               
           {(value === 2 || value === 0 && this.props.admins == null)?
@@ -58,14 +60,16 @@ export class AdminView extends React.Component<any, any> {
               items = {this.props.categories}
               show = {this.props.showCategory}
               hide = {this.props.hideCategory}
-              delete = {this.props.deleteCategory}/>
+              delete = {this.props.deleteCategory}
+              description = {true}/>
               : null}
           {(value === 3 || value === 1 && this.props.admins == null)?
             <CustomList
               items = {this.props.resources}
               show = {this.props.showResource}
               hide = {this.props.hideResource}
-              delete = {this.props.deleteResource}/>
+              delete = {this.props.deleteResource}
+              description = {true}/>
               : null}
         </Paper>
         </div>
