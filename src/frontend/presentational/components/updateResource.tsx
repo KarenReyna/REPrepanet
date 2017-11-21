@@ -58,7 +58,9 @@ export class UpdateResource extends React.Component<any, any> {
             name: nextProps.object.name,
             description: nextProps.object.description,
             url: nextProps.object.url,
-            tags: nextProps.object.tags,
+            tags: nextProps.object.tags.map((tag) => (
+              [...tag.name]
+            )),
             category: nextProps.object.category,
             type: nextProps.object.type
           } as Resource,
@@ -172,7 +174,7 @@ export class UpdateResource extends React.Component<any, any> {
               <Chips
                 value={this.state.resource.tags}
                 onChange={handleChipChange}
-                suggestions={this.props.tags}
+                // suggestions={this.props.tags}
                 />
 
               <br />
