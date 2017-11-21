@@ -86,6 +86,7 @@ class Admin extends React.Component<any, any> {
         if(hasRecentlyFailed(prevProps.session, this.props.session)) {
             this.props.history.push('/login');
         }
+        
     }
 
     handleShowUser = (isAdmin) => (user) => {
@@ -129,16 +130,14 @@ class Admin extends React.Component<any, any> {
                     hide = { this.props.hideUser }
                     failed = { this.props.users.status == Status.Failed }
                     waiting = { this.props.users.status == Status.WaitingOnServer }
-                    submit = {this.props.updateUser}
-                    error = {this.props.users.error}/>
+                    submit = {this.props.updateUser}/>
                 <UpdateCategory 
                     visible = { this.props.categories.update.open }
                     object = { this.props.categories.update.object } 
                     hide = { this.props.hideCategory }
                     failed = { this.props.categories.status == Status.Failed }
                     waiting = { this.props.categories.status == Status.WaitingOnServer }
-                    submit = {this.props.updateCategory}
-                    error = {this.props.categories.error}/>
+                    submit = {this.props.updateCategory}/>
                 <UpdateResource 
                     visible = { this.props.resources.update.open }
                     object = { this.props.resources.update.object } 
@@ -147,8 +146,7 @@ class Admin extends React.Component<any, any> {
                     waiting = { this.props.resources.status == Status.WaitingOnServer }
                     submit = {this.props.updateResource}
                     categories = {this.props.categories}
-                    tags = {this.state.tags}
-                    error = {this.props.resources.error}/>
+                    tags = {this.state.tags}/>
             </div>);
     }
 }

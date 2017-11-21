@@ -8,13 +8,13 @@ export class ResourceController {
     public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         if (ResourceController.validateRequiredParams(req)) {
             var resourceObject = await ResourceController.createResponseObject(req);
             return await Resource.create(resourceObject, (err, resource: any) => {
                 if (err) {
-                    return CustomError(res, 500, "El recurso ya existe");
+                    return CustomError(res, 500, err.message);
                 }
                 return Success(res, ResponseObjectType.Object, "resource", {
                     _id: resource._id,
@@ -28,25 +28,25 @@ export class ResourceController {
                 });
             });
         }
-        return CustomError(res, 400, 'Todos los campos son requeridos');
+        return CustomError(res, 400, 'Todos los campos son requeridos.');
     }
 
     public async edit(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         var resourceObject = await ResourceController.createUpdateObject(req);
         await Resource.findOneAndUpdate({ _id: req.params.id },
             resourceObject,
-            { new: true, fields: "id name description url tags category updated_by type" },
+            { new: true, fields: "_id name description url tags category updated_by type" },
             (err, resource) => {
                 if (err) {
-                    return CustomError(res, 400, "No se encontró el recurso");
+                    return CustomError(res, 400, err.message);
                 }
 
                 if (!resource) {
-                    return CustomError(res, 404, "No se encontró el recurso");
+                    return CustomError(res, 404, "No se encontró el recurso.");
                 }
 
                 return Success(res, ResponseObjectType.Object, "resource", {
@@ -65,7 +65,7 @@ export class ResourceController {
     public async index(_: any, res: any) {
         return await Resource.find({}, "id name description url tags category updated_by type").exec((err, resources) => {
             if (err) {
-                return CustomError(res, 500, "No se encontró el recurso");
+                return CustomError(res, 500, err.message);
             }
             let result = resources.map(resource => {
                 let rTags = resource.tags.map(t => t.name);
@@ -87,11 +87,11 @@ export class ResourceController {
     public async delete(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión");
+            return CustomError(res, 403, "Por favor inicia sesión.");
         }
         return await Resource.findByIdAndRemove(req.params.id, (err, resource) => {
             if (err) {
-                return CustomError(res, 500, "No se pudo borrar el recurso");
+                return CustomError(res, 500, err.message);
             }
             return Success(res, ResponseObjectType.Object, "resource", resource);
         });
@@ -102,12 +102,12 @@ export class ResourceController {
     }
 
     private static async createResponseObject(req: any): Promise<any> {
-        var category = await Category.findById(req.body.category, 'name description').exec();
+        var category = await Category.findOne(req.body.category, 'id name description').exec();
         var currentUser = await getCurrentUserAsync(req);
         let tags = [];
 
         if (req.body.tags != null) {
-            tags = await Tag.findOrCreateBatch(req.body.tags);
+            tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
         }
 
         return {
@@ -141,15 +141,10 @@ export class ResourceController {
             obj.url = req.body.url;
         }
         if (req.body.tags != null) {
-            var tagsArray = [];
-            for(var i = 0; i < req.body.tags.length; i++) {
-                var tag = req.body.tags[i];
-                tagsArray.push(tag.name as never);
-            }
-            obj.tags = await Tag.findOrCreateBatch(tagsArray);
+            obj.tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
         }
-        if (req.body.categoryid != null) {
-            obj.category = await Category.findById(req.body.categoryid, 'name description').exec();
+        if (req.body.category != null) {
+            obj.category = await Category.findOne(req.body.category, 'id name description').exec();
         }
         if (req.body.type != null) {
             obj.type = req.body.type;
