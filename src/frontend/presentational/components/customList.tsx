@@ -37,20 +37,29 @@ function listElements(items, search, showFunction, deleteFunction, description) 
             <TableCell>Descripción</TableCell>}
           {description &&
             <TableCell>Última actualización</TableCell>}
+            <TableCell>Borrar</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {items.map(item => {
           return (<TableRow
                     key = {item._id}
-                    onClick={() => showFunction(item)}>
-            <TableCell>{item.name}</TableCell>
+                    hover = {true}>
+            <TableCell onClick={() => showFunction(item)}>
+              {item.name}
+            </TableCell>
             {!description &&
-              <TableCell>{item.email}</TableCell>}
+              <TableCell onClick={() => showFunction(item)}>
+                {item.email}
+            </TableCell>}
             {description &&
-              <TableCell>{item.description}</TableCell>}
+              <TableCell onClick={() => showFunction(item)}>
+                {item.description}
+            </TableCell>}
             {description &&
-              <TableCell>{item.updated_by[item.updated_by.length-1].user.name}</TableCell>}
+              <TableCell onClick={() => showFunction(item)}>
+                {item.updated_by[item.updated_by.length-1].user.name}
+            </TableCell>}
             <TableCell>
               <IconButton 
                 aria-label="Delete"
