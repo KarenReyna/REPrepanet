@@ -10,6 +10,7 @@ import Checkbox from 'material-ui/Checkbox';
 import IconButton from 'material-ui/IconButton';
 import Visibility from 'material-ui-icons/Visibility';
 import VisibilityOff from 'material-ui-icons/VisibilityOff'; 
+import Error from 'Presentational/elements/Error';
 import { 
   isEmpty,
   containsOnlyIsAdmin,
@@ -113,13 +114,13 @@ export class UpdateUser extends React.Component<any, any> {
               /><br />
 
               <TextField
-                label="Email"
+                label="Correo electrónico"
                 value={this.state.user.email}
                 onChange={handleChange('email')}
               /><br />
 
               <FormControl>
-                <InputLabel htmlFor="password">Password</InputLabel>
+                <InputLabel htmlFor="password">Contraseña</InputLabel>
                 <Input
                   id="password"
                   onChange={handleChange('password')}
@@ -159,7 +160,7 @@ export class UpdateUser extends React.Component<any, any> {
                   label="Administrador"
                 /><br />
 
-              {this.props.failed && <p>El usuario ya existe</p>}
+              {this.props.error && <Error description={this.props.error.statusText}/>}
               {this.props.waiting && <LinearProgress mode="indeterminate" />}
 
             </DialogContent>

@@ -10,7 +10,7 @@ export class TagController {
         }
         return await Tag.find(query, "id name count", {sort: {count: -1}}, (err, tags) => {
             if (err) {
-                return CustomError(res, 500, err);
+                return CustomError(res, 500, "No se encontró la etiqueta");
             }
             return Success(res, ResponseObjectType.Array, "tags", tags)
         });
@@ -19,12 +19,12 @@ export class TagController {
     public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión.");
+            return CustomError(res, 403, "Por favor inicia sesión");
         }
         if (TagController.validateRequiredParams(req)) {
             return await Tag.create(TagController.createResponseObject(req), (err, tag) => {
                 if (err) {
-                    return CustomError(res, 500, err.message);
+                    return CustomError(res, 500, "No se pudo crear la etiqueta");
                 }
                 return Success(res, ResponseObjectType.Object, "tag", {
                     _id: tag._id,
@@ -33,7 +33,7 @@ export class TagController {
                 });
             });
         }
-        return CustomError(res, 400, 'Todos los campos son requeridos.');
+        return CustomError(res, 400, "Todos los campos son requeridos");
     }
 
     public async edit(req: any, res: any) {
@@ -45,11 +45,11 @@ export class TagController {
             TagController.createUpdateObject(req),
             { new: true, fields: "id name count" }, (err, tag) => {
                 if (err) {
-                    return CustomError(res, 400, err.message);
+                    return CustomError(res, 400, "No se encontró la etiqueta");
                 }
 
                 if (!tag) {
-                    return CustomError(res, 404, "Etiqueta no encontrada.");
+                    return CustomError(res, 404, "No se encontró la etiqueta");
                 }
 
                 return Success(res, ResponseObjectType.Object, "tag", {

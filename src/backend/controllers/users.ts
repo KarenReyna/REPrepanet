@@ -6,11 +6,11 @@ export class UserController {
     public async currentUser(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión.");
+            return CustomError(res, 403, "Por favor inicia sesión");
         }
         var user = await getCurrentUserAsync(req);
         if (!user) {
-            return CustomError(res, 500, "No han iniciado sesión.")
+            return CustomError(res, 500, "No ha iniciado sesión")
         }
         return Success(res, ResponseObjectType.Object, "user", user)
     }
@@ -22,11 +22,11 @@ export class UserController {
         }
         var isAdmin = await currentUserIsAdminAsync(req);
         if (!isAdmin) {
-            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
+            return CustomError(res, 403, "No tienes permisos para acceder a este recurso")
         }
         return await User.findById(req.params.id, "id name email isAdmin").exec((err, user) => {
             if (err) {
-                return CustomError(res, 500, err);
+                return CustomError(res, 500, "No se encontró al usuario");
             }
             return Success(res, ResponseObjectType.Object, "user", user);
         });
@@ -35,15 +35,15 @@ export class UserController {
     public async index(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión.");
+            return CustomError(res, 403, "Por favor inicia sesión");
         }
         var isAdmin = await currentUserIsAdminAsync(req);
         if (!isAdmin) {
-            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
+            return CustomError(res, 403, "No tienes permisos para acceder a este recurso")
         }
         return await User.find({}, "id name email isAdmin").exec((err, users) => {
             if (err) {
-                return CustomError(res, 500, err);
+                return CustomError(res, 500, "No se encontró al usuario");
             }
             return Success(res, ResponseObjectType.Array, "users", users);
         });
@@ -52,20 +52,20 @@ export class UserController {
     public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión.");
+            return CustomError(res, 403, "Por favor inicia sesión");
         }
         var isAdmin = await currentUserIsAdminAsync(req);
         if (!isAdmin) {
-            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
+            return CustomError(res, 403, "No tienes permisos para acceder a este recurso")
         }
         if (UserController.validateRequiredParams(req)) {
             if (req.body.password !== req.body.passwordConf) {
-                return CustomError(res, 400, 'La contraseña y la confirmación de contraseña no coinciden.');
+                return CustomError(res, 400, 'La contraseña y la confirmación de contraseña no coinciden');
             }
 
             return await User.create(UserController.createResponseObject(req), (err, user: any) => {
                 if (err) {
-                    return CustomError(res, 500, err.message);
+                    return CustomError(res, 500, "El usuario ya esta registrado");
                 }
                 return Success(res, ResponseObjectType.Object, "user", {
                     _id: user._id,
@@ -75,26 +75,26 @@ export class UserController {
                 });
             });
         }
-        return CustomError(res, 400, 'Todos los campos son requeridos.');
+        return CustomError(res, 400, 'Todos los campos son requeridos');
     }
 
     public async edit(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión.");
+            return CustomError(res, 403, "Por favor inicia sesión");
         }
         var isAdmin = await currentUserIsAdminAsync(req);
         if (!isAdmin) {
-            return CustomError(res, 403, "No tienes permisos para acceder a este recurso.")
+            return CustomError(res, 403, "No tienes permisos para acceder a este recurso")
         }
         await User.findOneAndUpdate({ _id: req.params.id }, UserController.createUpdateObject(req),
             { new: true, fields: "id name email isAdmin" }, (err, user) => {
                 if (err) {
-                    return CustomError(res, 400, err.message);
+                    return CustomError(res, 400, "No se encontró al usuario");
                 }
 
                 if (!user) {
-                    return CustomError(res, 404, "No se encontro al usuario.");
+                    return CustomError(res, 404, "No se encontró al usuario");
                 }
 
                 return Success(res, ResponseObjectType.Object, "user", {
@@ -109,11 +109,11 @@ export class UserController {
     public async delete(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión.");
+            return CustomError(res, 403, "Por favor inicia sesión");
         }
         return await User.findByIdAndRemove(req.params.id, (err, user) => {
             if (err) {
-                return CustomError(res, 500, err.message);
+                return CustomError(res, 500, "No se encontró al usuario");
             }
             return Success(res, ResponseObjectType.Object, "user", user);
         });

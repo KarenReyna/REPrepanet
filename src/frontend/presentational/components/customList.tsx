@@ -34,7 +34,7 @@ function listElements(items, search, showFunction, deleteFunction, description) 
         <TableRow>
           <TableCell>Nombre</TableCell>
           {!description &&
-            <TableCell>Email</TableCell>}
+            <TableCell>Correo electrónico</TableCell>}
           {description &&
             <TableCell>Descripción</TableCell>}
           {description &&

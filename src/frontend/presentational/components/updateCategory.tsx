@@ -4,6 +4,7 @@ import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import { LinearProgress } from 'material-ui/Progress';
 import { Category } from 'Config/constants';
+import Error from 'Presentational/elements/Error';
 import { 
   isEmpty
 } from 'Config/helper';
@@ -79,9 +80,9 @@ export class UpdateCategory extends React.Component<any, any> {
                 rows={2}
                 multiline={true}
                 onChange={handleChange('description')}
-              /><br />
-
-              {this.props.failed && <p>La categoría ya existe</p>}
+              /><br /><br />
+              
+              {this.props.error && <Error description={this.props.error.statusText}/>}
               {this.props.waiting && <LinearProgress mode="indeterminate" />}
 
             </DialogContent>
