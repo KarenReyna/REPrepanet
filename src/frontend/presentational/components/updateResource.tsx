@@ -174,7 +174,7 @@ export class UpdateResource extends React.Component<any, any> {
               <Chips
                 value={this.state.resource.tags}
                 onChange={handleChipChange}
-                // suggestions={this.props.tags}
+                suggestions={this.props.tags}
                 />
 
               <br />
