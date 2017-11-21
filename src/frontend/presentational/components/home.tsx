@@ -31,7 +31,7 @@ export class Home extends React.Component<any, any> {
 
     return (
       <div style={{ padding: 20 }}>
-        <Grid className='topicsAndResources' container alignItems='center' spacing={24}>
+        <Grid className='topicsAndResources' container spacing={24}>
           <Grid container item xs={12} md={9}>
             <div className='resourcesWrapper'>
               <div className='resourcesGrid'>

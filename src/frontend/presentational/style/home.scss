@@ -31,17 +31,11 @@ html, body {
   width: 96%;
   margin: 0.4em 0;
 	transition: opacity .4s ease-in-out;
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2);
   border-radius: 2px;
   background-color: #fff;
+  cursor: pointer;
 }
 
-.resourcesGrid:hover .resourceCard{
-	opacity: 0.3;
-}
-.resourcesGrid .resourceCard:hover {
-	opacity: 1;
-}
 
 @media only screen and (min-width: 400px) {
   .resourcesGrid {
