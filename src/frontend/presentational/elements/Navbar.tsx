@@ -2,7 +2,8 @@ import * as React from 'react';
 import Grid from 'material-ui/Grid';
 import Input, { InputAdornment } from 'material-ui/Input';
 import Paper from 'material-ui/Paper';
-import Search from 'material-ui-icons/Search';
+import {Search, Clear} from 'material-ui-icons';
+import IconButton from 'material-ui/IconButton';
 
 export default class Navbar extends React.Component<any, any> {
     state = {
@@ -34,21 +35,33 @@ export default class Navbar extends React.Component<any, any> {
                 <Grid item xs={12} sm={8} md={10}>
                     <Paper elevation={0} style={{
                         backgroundColor: searchStyle.backgroundColor,
-                        paddingRight: 20,
-                        paddingLeft: 20,
-                        paddingBottom: 10,
-                        paddingTop: 10}}
+                        paddingRight: 10,
+                        paddingLeft: 10,
+                        paddingBottom: 5,
+                        paddingTop: 5}}
                         onMouseEnter={toggleHover} 
                         onMouseLeave={toggleHover}>
                     <Input
+                        style={{alignItems: 'center'}}
+                        value={this.props.searchQuery}
                         disableUnderline
-                        type='search'
                         fullWidth
                         onChange={(e) => this.props.handleSearch(e.target.value)}
                         startAdornment={
                         <InputAdornment position="start">
                             <Search color='#f1f1f1'/>
                         </InputAdornment>}
+                        endAdornment={
+                            <InputAdornment
+                                position="start">
+                                <IconButton
+                                    onClick={(_) => this.props.handleSearch('')}
+                                    onMouseDown={(event) => { event.preventDefault(); }}
+                                >
+                                    <Clear color='#f1f1f1'/>
+                                </IconButton>
+                            </InputAdornment>
+                        }
                     />
                     </Paper>
                 </Grid>

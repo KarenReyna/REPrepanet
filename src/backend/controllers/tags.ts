@@ -4,15 +4,11 @@ import { isUserLoggedInAsync } from '../helpers/currentUser';
 
 export class TagController {
     public async search(req: any, res: any) {
-        var loggedIn = await isUserLoggedInAsync(req);
-        if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión.");
-        }
         var query = {};
         if (req.query.q) {
             query = { name: { $regex: req.query.q } };
         }
-        return await Tag.find(query, "id name count", (err, tags) => {
+        return await Tag.find(query, "id name count", {sort: {count: -1}}, (err, tags) => {
             if (err) {
                 return CustomError(res, 500, err);
             }

@@ -31,7 +31,7 @@ export function post(object: any, route: string) {
         body: JSON.stringify({
             ...object
         })
-    }).then(response => { return evaluate(response) })
+    }).then(response => { return evaluate(response) }, error =>{ return evaluate(error) })
 }
 
 export function get(route: string) {
@@ -41,7 +41,7 @@ export function get(route: string) {
         mode: 'cors',
         headers: fetchHeader,
         credentials: 'include'
-    }).then(response => { return evaluate(response) })
+    }).then(response => { return evaluate(response) }, error =>{ return evaluate(error) })
 }
 
 export function del(route: string) {
@@ -51,5 +51,5 @@ export function del(route: string) {
         mode: 'cors',
         headers: fetchHeader,
         credentials: "include"
-    }).then(response => { return evaluate(response) })
+    }).then(response => { return evaluate(response) }, error =>{ return evaluate(error) })
 }
