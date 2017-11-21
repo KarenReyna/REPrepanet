@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
@@ -6,6 +7,7 @@ import EditIcon from 'material-ui-icons/Edit';
 import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
 import TextField from 'material-ui/TextField';
+
 import Container from 'Presentational/elements/Container';
 
 function listElements(items, search, showFunction, deleteFunction) {
@@ -72,7 +74,6 @@ export class CustomList extends React.Component<any, any> {
               onChange={(e) =>
               this.handleChange(e.target.value)}
             />
-            <br />
             <br />
           {listElements(this.props.items, this.state.search, this.props.show, this.props.delete)}
           </Container>

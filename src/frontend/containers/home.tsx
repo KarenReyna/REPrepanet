@@ -1,30 +1,60 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
+import { search, isRecentlyReady, isEmpty } from 'Config/helper';
+import Navbar from 'Presentational/elements/Navbar';
 import { Home } from 'Presentational/components/home';
-
 import { thunks } from 'Logic/actions/thunks';
 
 class Main extends React.Component<any, any> {
   constructor() {
     super();
+    this.state = {
+      search: '',
+      resources: []
+    }
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
-    this.props.loadCategories();
-    this.props.loadResources();
+    if(isEmpty(this.props.categories.all)){
+      this.props.loadCategories();
+    }
+    if(isEmpty(this.props.resources.all)) {
+      this.props.loadResources();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(isEmpty(this.state.resources) && nextProps.resources.all != null &&
+        isRecentlyReady(this.props.resources, nextProps.resources)) {
+          this.setState({
+            resources: nextProps.resources.all
+          });
+    }
   }
 
   render() {
     return (
       <div>
-        <Home 
-          loginShow = {this.props.loginShow}
+        <Navbar 
+          handleSearch = {this.handleSearch}/>
+        <Home
           users = {this.props.users}
-          resources = {this.props.resources}
-          categories = {this.props.categories}/>
+          resources = {this.state.resources}
+          status = {this.props.resources.status}/>
       </div>
     );
+  }
+
+  private handleSearch(newSearch: string | undefined) {
+    let resources = newSearch && newSearch != ''? 
+        search(newSearch, this.props.resources.all, 
+          ['name', 'tags', 'type', 'category.name']) : 
+        this.props.resources.all;
+    this.setState({
+      search: newSearch,
+      resources: resources
+    });
   }
 }
 
