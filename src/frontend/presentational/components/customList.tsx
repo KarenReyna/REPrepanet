@@ -7,6 +7,7 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
 import TextField from 'material-ui/TextField';
 import Container from 'Presentational/elements/Container';
+import Styles from 'Presentational/style/elementStyles';
 import Table, {
   TableBody,
   TableCell,
@@ -93,22 +94,26 @@ export class CustomList extends React.Component<any, any> {
       return (
         <div>
           <Container>
-          <TextField
-              label="Buscar"
-              onChange={(e) =>
-              this.handleChange(e.target.value)}
-            />
-            <br />
-            <br />
-          {listElements(this.props.items, this.state.search, this.props.show, this.props.delete, this.props.description)}
+            <div>
+              <TextField
+                  label="Buscar"
+                  onChange={(e) =>
+                  this.handleChange(e.target.value)}
+                  style={Styles.searchAdminView.style}
+                />
+                <Button 
+                  fab 
+                  color="primary" 
+                  aria-label="Add"
+                  onClick={() => this.props.show(null)}
+                  style={Styles.addButton.style}>
+                    <AddIcon />
+                </Button>
+              </div>
+              <br />
+              <br />
+              {listElements(this.props.items, this.state.search, this.props.show, this.props.delete, this.props.description)}
           </Container>
-        <Button 
-          fab 
-          color="primary" 
-          aria-label="Add"
-          onClick={() => this.props.show(null)}>
-            <AddIcon />
-        </Button>
       </div>
       )
   }

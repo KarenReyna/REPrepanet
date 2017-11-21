@@ -117,6 +117,19 @@ const Styles = {
             marginRight: '0px',
         }
     },
+   addButton: {
+        style: {
+            float: 'right',
+            marginRight: '0px',
+        }
+    },
+    searchAdminView: {
+        style: {
+            float: 'left',
+            marginLeft: '0px',
+            width: '90%'
+        }
+    },
 }
 
 export default Styles;
