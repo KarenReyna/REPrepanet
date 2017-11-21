@@ -39,7 +39,7 @@ export class ResourceController {
         var resourceObject = await ResourceController.createUpdateObject(req);
         await Resource.findOneAndUpdate({ _id: req.params.id },
             resourceObject,
-            { new: true, fields: "id name description url tags category updated_by type" },
+            { new: true, fields: "_id name description url tags category updated_by type" },
             (err, resource) => {
                 if (err) {
                     return CustomError(res, 400, err.message);
@@ -102,12 +102,12 @@ export class ResourceController {
     }
 
     private static async createResponseObject(req: any): Promise<any> {
-        var category = await Category.findById(req.body.category, 'name description').exec();
+        var category = await Category.findOne(req.body.category, 'id name description').exec();
         var currentUser = await getCurrentUserAsync(req);
         let tags = [];
 
         if (req.body.tags != null) {
-            tags = await Tag.findOrCreateBatch(req.body.tags);
+            tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
         }
 
         return {
@@ -141,15 +141,10 @@ export class ResourceController {
             obj.url = req.body.url;
         }
         if (req.body.tags != null) {
-            var tagsArray = [];
-            for(var i = 0; i < req.body.tags.length; i++) {
-                var tag = req.body.tags[i];
-                tagsArray.push(tag.name as never);
-            }
-            obj.tags = await Tag.findOrCreateBatch(tagsArray);
+            obj.tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
         }
-        if (req.body.categoryid != null) {
-            obj.category = await Category.findById(req.body.categoryid, 'name description').exec();
+        if (req.body.category != null) {
+            obj.category = await Category.findOne(req.body.category, 'id name description').exec();
         }
         if (req.body.type != null) {
             obj.type = req.body.type;

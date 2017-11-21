@@ -29,8 +29,8 @@ export class UpdateResource extends React.Component<any, any> {
   menuItems(categories) {
     return categories.map((category) => (
       <MenuItem
-        key={category._id}
-        value={category._id}>
+        key={category.name}
+        value={category.name}>
         {category.name}
       </MenuItem>
     ));
@@ -58,13 +58,12 @@ export class UpdateResource extends React.Component<any, any> {
             name: nextProps.object.name,
             description: nextProps.object.description,
             url: nextProps.object.url,
-            tags: nextProps.object.tags.map((tag) => (
-              [...tag.name]
-            )),
+            tags: nextProps.object.tags,
             category: nextProps.object.category,
             type: nextProps.object.type
           } as Resource,
-          editing: true
+          editing: true,
+          selectFieldValue: nextProps.object.category.name
         });
       }
     }
@@ -79,6 +78,7 @@ export class UpdateResource extends React.Component<any, any> {
           type: '',
         } as Resource,
         editing: false,
+        selectFieldValue: ''
       });
     }
   }
@@ -98,14 +98,14 @@ export class UpdateResource extends React.Component<any, any> {
         selectFieldValue: e.target.value,
         resource: {
           ...this.state.resource,
-          [name]: e.target.value
+          [name]: {name: e.target.value}
         }
       });
   };
 
     var handleSubmit = () => {
-      let resource = this.state.resource
-      console.log(resource);
+      let resource = this.state.resource;
+      resource.tags = (this.state.resource.tags as string[]).join(',');
       if(this.state.editing) {
         resource._id = this.props.object._id;
       }
@@ -171,12 +171,11 @@ export class UpdateResource extends React.Component<any, any> {
               /><br />
               <br/>
               <InputLabel htmlFor="tag-helper">Etiquetas</InputLabel>
-              <Chips
-                value={this.state.resource.tags}
-                onChange={handleChipChange}
-                // suggestions={this.props.tags}
-                />
-
+                <Chips
+                  value={this.state.resource.tags}
+                  onChange={handleChipChange}
+                  suggestions={this.props.tags}
+                  />
               <br />
               {this.props.failed && <p>El recurso ya existe</p>}
               {this.props.waiting && <LinearProgress mode="indeterminate" />}
