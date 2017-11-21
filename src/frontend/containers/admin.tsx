@@ -25,6 +25,14 @@ class Admin extends React.Component<any, any> {
         tags: null
     }
 
+    componentWillMount() {
+        if(this.props.session.current) {
+            this.props.loadUsers();
+            this.props.loadCategories();
+            this.props.loadResources();
+        }
+    }
+
     componentDidMount() {
         if(isEmpty(this.props.session.current)) {
             this.props.loadProfile();
@@ -52,6 +60,7 @@ class Admin extends React.Component<any, any> {
                 });
         }
 
+
         if(nextProps.tags.all != null &&
             isRecentlyReady(this.props.tags, nextProps.tags)) {
                 let tags: string[];
@@ -60,6 +69,11 @@ class Admin extends React.Component<any, any> {
                     tags: tags
                 });
             }
+
+        if(isEmpty(nextProps.session.current)) {
+            this.props.history.push('/login');
+        }
+
     }
 
     componentDidUpdate(prevProps) {
@@ -106,6 +120,8 @@ class Admin extends React.Component<any, any> {
                     deleteUser = { this.props.deleteUser }
                     deleteCategory = { this.props.deleteCategory }
                     deleteResource = { this.props.deleteResource }
+
+                    logout = {this.props.logout}
                 />
                 <UpdateUser 
                     visible = { this.props.users.update.open }
@@ -167,6 +183,8 @@ function mapDispatchToProps(dispatch: any) {
         deleteUser: (user) => dispatch(thunks.users.remove(user)),
         deleteCategory: (category) => dispatch(thunks.categories.remove(category)),
         deleteResource: (resource) => dispatch(thunks.resources.remove(resource)),
+
+        logout: () => dispatch(thunks.session.logout()),
     }
 }
 
