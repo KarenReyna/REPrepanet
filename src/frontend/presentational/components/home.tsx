@@ -1,26 +1,21 @@
 import * as React from 'react';
-import Navbar from 'Presentational/elements/Navbar';
-import Container from 'Presentational/elements/Container';
-import CollectionCardV2 from 'Presentational/elements/CollectionCardV2';
-import {  Status } from 'Config/constants';
 import { LinearProgress } from 'material-ui/Progress';
-import TextField from 'material-ui/TextField';
-import SearchResult from 'Presentational/elements/SearchResult';
+import Grid from 'material-ui/Grid';
 
-function createContent(object, resources, search) {
-  if (resources.all != null && resources.all.length > 0)
-  switch (object.status) {
+import ResourceCard from 'Presentational/elements/ResourceCard';
+import {  Status } from 'Config/constants';
+
+function createContent(objects, status) {
+  if (objects != null && objects.length > 0)
+  switch (status) {
     case Status.Ready:
-      if (object && object.all && object.all.length > 0 && resources.all != null && resources.all.length > 0) {
-        if (search == '') {
-          return object.all.map((category) => (
-            <CollectionCardV2 key={object.all._id} title={category.name} resources={resources} />
+          return objects.map((object, i) => (
+              <ResourceCard
+                key={object._id}
+                resource={object}
+                delay={i/10}
+              />
           ));
-        } else {
-          return (<SearchResult resources={resources} search={search} />)
-        }
-      }
-      return (<p>No hay categorías</p>);
     case Status.Failed:
       return (<p>No hay conexión a Internet</p>);
     case Status.WaitingOnServer:
@@ -30,36 +25,17 @@ function createContent(object, resources, search) {
 }
 
 export class Home extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      search: '',
-    }
-  }
-
-  handleChange(newValue: string | undefined) {
-    this.setState({
-      search: newValue,
-    });
-  }
-
   public render() {
-    let categoryContent = createContent(this.props.categories, this.props.resources, this.state.search);
+    let gridContent = createContent(this.props.resources, this.props.status);
 
     return (
-      <div>
-        <Navbar title="REPrepanet"/>
-
-        <Container>
-          <TextField
-            label="Buscar"
-            onChange={(e) =>
-              this.handleChange(e.target.value)}
-          />
-          <br />
-          <br />
-          {categoryContent}
-        </Container>
+      <div style={{ padding: 20 }}>
+          <Grid
+            spacing={40}
+            container
+            direction='row'>
+            {gridContent}
+          </Grid>
       </div>
     );
   }

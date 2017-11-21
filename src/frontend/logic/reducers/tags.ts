@@ -1,5 +1,5 @@
 import {
-    Tag,
+    // Tag,
     TagActions,
     Status
 } from 'Config/constants';
@@ -11,7 +11,7 @@ interface ITagsState extends IReducerState {
 
 export function tags(
     state: ITagsState = {
-        all: [] as Tag[],
+        all: [] as string[],
         error: {},
         status: Status.Ready
     }, 

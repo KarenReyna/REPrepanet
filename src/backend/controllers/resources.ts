@@ -67,7 +67,20 @@ export class ResourceController {
             if (err) {
                 return CustomError(res, 500, err.message);
             }
-            return Success(res, ResponseObjectType.Array, "resources", resources);
+            let result = resources.map(resource => {
+                let rTags = resource.tags.map(t => t.name);
+                return {
+                    _id: resource._id,
+                    name: resource.name,
+                    description: resource.description,
+                    url: resource.url,
+                    tags: rTags,
+                    category: resource.category,
+                    type: resource.type,
+                    updated_by: resource.updated_by
+                }
+            });
+            return Success(res, ResponseObjectType.Array, "resources", result);
         });
     }
 

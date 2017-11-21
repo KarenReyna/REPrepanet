@@ -1,25 +1,15 @@
 import * as React from 'react';
+
+import { Button } from 'material-ui';
 import Card, { CardContent, CardActions } from 'material-ui/Card';
+import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import Collapse from 'material-ui/transitions/Collapse';
-import { ShareButtons, generateShareIcon} from 'react-share';
 
-
-const styles = {
-    flexGrow: {
-      flex: '1 1 auto',
-    },
-  };
+import { ShareButtons } from 'react-share';
 
 const {
   FacebookShareButton,
 } = ShareButtons;
-
-
-
-const FacebookIcon = generateShareIcon('facebook');
 
 export default class ResourceCard extends React.Component<any, any> {
     state = { 
@@ -27,61 +17,40 @@ export default class ResourceCard extends React.Component<any, any> {
     };
 
     public render() {
-        const shareUrl = this.props.resource.url;
-        const title = this.props.resource.name;
-        var classnames = require('classnames');
-
-        var handleExpandClick = ()=> {
-            this.setState({
-              expanded: !this.state.expanded
-            });
-        };
         return(
-            <div>
-            <Card className="resourceCard">
-                <CardContent className={classnames({["resourceCardContent"]: !this.state.expanded,})}>
-                    <Typography type="subheading" component="h2">
-                        {this.props.resource.name}
-                    </Typography>
-                </CardContent>
-                <CardActions disableActionSpacing className={classnames({["resourceCardActions"]: !this.state.expanded,})}>
-                    <IconButton aria-label="Share">
-                        <FacebookShareButton
-                            url={shareUrl}
-                            quote={title}
-                        >
-                        <FacebookIcon
-                            size={24}
-                            round />
-                        </FacebookShareButton>
-                    </IconButton>
-                    <div style={styles.flexGrow} />
-                    <IconButton
-                        className={classnames("expand", {
-                            ["expandOpen"]: this.state.expanded,
-                        })}
-                        onClick={handleExpandClick}
-                        aria-expanded={this.state.expanded}
-                        aria-label="Show more"
-                    >
-                        <ExpandMoreIcon />
-                    </IconButton>
-                </CardActions>
-                <Collapse in={this.state.expanded} unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph>
-                            {this.props.resource.description}
-                        </Typography>
-                        <Typography component="a">
-                            <a href={this.props.resource.url}>
-                                {this.props.resource.url}
-                            </a>
-                        </Typography>
-                    </CardContent>
-                </Collapse>
-            </Card> 
-            </div>
-                  
+                <Grid
+                item
+                className='animated fadeIn delay'
+                style={{'animationDelay': this.props.delay + 's'}}
+                key={this.props.resource._id}
+                xs={12} sm={4} md={3}>
+                    <Card>
+                        <CardContent>
+                            <Typography type="headline" component="h2">
+                                {this.props.resource.name}
+                            </Typography>
+                            <Typography component="p">
+                                {this.props.resource.description}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <FacebookShareButton
+                                url={this.props.resource.url}
+                                quote={`Información sobre ${this.props.resource.name}. 
+                                        \n Aprende más en LaNube.mx`}>
+                                <Button dense color="primary">
+                                    COMPARTIR
+                                </Button>
+                            </FacebookShareButton>
+                            <Button
+                                dense
+                                color="primary"
+                                onClick={() => window.open('http://' + this.props.resource.url, '_blank')}>
+                                    VER MÁS
+                            </Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
       );
   }
 }

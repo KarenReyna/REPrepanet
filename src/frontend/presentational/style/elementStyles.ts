@@ -5,16 +5,6 @@ const Styles = {
         blue: '#B2D3EF',
         gray: '#555555'
     },
-    // button: {
-    //     class: 'uk-button uk-button-primary',
-    // },
-    // navButton: {
-    //     class: 'uk-button uk-button-primary',
-    //     style: {
-    //         textAlign: 'right',
-    //         float: 'right',
-    //     }
-    // },
     navbar: {
         navbar: {
             class: 'uk-container',
@@ -29,13 +19,6 @@ const Styles = {
             class: 'uk-logo uk-inline',
             style: {
                 marginLeft: '0px',
-            }
-        },
-        container: {
-            style: {
-                borderBottomStyle: 'solid',
-                borderBottomWidth: '5px',
-                borderBottomColor: '#63BB67', 
             }
         }
     },
@@ -53,18 +36,6 @@ const Styles = {
     },
     list: {
         class: 'uk-list uk-list-divider',
-    },
-    collectionCardHead: {
-        class: "uk-card uk-card-primary uk-width-1-4@m uk-inline",
-        style: {
-            marginRight: '25px',
-        }
-    },
-    collectionCardBody: {
-        class: "uk-card-body",
-    },
-    collectionCardText: {
-        class: "uk-button uk-button-text",
     },
     resourceCardHead: {
         class: "uk-card uk-card-primary uk-width-1-4@m uk-inline",

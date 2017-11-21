@@ -6,6 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
 import TextField from 'material-ui/TextField';
+
 import Container from 'Presentational/elements/Container';
 import Styles from 'Presentational/style/elementStyles';
 import Table, {
