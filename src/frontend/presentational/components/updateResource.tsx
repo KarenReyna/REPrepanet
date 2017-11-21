@@ -2,6 +2,7 @@ import * as React from 'react';
 import Dialog, { DialogActions, DialogTitle, DialogContent } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
+// import ChipInput from 'material-ui-chip-input';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import Input, { InputLabel } from 'material-ui/Input';
@@ -10,7 +11,6 @@ import { LinearProgress } from 'material-ui';
 import { 
   isEmpty
 } from 'Config/helper';
-import Chips from 'react-chips';
 
 export class UpdateResource extends React.Component<any, any> {
   state = {
@@ -18,11 +18,12 @@ export class UpdateResource extends React.Component<any, any> {
       name: '',
       description: '',
       url: '',
-      tags: [],
+      tags: ['tag1', 'tag2', 'tag3'],
       category: '',
       type: '',
     } as Resource,
     editing: false,
+    chips: [],
     selectFieldValue: ''
   };
 
@@ -72,14 +73,38 @@ export class UpdateResource extends React.Component<any, any> {
           name: '',
           description: '',
           url: '',
-          tags: [],
+          tags: ['tag1', 'tag2', 'tag3'],
           category: '',
           type: '',
         } as Resource,
-        editing: false,
+        editing: false
       });
     }
   }
+
+//   onBeforeRequestAdd(chip) {
+//     return chip.length >= 3;
+//   }
+
+//   handleRequestAdd(chip) {
+//     this.setState({
+//       chips: [...this.state.chips, chip],
+//       resource: {
+//         ...this.state.resource,
+//         tags: [...this.state.chips, chip]
+//       }
+//     })
+//   }
+
+//   handleRequestDelete (deletedChip) {
+//     this.setState({
+//       chips: this.state.chips.filter((c) => c !== deletedChip),
+//       resource: {
+//         ...this.state.resource,
+//         tags: this.state.chips.filter((c) => c !== deletedChip)
+//       }
+//     })
+// }
 
   public render() {
     var handleChange = (name) => e => {
@@ -110,14 +135,6 @@ export class UpdateResource extends React.Component<any, any> {
       this.props.submit(resource, this.state.editing);
     }
 
-    var handleChipChange = (chips) => {
-      this.setState({
-        resource: {
-          ...this.state.resource,
-          tags: chips
-        }
-      });
-    }
     var title = this.state.editing? 'Editar Recurso' : 'Registrar Recurso';
     let categoryContent = this.createContent(this.props.categories);
     return (
@@ -140,6 +157,14 @@ export class UpdateResource extends React.Component<any, any> {
                 multiline={true}
                 onChange={handleChange('description')}
               /><br />
+
+              {/* <TextField
+                label="Categoría"
+                value={this.state.resource.category.name}
+                rows={2}
+                multiline={true}
+                onChange={handleChange('category')}
+              /><br /> */}
               
               <InputLabel htmlFor="category-helper">Categoría</InputLabel>
                 <Select
@@ -167,15 +192,24 @@ export class UpdateResource extends React.Component<any, any> {
                 multiline={true}
                 onChange={handleChange('type')}
               /><br />
-              <br/>
-              <InputLabel htmlFor="tag-helper">Etiquetas</InputLabel>
-              <Chips
-                value={this.state.resource.tags}
-                onChange={handleChipChange}
-                suggestions={this.props.tags}
-                />
 
-              <br />
+              {/* <TextField
+                label="Tipo"
+                value={this.state.resource.tags}
+                rows={2}
+                multiline={true}
+                onChange={handleChange('tags')}
+              /><br /> */}
+
+              {/* <ChipInput
+                  value={this.state.chips}
+                  onBeforeRequestAdd={(chip) => this.onBeforeRequestAdd(chip)}
+                  onRequestAdd={(chip) => this.handleRequestAdd(chip)}
+                  onRequestDelete={(deletedChip) => this.handleRequestDelete(deletedChip)}
+                  floatingLabelText='Etiquetas del recurso'
+                  dataSource={this.props.tags}
+              /> */}
+
               {this.props.failed && <p>El recurso ya existe</p>}
               {this.props.waiting && <LinearProgress mode="indeterminate" />}
 

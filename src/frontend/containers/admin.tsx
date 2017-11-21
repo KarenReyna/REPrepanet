@@ -21,8 +21,7 @@ import { isEmpty, isRecentlyReady, hasRecentlyFailed } from 'Config/helper';
 class Admin extends React.Component<any, any> {
     state = {
         admins: null,
-        collabs: null,
-        tags: null
+        collabs: null
     }
 
     componentWillMount() {
@@ -59,21 +58,9 @@ class Admin extends React.Component<any, any> {
                     collabs: collabs
                 });
         }
-
-
-        if(nextProps.tags.all != null &&
-            isRecentlyReady(this.props.tags, nextProps.tags)) {
-                let tags: string[];
-                tags = nextProps.tags.all.map((tag) => tag.name);
-                this.setState({
-                    tags: tags
-                });
-            }
-
         if(isEmpty(nextProps.session.current)) {
             this.props.history.push('/login');
         }
-
     }
 
     componentDidUpdate(prevProps) {
@@ -81,7 +68,6 @@ class Admin extends React.Component<any, any> {
             this.props.loadUsers();
             this.props.loadCategories();
             this.props.loadResources();
-            this.props.loadTags();
         }
         if(hasRecentlyFailed(prevProps.session, this.props.session)) {
             this.props.history.push('/login');
@@ -144,8 +130,7 @@ class Admin extends React.Component<any, any> {
                     failed = { this.props.resources.status == Status.Failed }
                     waiting = { this.props.resources.status == Status.WaitingOnServer }
                     submit = {this.props.updateResource}
-                    categories = {this.props.categories}
-                    tags = {this.state.tags}/>
+                    categories = {this.props.categories}/>
             </div>);
     }
 }
@@ -155,8 +140,7 @@ function mapStateToProps(state: any) {
         session: state.session,
         users: state.users,
         categories: state.categories,
-        resources: state.resources,
-        tags: state.tags
+        resources: state.resources
     }
 }
 
@@ -166,7 +150,6 @@ function mapDispatchToProps(dispatch: any) {
         loadProfile: () => dispatch(thunks.session.profile()),
         loadCategories: () => dispatch(thunks.categories.all()),
         loadResources: () => dispatch(thunks.resources.all()),
-        loadTags: () => dispatch(thunks.tags.all()),
 
         updateUser: (user, editing) => dispatch(thunks.users.update(user, editing)),
         updateCategory: (category, editing) => dispatch(thunks.categories.update(category, editing)),
