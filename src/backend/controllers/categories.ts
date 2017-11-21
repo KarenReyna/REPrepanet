@@ -6,13 +6,13 @@ export class CategoryController {
     public async create(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión.");
+            return CustomError(res, 403, "Por favor inicia sesión");
         }
         if (CategoryController.validateRequiredParams(req)) {
             var categoryObject = await CategoryController.createResponseObject(req);
             return await Category.create(categoryObject, (err, category: any) => {
                 if (err) {
-                    return CustomError(res, 500, err.message);
+                    return CustomError(res, 500, "La categoría ya existe");
                 }
                 return Success(res, ResponseObjectType.Object, "category", {
                     _id: category._id,
@@ -22,24 +22,24 @@ export class CategoryController {
                 });
             });
         }
-        return CustomError(res, 400, 'Todos los campos son requeridos.');
+        return CustomError(res, 400, 'Todos los campos son requeridos');
     }
 
     public async edit(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión.");
+            return CustomError(res, 403, "Por favor inicia sesión");
         }
         var categoryObject = await CategoryController.createUpdateObject(req);        
         await Category.findOneAndUpdate({ _id: req.params.id }, 
             categoryObject,
             { new: true, fields: "id name description updated_by" }, (err, category) => {
                 if (err) {
-                    return CustomError(res, 400, err.message);
+                    return CustomError(res, 400, "Error al registrar la categoría");
                 }
 
                 if (!category) {
-                    return CustomError(res, 404, "category not found");
+                    return CustomError(res, 404, "No se encontró la categoría");
                 }
 
                 return Success(res, ResponseObjectType.Object, "category", {
@@ -54,11 +54,11 @@ export class CategoryController {
     public async delete(req: any, res: any) {
         var loggedIn = await isUserLoggedInAsync(req);
         if (!loggedIn) {
-            return CustomError(res, 403, "Por favor inicia sesión.");
+            return CustomError(res, 403, "Por favor inicia sesión");
         }
         return await Category.findByIdAndRemove(req.params.id, (err, category) => {
             if (err) {
-                return CustomError(res, 500, err.message);
+                return CustomError(res, 500, "No se encontró la categoría");
             }
             return Success(res, ResponseObjectType.Object, "category", {
                 _id: category._id,
@@ -72,7 +72,7 @@ export class CategoryController {
     public async index(_: any, res: any) {
         return await Category.find({}, "id name description updated_by").exec((err, categories) => {
             if (err) {
-                return CustomError(res, 500, err);
+                return CustomError(res, 500, "No se encontró la categoría");
             }
             return Success(res, ResponseObjectType.Array, "categories", categories);
         });

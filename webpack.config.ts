@@ -35,7 +35,7 @@ const config: webpack.Configuration = {
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
-            title: 'Melon',
+            title: 'La Nube',
             chunksSortMode: 'dependency',
             template: path.resolve(__dirname, './src/frontend/config/index.ejs')
         }),

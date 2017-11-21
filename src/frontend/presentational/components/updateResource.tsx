@@ -7,6 +7,7 @@ import { MenuItem } from 'material-ui/Menu';
 import Input, { InputLabel } from 'material-ui/Input';
 import { Resource, Status } from 'Config/constants';
 import { LinearProgress } from 'material-ui';
+import Error from 'Presentational/elements/Error';
 import { 
   isEmpty
 } from 'Config/helper';
@@ -176,8 +177,9 @@ export class UpdateResource extends React.Component<any, any> {
                   onChange={handleChipChange}
                   suggestions={this.props.tags}
                   />
+                  
               <br />
-              {this.props.failed && <p>El recurso ya existe</p>}
+              {this.props.error && <Error description={this.props.error.statusText}/>}
               {this.props.waiting && <LinearProgress mode="indeterminate" />}
 
             </DialogContent>
