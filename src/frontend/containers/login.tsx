@@ -25,6 +25,16 @@ class Login extends React.Component<any, any> {
         }
     }
 
+    errorText() {
+        var errorText = this.props.session.error.statusText;
+        if (errorText != "Por favor inicia sesión") {
+            return errorText;
+        } else {
+            errorText = "";
+        }
+        return errorText;
+    }
+
   render() {
     return (
       <div>
@@ -36,6 +46,7 @@ class Login extends React.Component<any, any> {
             failed = {this.props.session.error && 
                     this.props.session.error.status && 
                     this.props.session.error.status == 400}
+            error = {this.errorText()}
         />  
       </div>
     );

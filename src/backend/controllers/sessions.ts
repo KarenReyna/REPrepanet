@@ -15,7 +15,7 @@ export class SessionController {
                 if (err) error = err;
             });
             if (error) {
-                return CustomError(res, 400, "Correo o contraseña incorrectos.");
+                return CustomError(res, 400, "El correo o la contraseña son incorrectos");
             }
 
             req.session.auth_token = user._id;
@@ -25,7 +25,7 @@ export class SessionController {
                 email: user.email
             });
         }
-        return CustomError(res, 400, "Todos los campos son requeridos.");
+        return CustomError(res, 400, "Todos los campos son requeridos");
     }
 
     public async logout(req: any, res: any) {

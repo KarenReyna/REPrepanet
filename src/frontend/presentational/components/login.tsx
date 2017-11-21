@@ -7,7 +7,8 @@ import Input, { InputAdornment, InputLabel } from 'material-ui/Input';
 import IconButton from 'material-ui/IconButton';
 // import { LinearProgress } from 'material-ui/Progress';
 import Visibility from 'material-ui-icons/Visibility';
-import VisibilityOff from 'material-ui-icons/VisibilityOff';  
+import VisibilityOff from 'material-ui-icons/VisibilityOff'; 
+import Error from 'Presentational/elements/Error'; 
 
 export class LoginForm extends React.Component<any, any> {
   handleChange: (name: any) => (event: any) => void;
@@ -64,6 +65,11 @@ export class LoginForm extends React.Component<any, any> {
               }
             />
           </FormControl>
+          
+          <br />
+          <br />
+          {this.props.error && <Error description={this.props.error}/>}
+
           </DialogContent>
           <DialogActions>
             <Button 
