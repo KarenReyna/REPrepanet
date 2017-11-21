@@ -22,6 +22,9 @@ class Main extends React.Component<any, any> {
     if(isEmpty(this.props.resources.all)) {
       this.props.loadResources();
     }
+    if(isEmpty(this.props.tags.all)) {
+      this.props.loadTags();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,11 +40,14 @@ class Main extends React.Component<any, any> {
     return (
       <div>
         <Navbar 
-          handleSearch = {this.handleSearch}/>
+          handleSearch = {this.handleSearch}
+          searchQuery = {this.state.search}/>
         <Home
           users = {this.props.users}
           resources = {this.state.resources}
-          status = {this.props.resources.status}/>
+          status = {this.props.resources.status}
+          handleSearch = {this.handleSearch}
+          tags = {this.props.tags.all}/>
       </div>
     );
   }
@@ -62,14 +68,16 @@ function mapStateToProps(state: any) {
     return {
         users: state.users,
         resources: state.resources,
-        categories: state.categories
+        categories: state.categories,
+        tags: state.tags
     }
 }
 
 function mapDispatchToProps(dispatch: any) {
     return {
         loadCategories: () => dispatch(thunks.categories.all()),
-        loadResources: () => dispatch(thunks.resources.all())
+        loadResources: () => dispatch(thunks.resources.all()),
+        loadTags: () => dispatch(thunks.tags.all())
     }
 }
 

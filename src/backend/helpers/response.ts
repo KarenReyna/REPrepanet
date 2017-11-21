@@ -1,7 +1,8 @@
 export function CustomError(res: any, statusCode: number, errorMsg: string) {
     res.statusCode = statusCode;
-    res.setHeader('Content-Type', 'application/json');
-    res.write(JSON.stringify(errorMsg));
+    res.writeHead(statusCode, errorMsg, {'content-type' : 'text/plain'});
+    // res.setHeader('Content-Type', 'application/json');
+    // res.write(JSON.stringify({message: errorMsg}));
     res.end();
 }
 
