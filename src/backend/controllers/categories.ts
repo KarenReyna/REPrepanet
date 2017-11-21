@@ -12,6 +12,7 @@ export class CategoryController {
             var categoryObject = await CategoryController.createResponseObject(req);
             return await Category.create(categoryObject, (err, category: any) => {
                 if (err) {
+                    console.log(err);
                     return CustomError(res, 500, "La categoría ya existe");
                 }
                 return Success(res, ResponseObjectType.Object, "category", {
