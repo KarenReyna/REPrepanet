@@ -14,14 +14,16 @@ export class ResourceController {
             var resourceObject = await ResourceController.createResponseObject(req);
             return await Resource.create(resourceObject, (err, resource: any) => {
                 if (err) {
+                    console.log("Entro aqui");
                     return CustomError(res, 500, err.message);
                 }
+                let rTags = resource.tags.map(t => t.name);
                 return Success(res, ResponseObjectType.Object, "resource", {
                     _id: resource._id,
                     name: resource.name,
                     description: resource.description,
                     url: resource.url,
-                    tags: resource.tags,
+                    tags: rTags,
                     category: resource.category,
                     type: resource.type,
                     updated_by: resource.updated_by
@@ -36,30 +38,32 @@ export class ResourceController {
         if (!loggedIn) {
             return CustomError(res, 403, "Por favor inicia sesión.");
         }
-        var resourceObject = await ResourceController.createUpdateObject(req);
-        await Resource.findOneAndUpdate({ _id: req.params.id },
-            resourceObject,
-            { new: true, fields: "_id name description url tags category updated_by type" },
-            (err, resource) => {
-                if (err) {
-                    return CustomError(res, 400, err.message);
-                }
-
-                if (!resource) {
-                    return CustomError(res, 404, "No se encontró el recurso.");
-                }
-
-                return Success(res, ResponseObjectType.Object, "resource", {
-                    _id: resource._id,
-                    name: resource.name,
-                    description: resource.description,
-                    url: resource.url,
-                    tags: resource.tags,
-                    category: resource.category,
-                    type: resource.type,
-                    updated_by: resource.updated_by
+        if (ResourceController.validateRequiredParams(req)) {
+            var resourceObject = await ResourceController.createUpdateObject(req);
+            return await Resource.findOneAndUpdate({ _id: req.params.id },
+                resourceObject,
+                { new: true, fields: "_id name description url tags category updated_by type" },
+                (err, resource) => {
+                    if (err) {
+                        return CustomError(res, 400, err.message);
+                    }
+                    if (!resource) {
+                        return CustomError(res, 404, "No se encontró el recurso.");
+                    }
+                    let rTags = resource.tags.map(t => t.name);
+                    return Success(res, ResponseObjectType.Object, "resource", {
+                        _id: resource._id,
+                        name: resource.name,
+                        description: resource.description,
+                        url: resource.url,
+                        tags: rTags,
+                        category: resource.category,
+                        type: resource.type,
+                        updated_by: resource.updated_by
+                    });
                 });
-            });
+        }
+        return CustomError(res, 400, 'Todos los campos son requeridos.');
     }
 
     public async index(_: any, res: any) {
@@ -107,6 +111,7 @@ export class ResourceController {
         let tags = [];
 
         if (req.body.tags != null) {
+            console.log(tags);
             tags = await Tag.findOrCreateBatch(req.body.tags.split(','));
         }
 

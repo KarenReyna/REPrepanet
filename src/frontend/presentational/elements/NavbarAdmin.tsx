@@ -12,12 +12,15 @@ export default class Navbar extends React.Component<any, any> {
                 container
                 direction='row'
                 alignItems='center'>
-                    <Grid container item xs={12} sm={2} md={2} justify='center'>
+                    <Grid container item xs={3} sm={3} md={3} justify='center'>
                         <a>
                             <img src={'/src/frontend/presentational/assets/logo.svg'}/>
                         </a>
                     </Grid>
-                    <Grid item xs={12} sm={10} md={10}>
+                    <Grid container item xs={6} sm={6} md={6}>
+                        <h1>¡Hola! <span style={{color: '#FFFFFF'}}>{this.props.user}</span></h1>
+                    </Grid>
+                    <Grid item xs={3} sm={3} md={3}>
                         <Button 
                             onClick = {this.props.logout}
                             color="primary"

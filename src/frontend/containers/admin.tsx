@@ -123,6 +123,7 @@ class Admin extends React.Component<any, any> {
                     deleteResource = { this.props.deleteResource }
 
                     logout = {this.props.logout}
+                    user = {this.props.session.current.name}
                 />
                 <UpdateUser 
                     visible = { this.props.users.update.open }

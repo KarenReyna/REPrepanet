@@ -14,6 +14,7 @@ export class AdminView extends React.Component<any, any> {
       return (
         <div>
           <Navbar title="REPrepanet"
+          user = {this.props.user}
           logout = {this.props.logout}/>
   
         <Paper>

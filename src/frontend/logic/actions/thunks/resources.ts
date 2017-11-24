@@ -13,7 +13,7 @@ export function update(resource: Resource, editing: boolean) {
                     createAction(ResourceActions.Update, response.resource as Resource, 
                         null, Status.Ready)))
                 .catch((error) => dispatch(
-                    createAction(ResourceActions.Update, null, error, 
+                    createAction(ResourceActions.Update, resource as Resource, error, 
                         Status.Failed)));
         }
         else {
@@ -22,7 +22,7 @@ export function update(resource: Resource, editing: boolean) {
                 createAction(ResourceActions.Update, response.resource as Resource, 
                     null, Status.Ready)))
             .catch((error) => dispatch(
-                createAction(ResourceActions.Update, null, error, 
+                createAction(ResourceActions.Update, resource as Resource, error, 
                     Status.Failed)));
         }
     };

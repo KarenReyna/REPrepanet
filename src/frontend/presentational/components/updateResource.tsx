@@ -66,6 +66,36 @@ export class UpdateResource extends React.Component<any, any> {
           editing: true,
           selectFieldValue: nextProps.object.category.name
         });
+      } else if(nextProps.object._id != null && nextProps.failed) {
+        var tags = nextProps.object.tags.split(',');
+        console.log(nextProps.object.tags);
+        this.setState({
+          resource: {
+            name: nextProps.object.name,
+            description: nextProps.object.description,
+            url: nextProps.object.url,
+            tags: tags,
+            category: nextProps.object.category,
+            type: nextProps.object.type
+          } as Resource,
+          editing: true,
+          selectFieldValue: nextProps.object.category.name
+        });
+      } else if(nextProps.object._id == null && nextProps.failed) {
+        var tags = nextProps.object.tags.split(',');
+        console.log(nextProps.object.tags);
+        this.setState({
+          resource: {
+            name: nextProps.object.name,
+            description: nextProps.object.description,
+            url: nextProps.object.url,
+            tags: tags,
+            category: nextProps.object.category,
+            type: nextProps.object.type
+          } as Resource,
+          editing: false,
+          selectFieldValue: nextProps.object.category.name
+        });
       }
     }
     else {
@@ -129,7 +159,6 @@ export class UpdateResource extends React.Component<any, any> {
           onRequestClose={this.props.hide}>
             <DialogTitle>{title}</DialogTitle>
               <DialogContent>
-
               <TextField
                   label="Nombre"
                   value={this.state.resource.name}
