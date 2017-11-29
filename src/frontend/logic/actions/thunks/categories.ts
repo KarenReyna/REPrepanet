@@ -12,7 +12,7 @@ export function update(category: Category, editing: boolean) {
                     createAction(CategoryActions.Update, response.category as Category, 
                         null, Status.Ready)))
                 .catch((error) => dispatch(
-                    createAction(CategoryActions.Update, null, error, 
+                    createAction(CategoryActions.Update, category as Category, error, 
                         Status.Failed)));
         }
         else {
@@ -21,7 +21,7 @@ export function update(category: Category, editing: boolean) {
                 createAction(CategoryActions.Update, response.category as Category, 
                     null, Status.Ready)))
             .catch((error) => dispatch(
-                createAction(CategoryActions.Update, null, error, 
+                createAction(CategoryActions.Update, category as Category, error, 
                     Status.Failed)));
         }
     };

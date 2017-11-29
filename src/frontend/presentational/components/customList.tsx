@@ -65,7 +65,7 @@ function listElements(items, search, showFunction, deleteFunction, description) 
             <TableCell>
               <IconButton 
                 aria-label="Delete"
-                onClick={() => deleteFunction(item)}>
+                onClick={() => {if (confirm("¿Quieres eliminar este elemento?") == true) {deleteFunction(item)}}}>
                   <DeleteIcon/>
               </IconButton></TableCell>
           </TableRow>)

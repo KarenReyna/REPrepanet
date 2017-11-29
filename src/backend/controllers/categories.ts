@@ -30,25 +30,26 @@ export class CategoryController {
         if (!loggedIn) {
             return CustomError(res, 403, "Por favor inicia sesión");
         }
-        var categoryObject = await CategoryController.createUpdateObject(req);        
-        await Category.findOneAndUpdate({ _id: req.params.id }, 
-            categoryObject,
-            { new: true, fields: "id name description updated_by" }, (err, category) => {
-                if (err) {
-                    return CustomError(res, 400, "Error al registrar la categoría");
-                }
-
-                if (!category) {
-                    return CustomError(res, 404, "No se encontró la categoría");
-                }
-
-                return Success(res, ResponseObjectType.Object, "category", {
-                    _id: category._id,
-                    name: category.name,
-                    updated_by: category.updated_by,
-                    description: category.description
+        if (CategoryController.validateRequiredParams(req)) {
+            var categoryObject = await CategoryController.createUpdateObject(req);        
+            return await Category.findOneAndUpdate({ _id: req.params.id }, 
+                categoryObject,
+                { new: true, fields: "id name description updated_by" }, (err, category) => {
+                    if (err) {
+                        return CustomError(res, 400, "La categoría ya existe");
+                    }
+                    if (!category) {
+                        return CustomError(res, 404, "No se encontró la categoría");
+                    }
+                    return Success(res, ResponseObjectType.Object, "category", {
+                        _id: category._id,
+                        name: category.name,
+                        updated_by: category.updated_by,
+                        description: category.description
+                    });
                 });
-            });
+        }
+        return CustomError(res, 400, 'Todos los campos son requeridos');
     }
 
     public async delete(req: any, res: any) {
@@ -60,12 +61,7 @@ export class CategoryController {
             if (err) {
                 return CustomError(res, 500, "No se encontró la categoría");
             }
-            return Success(res, ResponseObjectType.Object, "category", {
-                _id: category._id,
-                name: category.name,
-                updated_by: category.updated_by,
-                description: category.description
-            });
+            return Success(res, ResponseObjectType.Object, "category", category);
         });
     }
 

@@ -16,7 +16,7 @@ export function update(user: User, editing: boolean) {
                     createAction(UserActions.Update, response.user as User, 
                         null, Status.Ready)))
                 .catch((error) => dispatch(
-                    createAction(UserActions.Update, null, error, 
+                    createAction(UserActions.Update, user, error, 
                         Status.Failed)));
         }
         else {

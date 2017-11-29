@@ -28,6 +28,22 @@ export class UpdateCategory extends React.Component<any, any> {
           } as Category,
           editing: true
         });
+      } else if(nextProps.object._id != null && nextProps.failed) {
+        this.setState({
+          category: {
+            name: nextProps.object.name,
+            description: nextProps.object.description
+          } as Category,
+          editing: true
+        });
+      } else if (nextProps.object._id == null && nextProps.failed) {
+        this.setState({
+          category: {
+            name: nextProps.object.name,
+            description: nextProps.object.description
+          } as Category,
+          editing: false
+        });
       }
     }
     else {
