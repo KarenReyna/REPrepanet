@@ -1,10 +1,8 @@
 import * as React from 'react';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
-import Button from 'material-ui/Button';
 import { CustomList } from 'Presentational/components/customList';
-import Styles from 'Presentational/style/elementStyles';
-import Navbar from 'Presentational/elements/Navbar';
+import Navbar from 'Presentational/elements/NavbarAdmin';
 
 export class AdminView extends React.Component<any, any> {
   state = {
@@ -15,16 +13,10 @@ export class AdminView extends React.Component<any, any> {
       const { value } = this.state;
       return (
         <div>
-          <Navbar title="REPrepanet"/>
+          <Navbar title="REPrepanet"
+            logout = {this.props.logout}/>
   
         <Paper>
-            <Button 
-                onClick = {this.props.logout}
-                color="primary"
-                style={Styles.logoutButton.style}>
-                Cerrar sesión
-            </Button>
-            <br />
           <Tabs
             value={this.state.value}
             onChange= {(_, value) => {this.setState({ value })}}
